@@ -7,12 +7,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.game.eddieandmichael.activities.MainActivity">
+        tools:context="com.game.eddieandmichael.activities.MainActivity"
+
+        >
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/tool_bar"
@@ -52,7 +55,15 @@
 
         </android.support.v4.view.ViewPager>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main_fragmentPlace"
+            android:layout_below="@id/tablayout_id"
+            />
+
     </RelativeLayout>
+
 
    <android.support.design.widget.NavigationView
        android:id="@+id/navigation_view"

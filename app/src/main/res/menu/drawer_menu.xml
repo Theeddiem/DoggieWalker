@@ -10,7 +10,9 @@
 
                     android:checked="true"
                     android:icon="@drawable/ic_person_black_24dp"
-                    android:title="Profile"/>
+                    android:title="Profile"
+                    android:id="@+id/navi_profile"
+                    />
                 <item
                     android:icon="@drawable/ic_attachemnt"
                     android:title="Empty for now "/>
@@ -23,10 +25,14 @@
         <menu>
             <item
                 android:icon="@drawable/ic_mode_black_24dp"
-                android:title="Change Mode" />
+                android:title="Change Mode"
+                android:id="@+id/navi_changeMode"
+                />
             <item
                 android:icon="@drawable/ic_info_outline_black_24dp"
-                android:title="About" />
+                android:title="About"
+                android:id="@+id/navi_about"
+                />
         </menu>
     </item>
 
