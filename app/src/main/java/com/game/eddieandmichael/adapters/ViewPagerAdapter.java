@@ -1,4 +1,4 @@
-package com.game.eddieandmichael.doggiewalker;
+package com.game.eddieandmichael.adapters;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;

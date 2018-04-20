@@ -1,4 +1,4 @@
-package com.game.eddieandmichael.doggiewalker;
+package com.game.eddieandmichael.classes;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

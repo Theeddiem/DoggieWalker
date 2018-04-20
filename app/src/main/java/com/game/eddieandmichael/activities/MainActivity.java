@@ -1,4 +1,4 @@
-package com.game.eddieandmichael.doggiewalker;
+package com.game.eddieandmichael.activities;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,10 +10,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar; //import this
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TableLayout;
 import android.widget.Toast;
+
+import com.game.eddieandmichael.fragments.FragmentDogs;
+import com.game.eddieandmichael.fragments.FragmentWalkers;
+import com.game.eddieandmichael.doggiewalker.R;
+import com.game.eddieandmichael.adapters.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -12,7 +12,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context="com.game.eddieandmichael.activities.MainActivity">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/tool_bar"
