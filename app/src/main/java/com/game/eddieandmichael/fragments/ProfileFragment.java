@@ -34,7 +34,7 @@ public class ProfileFragment extends Fragment
 
         collapsingToolbar = thisView.findViewById(R.id.fragment_profile_collapsingToolBar);
 
-        collapsingToolbar.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+        collapsingToolbar.setExpandedTitleColor(getResources().getColor(android.R.color.holo_blue_dark));
 
         profile_image = thisView.findViewById(R.id.profile_frag_imageProfile);
 
