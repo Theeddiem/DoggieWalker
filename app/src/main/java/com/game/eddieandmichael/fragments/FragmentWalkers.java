@@ -27,26 +27,32 @@ public class FragmentWalkers extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
         view = inflater.inflate(R.layout.walkers_fragment, container, false);
+
         myRecyclerView = view.findViewById(R.id.walkers_recyclerview);
-        RecyclerViewAdapterForWalkers recyclerViewAdapterForWalkers = new RecyclerViewAdapterForWalkers(getContext(),lstWalkers);
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-       myRecyclerView.setAdapter(recyclerViewAdapterForWalkers);
-        lstWalkers= new ArrayList<>();
+
+
+
+
         return view;
         }
-   @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        lstWalkers= new ArrayList<>();
+    private void updateAdapter()
+    {
         lstWalkers.add(new Walker("Putin", BitmapFactory.decodeResource(getResources(), R.drawable.walker1)));
         lstWalkers.add(new Walker("Natasha", BitmapFactory.decodeResource(getResources(), R.drawable.walker2)));
         lstWalkers.add(new Walker("Moshe", BitmapFactory.decodeResource(getResources(), R.drawable.walker3)));
         lstWalkers.add(new Walker("Anna", BitmapFactory.decodeResource(getResources(), R.drawable.walker4)));
 
+    }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
 
     }
+
 }

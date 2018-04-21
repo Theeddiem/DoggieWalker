@@ -7,7 +7,12 @@
         <item android:title="Options">
             <menu>
                 <item
+                    android:id="@+id/navi_mainScreen"
+                    android:title="Main Screen"
 
+                    />
+
+                <item
                     android:checked="true"
                     android:icon="@drawable/ic_person_black_24dp"
                     android:title="Profile"
