@@ -31,26 +31,40 @@ public class FragmentDogs extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
         view=inflater.inflate(R.layout.dogs_fragment,container,false);
+
         myRecyclerView = view.findViewById(R.id.dogs_recyclerview);
+
+        lstDogs= new ArrayList<>();
+        updateAdapter();
+
         RecyclerViewAdapterForDogs recyclerViewAdapterForDogs = new RecyclerViewAdapterForDogs(getContext(),lstDogs);
+
         myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         myRecyclerView.setAdapter(recyclerViewAdapterForDogs);
+
         return view;
 
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        lstDogs= new ArrayList<>();
+    private void updateAdapter()
+    {
         lstDogs.add(new Dog("Yossi", BitmapFactory.decodeResource(getResources(), R.drawable.dog1)));
         lstDogs.add(new Dog("Nir", BitmapFactory.decodeResource(getResources(), R.drawable.dog2)));
         lstDogs.add(new Dog("Max", BitmapFactory.decodeResource(getResources(), R.drawable.dog3)));
         lstDogs.add(new Dog("Michael", BitmapFactory.decodeResource(getResources(), R.drawable.dog4)));
 
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+
+    }
+
 
 }
