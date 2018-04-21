@@ -20,7 +20,8 @@
                     />
                 <item
                     android:icon="@drawable/ic_attachemnt"
-                    android:title="Empty for now "/>
+                    android:id="@+id/navi_login"
+                    android:title="Login"/>
 
             </menu>
         </item>

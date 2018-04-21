@@ -85,6 +85,15 @@ public class MainActivity extends AppCompatActivity
                         return true;
                     }
 
+                    case R.id.navi_login:
+                    {
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.main_fragment,new LoginFragment(),"ProfileScreen");
+                        fragmentTransaction.commit();
+                        drawerLayout.closeDrawers();
+
+                    }
+
                 }
 
                 return false;
