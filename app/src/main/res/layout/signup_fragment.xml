@@ -61,7 +61,7 @@
                         android:inputType="text"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:id="@+id/signup_userName_et"
+                        android:id="@+id/signUp_username_et"
                         />
 
                 </android.support.design.widget.TextInputLayout>
