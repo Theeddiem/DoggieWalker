@@ -40,16 +40,10 @@ public class ProfileFragment extends Fragment
 
         thisView = inflater.inflate(R.layout.profile_fragment,container,false);
 
-        collapsingToolbar = thisView.findViewById(R.id.fragment_profile_collapsingToolBar);
-
-        collapsingToolbar.setExpandedTitleColor(getResources().getColor(android.R.color.holo_blue_dark));
-
         profile_image = thisView.findViewById(R.id.profile_frag_imageProfile);
+        profileName = thisView.findViewById(R.id.profile_frag_fullName);
 
-        //Testing for setting up the profile Image
-        profile_image.setImageDrawable(getResources().getDrawable(R.drawable.ic_person_black_24dp));
 
-        profileName = thisView.findViewById(R.id.profile_userFirstName);
         if(user != null)
         {
             updateUI();
