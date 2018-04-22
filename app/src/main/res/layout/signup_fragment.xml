@@ -37,13 +37,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <AutoCompleteTextView
+                    <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Full Name"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:id="@+id/signup_fullName_et"
+                        />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -52,13 +54,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <AutoCompleteTextView
+                    <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Username"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:id="@+id/signUp_username_et"
+                        />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -66,13 +70,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <AutoCompleteTextView
+                    <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Email"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:id="@+id/signup_email_et"
+                        />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -86,7 +92,9 @@
                         android:hint="Password"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:id="@+id/signup_password_et"
+                        />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -100,7 +108,9 @@
                         android:hint="Re-type Password"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:id="@+id/signup_rePassword_et"
+                        />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -153,7 +163,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/email_sign_in_button"
+                    android:id="@+id/signup_email_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_large"
@@ -163,11 +173,21 @@
 
 
                 <Button
+                    android:id="@+id/signup_facebook_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_rounded_primary"
                     android:text="REGISTER WITH FACEBOOK"
                     android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/signup_google_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_rounded_red"
+                    android:text="REGISTER WITH GOOGLE"
+                    android:textColor="@android:color/white" />
+
 
             </LinearLayout>
 
