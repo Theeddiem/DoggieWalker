@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.squareup.picasso.Picasso;
@@ -23,6 +24,7 @@ public class ProfileFragment extends Fragment
     TextView profileName;
 
     User user;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -48,7 +50,6 @@ public class ProfileFragment extends Fragment
         profile_image.setImageDrawable(getResources().getDrawable(R.drawable.ic_person_black_24dp));
 
         profileName = thisView.findViewById(R.id.profile_userFirstName);
-
         if(user != null)
         {
             updateUI();
@@ -60,7 +61,10 @@ public class ProfileFragment extends Fragment
     private void updateUI()
     {
         profileName.setText(user.getFullName());
-        Picasso.get().load(user.getProfilePhoto()).into(profile_image);
+
+        Picasso.get()
+                .load(user.getProfilePhoto())
+                .into(profile_image);
 
     }
 

@@ -1,6 +1,7 @@
 package com.game.eddieandmichael.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -111,6 +112,9 @@ public class SignupFragment extends Fragment
             user.set_ID(account.getId()).setEmail(account.getEmail()).
                     setFullName(account.getDisplayName()).setUserName(account.getEmail())
                     .setProfilePhoto(account.getPhotoUrl());
+
+
+            Toast.makeText(getActivity(), ""+account.getPhotoUrl(), Toast.LENGTH_SHORT).show();
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
