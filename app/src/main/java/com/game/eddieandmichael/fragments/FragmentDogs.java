@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.game.eddieandmichael.adapters.PostRecycleAdapter;
 import com.game.eddieandmichael.classes.Dog;
+import com.game.eddieandmichael.classes.Post;
+import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.game.eddieandmichael.adapters.RecyclerViewAdapterForDogs;
 
@@ -24,6 +27,7 @@ public class FragmentDogs extends Fragment {
     private RecyclerView myRecyclerView;
     private List<Dog> lstDogs;
 
+    private ArrayList<Post> allThePosts;
 
     public FragmentDogs() {
 
@@ -37,14 +41,16 @@ public class FragmentDogs extends Fragment {
 
         myRecyclerView = view.findViewById(R.id.dogs_recyclerview);
 
+        allThePosts = new ArrayList<>();
         lstDogs= new ArrayList<>();
         updateAdapter();
 
+        PostRecycleAdapter postAdapter = new PostRecycleAdapter(allThePosts,getActivity());
         RecyclerViewAdapterForDogs recyclerViewAdapterForDogs = new RecyclerViewAdapterForDogs(getContext(),lstDogs);
 
         myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        myRecyclerView.setAdapter(recyclerViewAdapterForDogs);
+        myRecyclerView.setAdapter(postAdapter);
 
         return view;
 
@@ -56,6 +62,13 @@ public class FragmentDogs extends Fragment {
         lstDogs.add(new Dog("Nir", BitmapFactory.decodeResource(getResources(), R.drawable.dog2)));
         lstDogs.add(new Dog("Max", BitmapFactory.decodeResource(getResources(), R.drawable.dog3)));
         lstDogs.add(new Dog("Michael", BitmapFactory.decodeResource(getResources(), R.drawable.dog4)));
+
+        allThePosts.add(new Post(User.getInstance(),true));
+        allThePosts.add(new Post(User.getInstance(),true));
+        allThePosts.add(new Post(User.getInstance(),true));
+        allThePosts.add(new Post(User.getInstance(),true));
+        allThePosts.add(new Post(User.getInstance(),true));
+        allThePosts.add(new Post(User.getInstance(),true));
 
     }
 

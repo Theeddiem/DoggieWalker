@@ -39,14 +39,14 @@ public class MainScreen extends Fragment
         adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
         adapter.AddFragment(new FragmentDogs(),"");
-        adapter.AddFragment(new FragmentWalkers(),"");
+        //adapter.AddFragment(new FragmentWalkers(),"");
 
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_pets_black_24dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_group_black_24dp);
+        //tabLayout.getTabAt(1).setIcon(R.drawable.ic_group_black_24dp);
 
         return view;
     }

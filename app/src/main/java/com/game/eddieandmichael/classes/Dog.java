@@ -5,7 +5,8 @@ import android.graphics.BitmapFactory;
 
 import java.io.IOException;
 
-public class Dog {
+public class Dog
+{
 
     private String ownerName;
     private transient Bitmap photo;

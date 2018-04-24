@@ -20,7 +20,8 @@ public class RecyclerViewAdapterForDogs extends RecyclerView.Adapter<RecyclerVie
     Context mContext;
     List<Dog> mData;
 
-    public RecyclerViewAdapterForDogs(Context context, List<Dog> lstDogs) {
+    public RecyclerViewAdapterForDogs(Context context, List<Dog> lstDogs)
+    {
         this.mContext=context;
         this.mData=lstDogs;
     }
@@ -35,7 +36,8 @@ public class RecyclerViewAdapterForDogs extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position)
+    {
         holder.name.setText(mData.get(position).getOwnerName());
         holder.photo.setImageBitmap(mData.get(position).getPhoto());
     }
@@ -48,7 +50,8 @@ public class RecyclerViewAdapterForDogs extends RecyclerView.Adapter<RecyclerVie
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
         private ImageView photo;
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(View itemView)
+        {
             super(itemView);
 
             name=itemView.findViewById(R.id.dog_name);
