@@ -156,7 +156,7 @@ public class SignupFragment extends Fragment
                     setFullName(account.getDisplayName()).setUserName(account.getEmail())
                     .setProfilePhoto(account.getPhotoUrl());
 
-            Toast.makeText(getActivity(), ""+account.getPhotoUrl(), Toast.LENGTH_SHORT).show();
+            getActivity().onBackPressed();
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.

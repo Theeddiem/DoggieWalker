@@ -31,13 +31,14 @@ public class SignOutFragment extends Fragment
     TextView profileName;
     TextView signOut_tv;
     GoogleSignInOptions signInOptions;
+    GoogleApiClient mGoogleApiClient;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState)
     {
         View view = null;
         view = inflater.inflate(R.layout.signout_fragment,container,false);
 
-        User user = User.getInstance();
+        final User user = User.getInstance();
 
         profileImage = view.findViewById(R.id.signout_profileImage);
         profileName = view.findViewById(R.id.signout_userName);
@@ -50,30 +51,27 @@ public class SignOutFragment extends Fragment
         {
             public void onClick(View view)
             {
-                signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestEmail().build();
-
-                GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                        .addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
-                        .build();
-
-                mGoogleApiClient.connect();
-
-                Auth.GoogleSignInApi.signOut(mGoogleApiClient).addStatusListener(new PendingResult.StatusListener()
-                {
-                    @Override
-                    public void onComplete(Status status)
-                    {
-                        if(status.isSuccess())
+                Auth.GoogleSignInApi.signOut(mGoogleApiClient)
+                        .setResultCallback(new ResultCallback<Status>()
                         {
-                            Toast.makeText(getContext(), "SignOut Succsesfuly", Toast.LENGTH_SHORT).show();
-                        }else
-                        {
-                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                        }
+                            @Override
+                            public void onResult(@NonNull Status status)
+                            {
+                                if (status.isSuccess())
+                                {
+                                    Toast.makeText(getContext(), "Logged Out", Toast.LENGTH_SHORT).show();
+                                    user.setUserName(null).setFullName(null).setEmail(null)
+                                            .set_ID(null).setProfilePhoto(null);
 
-                    }
-                });
+                                    getActivity().onBackPressed();
+
+                                }else
+                                {
+                                    Toast.makeText(getContext(), "Logged Out", Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                        });
 
             }
         });
@@ -81,5 +79,22 @@ public class SignOutFragment extends Fragment
 
 
         return view;
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+
+        signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail().build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
+                .build();
+
+        mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
+
+
     }
 }

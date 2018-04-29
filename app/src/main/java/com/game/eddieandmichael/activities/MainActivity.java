@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.fragments.*;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
+    User user;
 
 
     @Override
@@ -62,11 +65,15 @@ public class MainActivity extends AppCompatActivity
                 {
                     case R.id.navi_profile:
                     {
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment,new ProfileFragment(),"ProfileScreen");
-                        fragmentTransaction.commit();
-                        drawerLayout.closeDrawers();
-
+                        if(user.get_ID() == null)
+                        {
+                            Toast.makeText(MainActivity.this, "Login to watch profile", Toast.LENGTH_SHORT).show();
+                        }else {
+                            fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.main_fragment, new ProfileFragment(), "ProfileScreen");
+                            fragmentTransaction.commit();
+                            drawerLayout.closeDrawers();
+                        }
                         return true;
                     }
 
@@ -125,17 +132,16 @@ public class MainActivity extends AppCompatActivity
         super.onStart();
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        user = User.getInstance();
 
         if(account != null)
         {
-            User user = User.getInstance();
+
             user.set_ID(account.getId()).setEmail(account.getEmail()).
                     setFullName(account.getDisplayName()).setUserName(account.getEmail())
                     .setProfilePhoto(account.getPhotoUrl());
-        }else
-        {
-            User user = User.getInstance();
         }
+
 
     }
 
