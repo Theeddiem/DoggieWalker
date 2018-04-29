@@ -55,8 +55,10 @@ public class User
         return profilePhoto;
     }
 
-    public void setProfilePhoto(Uri profilePhoto) {
+    public User setProfilePhoto(Uri profilePhoto)
+    {
         this.profilePhoto = profilePhoto;
+        return this;
     }
 
     public static User getInstance()

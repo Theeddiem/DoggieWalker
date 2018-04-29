@@ -112,7 +112,9 @@
                     android:text="S I G N  I N"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:id="@+id/login_login_btn"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"

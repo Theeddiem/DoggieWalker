@@ -14,15 +14,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SignupFragment extends Fragment
@@ -44,6 +48,8 @@ public class SignupFragment extends Fragment
     GoogleSignInOptions signInOptions;
     GoogleSignInClient signInClient;
 
+    FirebaseAuth firebaseAuth;
+
     final int PICK_IMAGE_REQUEST = 2;
     final int GOOGLE_SIGNUP_REQUEST = 1;
 
@@ -61,6 +67,9 @@ public class SignupFragment extends Fragment
     {
         View view;
         view = inflater.inflate(R.layout.signup_fragment,container,false);
+
+
+
         getReferences(view);
 
         google_btn.setOnClickListener(new View.OnClickListener()
@@ -79,8 +88,74 @@ public class SignupFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-                //TODO Add Firebase Email signUp
+                if(checkFields())
+                {
+                    final String email = email_et.getText().toString();
+                    final String fullName = fullName_et.getText().toString();
+                    final String userName = userName_et.getText().toString();
+                    String password = password_et.getText().toString();
 
+                    firebaseAuth.createUserWithEmailAndPassword(email,password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>()
+                            {
+
+                                public void onComplete( Task<AuthResult> task)
+                                {
+                                    if (task.isSuccessful())
+                                    {
+                                        User user = User.getInstance();
+                                        user.setProfilePhoto(photoUri).setEmail(email)
+                                        .setFullName(fullName).setUserName(userName)
+                                        .set_ID(firebaseAuth.getUid());
+
+                                        //TODO add user to firestorm database
+
+                                        getActivity().onBackPressed();
+
+                                    }else
+                                    {
+                                        Toast.makeText(getActivity(), "Authentication failed.",
+                                                Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                }
+                            });
+                }
+
+
+
+            }
+
+            private boolean checkFields()
+            {
+                if(fullName_et.getText().toString() == null)
+                {
+                    Toast.makeText(getActivity(), "Enter Full Name", Toast.LENGTH_SHORT).show();
+                    return false;
+                }else if(userName_et.getText().toString() == null)
+                {
+                    Toast.makeText(getActivity(), "Enter User Name", Toast.LENGTH_SHORT).show();
+                    return false;
+                }else if(email_et.getText().toString() == null)
+                {
+                    Toast.makeText(getActivity(), "Enter Email", Toast.LENGTH_SHORT).show();
+                    return false;
+                }else if (password_et.getText().toString() == null)
+                {
+                    Toast.makeText(getActivity(), "Enter Password", Toast.LENGTH_SHORT).show();
+                    return false;
+                }else if(rePassword_et.getText().toString() == null)
+                {
+                    Toast.makeText(getActivity(), "Enter your password again", Toast.LENGTH_SHORT).show();
+                    return false;
+                }else if(!rePassword_et.getText().toString().equals(password_et.getText().toString()))
+                {
+                    Toast.makeText(getActivity(), "Passwords Dont Match!", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+
+                return true;
             }
         });
 
@@ -120,6 +195,7 @@ public class SignupFragment extends Fragment
                 .requestEmail().build();
 
         signInClient = GoogleSignIn.getClient(getActivity(),signInOptions);
+
 
 
     }
@@ -165,5 +241,11 @@ public class SignupFragment extends Fragment
         }
     }
 
+    @Override
+    public void onStart()
+    {
+        super.onStart();
 
+        firebaseAuth = FirebaseAuth.getInstance();
+    }
 }

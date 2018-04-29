@@ -17,6 +17,9 @@ import com.game.eddieandmichael.fragments.*;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.game.eddieandmichael.doggiewalker.R;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity
@@ -35,6 +38,9 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseApp.initializeApp(this);
+
 
         Toolbar toolbar=findViewById(R.id.main_ToolBar);
         setSupportActionBar(toolbar);
@@ -141,6 +147,13 @@ public class MainActivity extends AppCompatActivity
                     setFullName(account.getDisplayName()).setUserName(account.getEmail())
                     .setProfilePhoto(account.getPhotoUrl());
         }
+        FirebaseAuth instance = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = instance.getCurrentUser();
+
+        if(currentUser != null)
+        {
+            //TODO get Details from firestorm
+        }
 
 
     }
@@ -148,6 +161,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
+
         MainScreen mainScreen = (MainScreen) fragmentManager.findFragmentByTag("MainScreen");
 
         if(mainScreen != null && mainScreen.isVisible())
