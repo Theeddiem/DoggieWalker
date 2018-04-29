@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Allready sign in as: "
+        android:textSize="55sp"
+        android:gravity="center"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:textStyle="bold"
+        android:id="@+id/signout_as_tv"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signout_as_tv"
+        android:layout_marginTop="25dp"
+        android:id="@+id/signout_profileImage"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signout_profileImage"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:text="Profile name"
+        android:textSize="35sp"
+        android:id="@+id/signout_userName"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textColor="@color/blue_700"
+        android:text="Sign Out"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="25sp"
+        android:id="@+id/signout_signout_tv"
+        />
+
+
+
+
+</RelativeLayout>

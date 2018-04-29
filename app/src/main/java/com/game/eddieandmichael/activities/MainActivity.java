@@ -83,10 +83,22 @@ public class MainActivity extends AppCompatActivity
 
                     case R.id.navi_login:
                     {
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment,new LoginFragment(),"LoginScreen");
-                        fragmentTransaction.commit();
-                        drawerLayout.closeDrawers();
+                        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+
+                        if(account != null)
+                        {
+                            fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.main_fragment, new SignOutFragment(), "SignOut");
+                            fragmentTransaction.commit();
+                            drawerLayout.closeDrawers();
+
+                        }else {
+
+                            fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.main_fragment, new LoginFragment(), "LoginScreen");
+                            fragmentTransaction.commit();
+                            drawerLayout.closeDrawers();
+                        }
 
                     }
 

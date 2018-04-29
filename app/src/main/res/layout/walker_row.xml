@@ -19,7 +19,6 @@
         <ImageView
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:src="@drawable/walker1"
             android:id="@+id/img_walker"
             />
 
