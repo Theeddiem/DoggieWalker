@@ -149,13 +149,12 @@ public class SignupFragment extends Fragment
     {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            // Signed in successfully, show authenticated UI.
+
 
             User user = User.getInstance();
             user.set_ID(account.getId()).setEmail(account.getEmail()).
                     setFullName(account.getDisplayName()).setUserName(account.getEmail())
                     .setProfilePhoto(account.getPhotoUrl());
-
 
             Toast.makeText(getActivity(), ""+account.getPhotoUrl(), Toast.LENGTH_SHORT).show();
 
