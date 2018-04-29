@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar=findViewById(R.id.main_ToolBar); //add this
+        Toolbar toolbar=findViewById(R.id.main_ToolBar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar=getSupportActionBar();
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         drawerLayout=findViewById(R.id.drawer_layout);
 
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_fragment,new FragmentDogs());
+        fragmentTransaction.replace(R.id.main_fragment,new MainScreen());
         fragmentTransaction.commit();
 
 
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity
                     case R.id.navi_mainScreen:
                     {
                         fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment,new FragmentDogs(),"MainScreen");
+                        fragmentTransaction.replace(R.id.main_fragment,new MainScreen(),"MainScreen");
                         fragmentTransaction.commit();
                         drawerLayout.closeDrawers();
 
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
-        FragmentDogs mainScreen = (FragmentDogs) fragmentManager.findFragmentByTag("MainScreen");
+        MainScreen mainScreen = (MainScreen) fragmentManager.findFragmentByTag("MainScreen");
 
         if(mainScreen != null && mainScreen.isVisible())
         {
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity
         }else
         {
             fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.main_fragment,new FragmentDogs(),"MainScreen");
+            fragmentTransaction.replace(R.id.main_fragment,new MainScreen(),"MainScreen");
             fragmentTransaction.commit();
         }
 

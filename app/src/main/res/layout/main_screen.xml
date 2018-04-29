@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/Mainscreen_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/indigo_600"
@@ -35,21 +35,16 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/mainScreen_textViewFilter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="All post"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/grey_40" />
+                android:textColor="@color/grey_40"
+                android:clickable="true"
+                />
 
-            <ImageButton
-                android:id="@+id/bt_toggle_text"
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/grey_40"
-                app:srcCompat="@drawable/ic_arrow_drop" />
 
         </LinearLayout>
 
@@ -65,7 +60,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
 
@@ -73,61 +68,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/spacing_middle" />
 
-            <android.support.v7.widget.CardView
+
+            <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_middle"
-                android:layout_marginRight="@dimen/spacing_middle"
-                android:visibility="visible"
-                app:cardCornerRadius="0dp"
-                app:cardElevation="4dp">
-
-            </android.support.v7.widget.CardView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_middle" />
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_middle"
-                android:layout_marginRight="@dimen/spacing_middle"
-                android:visibility="visible"
-                app:cardCornerRadius="0dp"
-                app:cardElevation="4dp">
-
-            </android.support.v7.widget.CardView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_middle" />
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_middle"
-                android:layout_marginRight="@dimen/spacing_middle"
-                android:visibility="visible"
-                app:cardCornerRadius="0dp"
-                app:cardElevation="4dp">
-
-            </android.support.v7.widget.CardView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_middle" />
-
+                android:layout_height="match_parent"
+                android:id="@+id/mainscreen_RecyclerViewPost"/>
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/mainscreen_RecyclerViewPost"
-            >
 
-
-        </android.support.v7.widget.RecyclerView>
 
     </android.support.v4.widget.NestedScrollView>
 
