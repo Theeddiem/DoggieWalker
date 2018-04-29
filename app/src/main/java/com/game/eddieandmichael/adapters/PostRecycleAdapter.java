@@ -120,3 +120,6 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
 
 }
+
+
+//TODO different colors for seekers and walkers

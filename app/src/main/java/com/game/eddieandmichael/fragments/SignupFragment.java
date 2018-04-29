@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.game.eddieandmichael.classes.User;
@@ -31,13 +32,20 @@ public class SignupFragment extends Fragment
     EditText email_et;
     EditText password_et;
     EditText rePassword_et;
+    Uri photoUri;
 
     Button email_btn;
     Button facebook_btn;
     Button google_btn;
+    Button addProfilePhoto_btn;
+
+    TextView profilePhotoURI_tv;
 
     GoogleSignInOptions signInOptions;
     GoogleSignInClient signInClient;
+
+    final int PICK_IMAGE_REQUEST = 2;
+    final int GOOGLE_SIGNUP_REQUEST = 1;
 
 
     @Override
@@ -61,10 +69,34 @@ public class SignupFragment extends Fragment
             public void onClick(View view)
             {
                 Intent signInIntent =  signInClient.getSignInIntent();
-                startActivityForResult(signInIntent,1);
+                startActivityForResult(signInIntent,GOOGLE_SIGNUP_REQUEST);
             }
         });
 
+
+        email_btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                //TODO Add Firebase Email signUp
+
+            }
+        });
+
+
+        addProfilePhoto_btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"),PICK_IMAGE_REQUEST);
+
+            }
+        });
 
         return view;
     }
@@ -80,24 +112,35 @@ public class SignupFragment extends Fragment
         email_btn = view.findViewById(R.id.signup_email_btn);
         facebook_btn = view.findViewById(R.id.signup_facebook_btn);
         google_btn = view.findViewById(R.id.signup_google_btn);
+        addProfilePhoto_btn = view.findViewById(R.id.signup_addPhoto_btn);
+
+        profilePhotoURI_tv = view.findViewById(R.id.signup_profilePhoto_tv);
 
         signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail().build();
 
         signInClient = GoogleSignIn.getClient(getActivity(),signInOptions);
+
+
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode == 1)
+        if(requestCode == GOOGLE_SIGNUP_REQUEST)
         {
             if(resultCode == getActivity().RESULT_OK)
             {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                 handleSignInResult(task);
             }
+        }
+
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK)
+        {
+            photoUri = data.getData();
+            profilePhotoURI_tv.setText(photoUri.getLastPathSegment());
         }
 
     }

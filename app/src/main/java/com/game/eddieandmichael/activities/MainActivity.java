@@ -1,6 +1,5 @@
 package com.game.eddieandmichael.activities;
 
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         drawerLayout=findViewById(R.id.drawer_layout);
 
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_fragment,new MainScreen());
+        fragmentTransaction.replace(R.id.main_fragment,new FragmentDogs());
         fragmentTransaction.commit();
 
 
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity
         navigationView = findViewById(R.id.main_NavigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item)
+            public boolean onNavigationItemSelected(MenuItem item)
             {
                 item.setChecked(false); // change color if selceted.
 
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity
                     case R.id.navi_mainScreen:
                     {
                         fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment,new MainScreen(),"MainScreen");
+                        fragmentTransaction.replace(R.id.main_fragment,new FragmentDogs(),"MainScreen");
                         fragmentTransaction.commit();
                         drawerLayout.closeDrawers();
 
@@ -100,7 +99,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home)
+        {
             drawerLayout.openDrawer(GravityCompat.START);
             return true;
         }
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
-        MainScreen mainScreen = (MainScreen) fragmentManager.findFragmentByTag("MainScreen");
+        FragmentDogs mainScreen = (FragmentDogs) fragmentManager.findFragmentByTag("MainScreen");
 
         if(mainScreen != null && mainScreen.isVisible())
         {
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity
         }else
         {
             fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.main_fragment,new MainScreen(),"MainScreen");
+            fragmentTransaction.replace(R.id.main_fragment,new FragmentDogs(),"MainScreen");
             fragmentTransaction.commit();
         }
 
@@ -148,3 +148,6 @@ public class MainActivity extends AppCompatActivity
 //TODO Add more profile information
 //TODO Add Post class
 //TODO Fix the main screen to show posts (After last todo)
+//TODO Fix uppder action bar (looks weird)
+//TODO remove login option from menu when user is logged in
+//TODO add a sign out button when user is logged in

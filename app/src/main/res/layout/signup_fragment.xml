@@ -112,6 +112,30 @@
                         android:id="@+id/signup_rePassword_et"
                         />
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="No file selected"
+                            android:textSize="20sp"
+                            android:id="@+id/signup_profilePhoto_tv"
+                            />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add Profile Photo"
+                            android:id="@+id/signup_addPhoto_btn"
+
+                            />
+
+
+                    </LinearLayout>
+
                 </android.support.design.widget.TextInputLayout>
 
                 <LinearLayout
