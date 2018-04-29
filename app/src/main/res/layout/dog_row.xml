@@ -15,7 +15,7 @@
             android:id="@+id/img_dog"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:src="@drawable/dog1" />
+             />
 
         <TextView
             android:id="@+id/dog_name"

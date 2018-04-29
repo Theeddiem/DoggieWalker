@@ -41,10 +41,6 @@ public class FragmentWalkers extends Fragment {
 
     private void updateAdapter()
     {
-        lstWalkers.add(new Walker("Putin", BitmapFactory.decodeResource(getResources(), R.drawable.walker1)));
-        lstWalkers.add(new Walker("Natasha", BitmapFactory.decodeResource(getResources(), R.drawable.walker2)));
-        lstWalkers.add(new Walker("Moshe", BitmapFactory.decodeResource(getResources(), R.drawable.walker3)));
-        lstWalkers.add(new Walker("Anna", BitmapFactory.decodeResource(getResources(), R.drawable.walker4)));
 
     }
 

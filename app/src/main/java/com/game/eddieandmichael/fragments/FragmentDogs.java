@@ -58,11 +58,6 @@ public class FragmentDogs extends Fragment {
 
     private void updateAdapter()
     {
-        lstDogs.add(new Dog("Yossi", BitmapFactory.decodeResource(getResources(), R.drawable.dog1)));
-        lstDogs.add(new Dog("Nir", BitmapFactory.decodeResource(getResources(), R.drawable.dog2)));
-        lstDogs.add(new Dog("Max", BitmapFactory.decodeResource(getResources(), R.drawable.dog3)));
-        lstDogs.add(new Dog("Michael", BitmapFactory.decodeResource(getResources(), R.drawable.dog4)));
-
         allThePosts.add(new Post(User.getInstance(),true));
         allThePosts.add(new Post(User.getInstance(),true));
         allThePosts.add(new Post(User.getInstance(),true));
