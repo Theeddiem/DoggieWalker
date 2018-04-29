@@ -34,19 +34,7 @@ public class MainScreen extends Fragment
 
         view = inflater.inflate(R.layout.main_screen, container,false);
 
-        tabLayout=view.findViewById(R.id.tablayout_id);
-        viewPager=view. findViewById(R.id.viewpager_id);
-        adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
-        adapter.AddFragment(new FragmentDogs(),"");
-        //adapter.AddFragment(new FragmentWalkers(),"");
-
-
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_pets_black_24dp);
-        //tabLayout.getTabAt(1).setIcon(R.drawable.ic_group_black_24dp);
 
         return view;
     }
