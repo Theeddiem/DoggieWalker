@@ -23,10 +23,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 
 public class SignupFragment extends Fragment
@@ -49,6 +55,9 @@ public class SignupFragment extends Fragment
     GoogleSignInClient signInClient;
 
     FirebaseAuth firebaseAuth;
+    FirebaseFirestore firestoreDatabase;
+    FirebaseStorage firebaseStorage;
+    StorageReference storageReference;
 
     final int PICK_IMAGE_REQUEST = 2;
     final int GOOGLE_SIGNUP_REQUEST = 1;
@@ -67,7 +76,6 @@ public class SignupFragment extends Fragment
     {
         View view;
         view = inflater.inflate(R.layout.signup_fragment,container,false);
-
 
 
         getReferences(view);
@@ -103,12 +111,46 @@ public class SignupFragment extends Fragment
                                 {
                                     if (task.isSuccessful())
                                     {
-                                        User user = User.getInstance();
-                                        user.setProfilePhoto(photoUri).setEmail(email)
-                                        .setFullName(fullName).setUserName(userName)
-                                        .set_ID(firebaseAuth.getUid());
+                                        final User user = User.getInstance();
+                                        user.setEmail(email);
+                                        user.setFullName(fullName);
+                                        user.setUserName(userName);
+                                        user.set_ID(firebaseAuth.getUid());
 
-                                        //TODO add user to firestorm database
+                                        storageReference.child(user.get_ID());
+
+                                        storageReference.putFile(photoUri)
+                                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
+                                                {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+                                            {
+                                                Uri uri = taskSnapshot.getDownloadUrl();
+                                                user.setProfilePhoto(uri.getPath());
+
+                                                firestoreDatabase.collection("users")
+                                                        .add(user)
+                                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>()
+                                                        {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentReference> task)
+                                                            {
+                                                                if (task.isSuccessful())
+                                                                {
+                                                                    //Toast.makeText(getActivity(), "Signup success", Toast.LENGTH_SHORT).show();
+
+                                                                }else
+                                                                {
+                                                                    //Toast.makeText(getActivity(), "Signup Failed", Toast.LENGTH_SHORT).show();
+
+                                                                }
+
+                                                            }
+                                                        });
+
+                                            }
+                                        });
+
 
                                         getActivity().onBackPressed();
 
@@ -122,7 +164,6 @@ public class SignupFragment extends Fragment
                                 }
                             });
                 }
-
 
 
             }
@@ -196,7 +237,11 @@ public class SignupFragment extends Fragment
 
         signInClient = GoogleSignIn.getClient(getActivity(),signInOptions);
 
+        firestoreDatabase = FirebaseFirestore.getInstance();
 
+        firebaseStorage = FirebaseStorage.getInstance();
+
+        storageReference = firebaseStorage.getReference().child("usersPhotos");
 
     }
 
@@ -228,15 +273,16 @@ public class SignupFragment extends Fragment
 
 
             User user = User.getInstance();
-            user.set_ID(account.getId()).setEmail(account.getEmail()).
-                    setFullName(account.getDisplayName()).setUserName(account.getEmail())
-                    .setProfilePhoto(account.getPhotoUrl());
+
+            user.set_ID(account.getId());
+            user.setEmail(account.getEmail());
+            user.setFullName(account.getDisplayName());
+            user.setUserName(account.getEmail());
+            user.setProfilePhoto(account.getPhotoUrl().getPath());
 
             getActivity().onBackPressed();
 
         } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
 
         }
     }

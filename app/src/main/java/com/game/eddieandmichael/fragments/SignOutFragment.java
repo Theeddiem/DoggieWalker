@@ -60,8 +60,10 @@ public class SignOutFragment extends Fragment
                                 if (status.isSuccess())
                                 {
                                     Toast.makeText(getContext(), "Logged Out", Toast.LENGTH_SHORT).show();
-                                    user.setUserName(null).setFullName(null).setEmail(null)
-                                            .set_ID(null).setProfilePhoto(null);
+                                    user.setUserName(null);
+                                    user.setFullName(null);
+                                    user.setEmail(null);
+                                    user.set_ID(null).setProfilePhoto(null);
 
                                     getActivity().onBackPressed();
 

@@ -2,13 +2,15 @@ package com.game.eddieandmichael.classes;
 
 import android.net.Uri;
 
-public class User
+import java.io.Serializable;
+
+public class User implements Serializable
 {
     private String fullName;
     private String userName;
     private String email;
     private String _ID;
-    private Uri profilePhoto;
+    private String profilePhoto;
 
     private static User instance = null;
 
@@ -19,18 +21,16 @@ public class User
         return fullName;
     }
 
-    public User setFullName(String fullName) {
+    public void setFullName(String fullName) {
         this.fullName = fullName;
-        return this;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public User setUserName(String userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
-        return this;
     }
 
     public String getEmail() {
@@ -51,14 +51,13 @@ public class User
         return this;
     }
 
-    public Uri getProfilePhoto() {
+    public String getProfilePhoto() {
         return profilePhoto;
     }
 
-    public User setProfilePhoto(Uri profilePhoto)
+    public void setProfilePhoto(String profilePhoto)
     {
         this.profilePhoto = profilePhoto;
-        return this;
     }
 
     public static User getInstance()
@@ -70,4 +69,6 @@ public class User
 
         return instance;
     }
+
+
 }

@@ -17,9 +17,15 @@ import com.game.eddieandmichael.fragments.*;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.game.eddieandmichael.doggiewalker.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
@@ -98,7 +104,7 @@ public class MainActivity extends AppCompatActivity
                     {
                         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
 
-                        if(account != null)
+                        if(user.get_ID() != null)
                         {
                             fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.main_fragment, new SignOutFragment(), "SignOut");
@@ -143,16 +149,46 @@ public class MainActivity extends AppCompatActivity
         if(account != null)
         {
 
-            user.set_ID(account.getId()).setEmail(account.getEmail()).
-                    setFullName(account.getDisplayName()).setUserName(account.getEmail())
-                    .setProfilePhoto(account.getPhotoUrl());
+            user.set_ID(account.getId());
+            user.setEmail(account.getEmail());
+            user.setFullName(account.getDisplayName());
+            user.setUserName(account.getEmail());
+            user.setProfilePhoto(account.getPhotoUrl().getPath());
         }
         FirebaseAuth instance = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = instance.getCurrentUser();
+        final FirebaseUser currentUser = instance.getCurrentUser();
 
         if(currentUser != null)
         {
-            //TODO get Details from firestorm
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+            CollectionReference allTheUsers = firestore.collection("users");
+
+            allTheUsers.whereEqualTo("_ID",currentUser.getUid()).get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
+                    {
+                        @Override
+                        public void onSuccess(QuerySnapshot documentSnapshots)
+                        {
+                            if(documentSnapshots.isEmpty())
+                            {
+                                Toast.makeText(MainActivity.this, "No User Data Found", Toast.LENGTH_SHORT).show();
+                            }else
+                            {
+                                List<User> users = documentSnapshots.toObjects(User.class);
+
+                                user.set_ID(currentUser.getUid());
+                                user.setUserName(users.get(0).getUserName());
+                                user.setFullName(users.get(0).getFullName());
+                                user.setEmail(users.get(0).getEmail());
+                                user.setProfilePhoto(users.get(0).getProfilePhoto());
+
+                            }
+
+                        }
+                    });
+
+
         }
 
 
