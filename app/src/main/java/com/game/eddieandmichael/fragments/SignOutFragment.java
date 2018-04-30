@@ -22,6 +22,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 public class SignOutFragment extends Fragment
@@ -74,6 +75,9 @@ public class SignOutFragment extends Fragment
                                 }
                             }
                         });
+
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.signOut();
 
             }
         });

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -117,7 +119,9 @@ public class SignupFragment extends Fragment
                                         user.setUserName(userName);
                                         user.set_ID(firebaseAuth.getUid());
 
-                                        storageReference.child(user.get_ID());
+                                        String firebasePath = ("profilePhotos/"+user.get_ID());
+
+                                        storageReference = firebaseStorage.getReference(firebasePath);
 
                                         storageReference.putFile(photoUri)
                                                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
@@ -126,7 +130,7 @@ public class SignupFragment extends Fragment
                                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
                                             {
                                                 Uri uri = taskSnapshot.getDownloadUrl();
-                                                user.setProfilePhoto(uri.getPath());
+                                                user.setProfilePhoto(uri.toString());
 
                                                 firestoreDatabase.collection("users")
                                                         .add(user)
@@ -278,7 +282,8 @@ public class SignupFragment extends Fragment
             user.setEmail(account.getEmail());
             user.setFullName(account.getDisplayName());
             user.setUserName(account.getEmail());
-            user.setProfilePhoto(account.getPhotoUrl().getPath());
+            user.setProfilePhoto(account.getPhotoUrl().toString());
+            Log.d("Google Photo", "handleSignInResult: "+account.getPhotoUrl().toString());
 
             getActivity().onBackPressed();
 
