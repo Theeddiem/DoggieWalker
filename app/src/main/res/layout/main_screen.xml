@@ -84,6 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:src="@drawable/btn_rounded_red" />
+        android:src="@drawable/ic_create"
+        />
 
 </android.support.design.widget.CoordinatorLayout>

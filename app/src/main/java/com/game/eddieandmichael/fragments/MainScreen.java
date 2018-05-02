@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.game.eddieandmichael.adapters.PostRecycleAdapter;
+import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.Post;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 public class MainScreen extends Fragment
 {
     User user;
+    AllThePosts allThePosts;
 
     RecyclerView recyclerView;
     PostRecycleAdapter recycleAdapter;
@@ -47,6 +50,8 @@ public class MainScreen extends Fragment
         view = inflater.inflate(R.layout.main_screen, container,false);
 
         user = User.getInstance();
+
+        allThePosts = AllThePosts.getInstance();
 
         filterTv = view.findViewById(R.id.mainScreen_textViewFilter);
 
@@ -78,7 +83,7 @@ public class MainScreen extends Fragment
 
         listOfPosts = new ArrayList<>();
         recyclerView = view.findViewById(R.id.mainscreen_RecyclerViewPost);
-        recycleAdapter = new PostRecycleAdapter(listOfPosts,getContext());
+        recycleAdapter = new PostRecycleAdapter(allThePosts.getAllThePosts(),getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recycleAdapter);
 
@@ -91,16 +96,33 @@ public class MainScreen extends Fragment
             @Override
             public void onClick(View view)
             {
-                showAddPostDialog();
+                if(user.get_ID() == null)
+                {
+                    Toast.makeText(getActivity(), "Login to add posts", Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    showAddPostDialog();
+                }
             }
         });
-
 
         return view;
     }
 
     private void showAddPostDialog()
     {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+        Fragment prev = getFragmentManager().findFragmentByTag("postDialog");
+        if (prev != null)
+        {
+            transaction.remove(prev);
+        }
+        transaction.addToBackStack(null);
+
+        AddPostDialogFragment postDialog = new AddPostDialogFragment();
+
+        postDialog.show(transaction,"postDialog");
 
 
     }
