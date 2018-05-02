@@ -15,11 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.game.eddieandmichael.classes.Post;
-import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -54,7 +51,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         int day,month,year;
         day = month = year = 0;
 
-        String uri = post.getPostOwner().getProfilePhoto();
+        String uri = post.getPostOwner_ID().getProfilePhoto();
         if(uri != null)
         {
             Uri photoUri = Uri.parse(uri);
@@ -63,7 +60,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         }
 
 
-        holder.profileName.setText(post.getPostOwner().getFullName());
+        holder.profileName.setText(post.getPostOwner_ID().getFullName());
         holder.aboutThePost.setText(post.getAboutThePost());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -80,7 +77,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(context, ""+post.getPostOwner().getFullName()
+                Toast.makeText(context, ""+post.getPostOwner_ID().getFullName()
                         +" Is the owner of the post", Toast.LENGTH_SHORT).show();
             }
         });
@@ -90,7 +87,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(context, ""+post.getPostOwner().getFullName()
+                Toast.makeText(context, ""+post.getPostOwner_ID().getFullName()
                         +" For the profile!", Toast.LENGTH_SHORT).show();
             }
         });
