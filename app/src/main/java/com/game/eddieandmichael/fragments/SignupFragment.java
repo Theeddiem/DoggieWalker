@@ -29,8 +29,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
@@ -63,6 +65,7 @@ public class SignupFragment extends Fragment
 
     final int PICK_IMAGE_REQUEST = 2;
     final int GOOGLE_SIGNUP_REQUEST = 1;
+    User user;
 
 
     @Override
@@ -272,11 +275,41 @@ public class SignupFragment extends Fragment
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask)
     {
+        final boolean userInDatabase = false;
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            final GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
+            user = User.getInstance();
 
-            User user = User.getInstance();
+            final CollectionReference allTheUsers = firestoreDatabase.collection("users");
+
+            allTheUsers.whereEqualTo("_ID",account.getId())
+                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
+            {
+                @Override
+                public void onSuccess(QuerySnapshot documentSnapshots)
+                {
+                    if(documentSnapshots.isEmpty())
+                    {
+                        user.set_ID(account.getId());
+                        user.setEmail(account.getEmail());
+                        user.setFullName(account.getDisplayName());
+                        user.setUserName(account.getEmail());
+                        user.setProfilePhoto(account.getPhotoUrl().toString());
+
+                        allTheUsers.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                        {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference)
+                            {
+
+                            }
+                        });
+                    }
+
+                }
+            });
+
 
             user.set_ID(account.getId());
             user.setEmail(account.getEmail());

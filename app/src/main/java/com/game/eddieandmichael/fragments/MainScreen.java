@@ -3,6 +3,7 @@ package com.game.eddieandmichael.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.game.eddieandmichael.adapters.PostRecycleAdapter;
 import com.game.eddieandmichael.classes.Post;
@@ -29,6 +31,8 @@ public class MainScreen extends Fragment
     TextView filterTv;
 
     int textViewCounter = 0;
+
+    FloatingActionButton floatingActionButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,9 +84,25 @@ public class MainScreen extends Fragment
 
         updateList();
 
+        floatingActionButton = view.findViewById(R.id.mainScreen_fab);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                showAddPostDialog();
+            }
+        });
 
 
         return view;
+    }
+
+    private void showAddPostDialog()
+    {
+
+
     }
 
     void updateList()

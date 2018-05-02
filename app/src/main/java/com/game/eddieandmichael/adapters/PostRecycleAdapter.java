@@ -15,11 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.game.eddieandmichael.classes.Post;
-import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -31,10 +28,10 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
     public PostRecycleAdapter(ArrayList<Post> allThePosts, Context context)
     {
+
         this.allThePosts = allThePosts;
         this.context = context;
-    }
-
+}
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
@@ -68,9 +65,10 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
         {
-            day =  post.getTimeOfPost().get(Calendar.DAY_OF_MONTH);
-            month = post.getTimeOfPost().get(Calendar.MONTH);
-            year = post.getTimeOfPost().get(Calendar.YEAR);
+//            day =  post.getTimeOfPost().get(Calendar.DAY_OF_MONTH);
+//            month = post.getTimeOfPost().get(Calendar.MONTH);
+//            year = post.getTimeOfPost().get(Calendar.YEAR);
+            //TODO Enable this
         }
 
         holder.postDate.setText(day+"/"+month+"/"+year);
