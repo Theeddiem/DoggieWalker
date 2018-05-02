@@ -28,10 +28,10 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
     public PostRecycleAdapter(ArrayList<Post> allThePosts, Context context)
     {
+
         this.allThePosts = allThePosts;
         this.context = context;
-    }
-
+}
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
@@ -51,7 +51,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         int day,month,year;
         day = month = year = 0;
 
-        String uri = post.getPostOwner_ID().getProfilePhoto();
+        String uri = post.getPostOwner().getProfilePhoto();
         if(uri != null)
         {
             Uri photoUri = Uri.parse(uri);
@@ -60,14 +60,15 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         }
 
 
-        holder.profileName.setText(post.getPostOwner_ID().getFullName());
+        holder.profileName.setText(post.getPostOwner().getFullName());
         holder.aboutThePost.setText(post.getAboutThePost());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
         {
-            day =  post.getTimeOfPost().get(Calendar.DAY_OF_MONTH);
-            month = post.getTimeOfPost().get(Calendar.MONTH);
-            year = post.getTimeOfPost().get(Calendar.YEAR);
+//            day =  post.getTimeOfPost().get(Calendar.DAY_OF_MONTH);
+//            month = post.getTimeOfPost().get(Calendar.MONTH);
+//            year = post.getTimeOfPost().get(Calendar.YEAR);
+            //TODO Enable this
         }
 
         holder.postDate.setText(day+"/"+month+"/"+year);
@@ -77,7 +78,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(context, ""+post.getPostOwner_ID().getFullName()
+                Toast.makeText(context, ""+post.getPostOwner().getFullName()
                         +" Is the owner of the post", Toast.LENGTH_SHORT).show();
             }
         });
@@ -87,7 +88,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(context, ""+post.getPostOwner_ID().getFullName()
+                Toast.makeText(context, ""+post.getPostOwner().getFullName()
                         +" For the profile!", Toast.LENGTH_SHORT).show();
             }
         });

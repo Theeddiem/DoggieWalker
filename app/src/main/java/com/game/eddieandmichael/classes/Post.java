@@ -9,6 +9,7 @@ import java.util.UUID;
 public class Post
 {
     private String _ID;
+    private User postOwner;
     private String postOwner_ID;
     private String aboutThePost;
     private Calendar timeOfPost;
@@ -25,6 +26,12 @@ public class Post
         this.isAWalker = isAWalker;
 
         this._ID = UUID.randomUUID().toString();
+    }
+
+    public Post(User user, boolean isAWalker)
+    {
+        this.postOwner = user;
+        this.isAWalker = isAWalker;
     }
 
     public String get_ID() {
@@ -69,5 +76,13 @@ public class Post
 
     public void setAWalker(boolean AWalker) {
         isAWalker = AWalker;
+    }
+
+    public User getPostOwner() {
+        return postOwner;
+    }
+
+    public void setPostOwner(User postOwner) {
+        this.postOwner = postOwner;
     }
 }
