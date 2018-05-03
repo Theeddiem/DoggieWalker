@@ -67,10 +67,10 @@ public class AddPostDialogFragment extends DialogFragment
                     post.setAboutThePost(postText.getText().toString());
 
                     allThePosts.updateList(allThePosts.getAllThePosts(),post);
+                    Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
+                    dismiss();
                 }
 
-                Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
-                dismiss();
             }
         });
 
