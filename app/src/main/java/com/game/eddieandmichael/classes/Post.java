@@ -3,10 +3,12 @@ package com.game.eddieandmichael.classes;
 
 import android.icu.util.Calendar;
 import android.os.Build;
+import android.util.Log;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Post
+public class Post implements Serializable
 {
     private String _ID;
     private User postOwner;
@@ -26,6 +28,7 @@ public class Post
         this.isAWalker = isAWalker;
 
         this._ID = UUID.randomUUID().toString();
+
     }
 
     public Post(User user, boolean isAWalker)
@@ -34,9 +37,12 @@ public class Post
         this.isAWalker = isAWalker;
     }
 
+    public Post(){}
+
     public String get_ID() {
         return _ID;
     }
+    public void set_ID(String ID){this._ID = ID;}
 
     public String getPostOwner_ID() {
         return postOwner_ID;

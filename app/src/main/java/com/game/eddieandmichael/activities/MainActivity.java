@@ -1,5 +1,6 @@
 package com.game.eddieandmichael.activities;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.fragments.*;
+import com.game.eddieandmichael.services.SyncWithFirebaseService;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.game.eddieandmichael.doggiewalker.R;
@@ -126,6 +128,9 @@ public class MainActivity extends AppCompatActivity
                 return false;
             }
         });
+
+        Intent syncServiceIntent = new Intent(this, SyncWithFirebaseService.class);
+        startService(syncServiceIntent);
     }
 
     @Override

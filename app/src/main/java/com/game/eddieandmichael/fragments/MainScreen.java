@@ -38,7 +38,9 @@ public class MainScreen extends Fragment
     FloatingActionButton floatingActionButton;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+
         super.onCreate(savedInstanceState);
     }
 
