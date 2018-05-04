@@ -52,6 +52,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         day = month = year = 0;
 
         String uri = post.getPostOwner().getProfilePhoto();
+
         if(uri != null)
         {
             Uri photoUri = Uri.parse(uri);

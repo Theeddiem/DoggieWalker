@@ -151,25 +151,28 @@ public class MainActivity extends AppCompatActivity
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         user = User.getInstance();
 
-        if(account != null)
-        {
-
-            user.set_ID(account.getId());
-            user.setEmail(account.getEmail());
-            user.setFullName(account.getDisplayName());
-            user.setUserName(account.getEmail());
-            user.setProfilePhoto(account.getPhotoUrl().getPath());
-        }
         FirebaseAuth instance = FirebaseAuth.getInstance();
         final FirebaseUser currentUser = instance.getCurrentUser();
 
-        if(currentUser != null)
+        if(currentUser != null || account != null)
         {
             FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
             CollectionReference allTheUsers = firestore.collection("users");
 
-            allTheUsers.whereEqualTo("_ID",currentUser.getUid()).get()
+            String accountId = "";
+
+            if(account == null)
+            {
+                accountId = currentUser.getUid();
+            }
+
+            if(currentUser == null)
+            {
+                accountId = account.getId();
+            }
+
+            allTheUsers.whereEqualTo("_ID",accountId).get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
                     {
                         @Override
@@ -182,7 +185,7 @@ public class MainActivity extends AppCompatActivity
                             {
                                 List<User> users = documentSnapshots.toObjects(User.class);
 
-                                user.set_ID(currentUser.getUid());
+                                user.set_ID(users.get(0).get_ID());
                                 user.setUserName(users.get(0).getUserName());
                                 user.setFullName(users.get(0).getFullName());
                                 user.setEmail(users.get(0).getEmail());

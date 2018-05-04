@@ -35,6 +35,7 @@ public class Post implements Serializable
     {
         this.postOwner = user;
         this.isAWalker = isAWalker;
+        this.postOwner_ID = user.get_ID();
     }
 
     public Post(){}
