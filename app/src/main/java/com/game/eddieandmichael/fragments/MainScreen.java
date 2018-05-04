@@ -1,11 +1,17 @@
 package com.game.eddieandmichael.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -57,6 +63,7 @@ public class MainScreen extends Fragment
 
         filterTv = view.findViewById(R.id.mainScreen_textViewFilter);
 
+
         filterTv.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -78,7 +85,6 @@ public class MainScreen extends Fragment
                     filterTv.setText("Searching Only");
                     //TODO add firestorm get Searching Only
                 }
-
 
             }
         });
@@ -108,6 +114,9 @@ public class MainScreen extends Fragment
             }
         });
 
+
+        LocalBroadcastManager.getInstance(getActivity())
+                .registerReceiver(adapterReceiver, new IntentFilter("Refresh_Adapter"));
         return view;
     }
 
@@ -137,5 +146,15 @@ public class MainScreen extends Fragment
             listOfPosts.add(p);
         }
     }
+
+    private BroadcastReceiver adapterReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            recycleAdapter.notifyDataSetChanged();
+        }
+    };
+
 
 }
