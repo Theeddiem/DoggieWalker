@@ -17,7 +17,13 @@ import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.Post;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
+
+import java.util.UUID;
 
 public class AddPostDialogFragment extends DialogFragment
 {
@@ -30,6 +36,8 @@ public class AddPostDialogFragment extends DialogFragment
     EditText postText;
 
     User currentUser;
+
+    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     @Nullable
     @Override
@@ -56,6 +64,7 @@ public class AddPostDialogFragment extends DialogFragment
             {
                 //TODO Add create a new post instance and add it to the Firestore Database
 
+                CollectionReference collection = firestore.collection("Posts");
 
                 if(postText.getText().toString().equals(""))
                 {
@@ -66,11 +75,22 @@ public class AddPostDialogFragment extends DialogFragment
 
                     post.setAboutThePost(postText.getText().toString());
 
+                    post.set_ID(UUID.randomUUID().toString());
+
                     allThePosts.updateList(allThePosts.getAllThePosts(),post);
+                    Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
+
+                    collection.add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                    {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference)
+                        {
+                            dismiss();
+                        }
+                    });
+
                 }
 
-                Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
-                dismiss();
             }
         });
 

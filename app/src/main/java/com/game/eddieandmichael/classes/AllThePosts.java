@@ -1,5 +1,7 @@
 package com.game.eddieandmichael.classes;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class AllThePosts
@@ -44,6 +46,21 @@ public class AllThePosts
 
     public synchronized void updateList(ArrayList<Post> list, Post post)
     {
-        list.add(post);
+        boolean found = false;
+
+        for (int i = 0; i < list.size(); i++)
+        {
+            if(list.get(i).get_ID().equals(post.get_ID()))
+            {
+                found = true;
+            }
+
+        }
+
+        if(!found)
+        {
+            list.add(post);
+        }
+
     }
 }
