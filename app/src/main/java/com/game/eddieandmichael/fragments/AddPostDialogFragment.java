@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +36,11 @@ public class AddPostDialogFragment extends DialogFragment
     TextView profileName;
     Button submitBtn;
     EditText postText;
+    EditText priceText;
+    EditText placesText;
+    Switch isWalkerSwitch;
 
+    boolean iswalker = false;
     User currentUser;
 
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -53,16 +59,29 @@ public class AddPostDialogFragment extends DialogFragment
         profileImage = view.findViewById(R.id.addPost_profileImage);
         profileName = view.findViewById(R.id.addPost_profileName);
 
-        postText = view.findViewById(R.id.addPost_postEt);
+        postText = view.findViewById(R.id.dialogPost_looking_et);
 
         submitBtn = view.findViewById(R.id.addPost_submitBtn);
+
+        placesText = view.findViewById(R.id.dialogPost_places_et);
+        priceText = view.findViewById(R.id.dialogPost_prices_et);
+
+        isWalkerSwitch = view.findViewById(R.id.addPost_isWalker_switch);
+
+        isWalkerSwitch.setOnCheckedChangeListener
+                (new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+            {
+                iswalker = b;
+            }
+        });
 
         submitBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                //TODO Add create a new post instance and add it to the Firestore Database
 
                 CollectionReference collection = firestore.collection("Posts");
 
@@ -71,20 +90,28 @@ public class AddPostDialogFragment extends DialogFragment
                     Toast.makeText(getActivity(), "Cant add empty post", Toast.LENGTH_SHORT).show();
                 }else
                 {
-                    Post post = new Post(currentUser,true);
+                    Post post = new Post(currentUser,iswalker);
+                    post.setPlacesOfPost(placesText.getText().toString());
+                    if(priceText.getText().toString().equals(""))
+                    {
+                        post.setPrice("Unspecified");
+                    }else
+                    {
+                        post.setPrice(priceText.getText().toString());
+                    }
 
                     post.setAboutThePost(postText.getText().toString());
 
                     post.set_ID(UUID.randomUUID().toString());
 
                     allThePosts.updateList(allThePosts.getAllThePosts(),post);
-                    Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
 
                     collection.add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
                     {
                         @Override
                         public void onSuccess(DocumentReference documentReference)
                         {
+                            Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
                             dismiss();
                         }
                     });

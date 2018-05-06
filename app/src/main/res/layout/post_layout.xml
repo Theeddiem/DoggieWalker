@@ -22,7 +22,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="15dp"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -70,14 +72,80 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/post_aboutJob"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/spacing_large"
-                android:lineSpacingExtra="4dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:textColor="@color/grey_60" />
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@id/post_aboutJob"
+                        android:text="About: " />
+
+                    <TextView
+                        android:id="@+id/post_aboutJob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/medium_lorem_ipsum" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:background="@color/grey_20" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@id/post_price"
+                        android:text="Price: " />
+
+                    <TextView
+                        android:id="@+id/post_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/short_lorem_ipsum" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:background="@color/grey_5" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@id/post_price"
+                        android:text="Places: " />
+
+                    <TextView
+                        android:id="@+id/post_places"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/short_lorem_ipsum" />
+                </LinearLayout>
+
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -105,14 +173,6 @@
                     android:layout_width="@dimen/spacing_large"
                     android:layout_height="0dp" />
 
-                <Button
-                    android:id="@+id/post_viewPost"
-                    style="@style/Base.Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="VIEW"
-                    android:textColor="@color/grey_80" />
 
                 <TextView
                     android:id="@+id/post_postDate"
@@ -130,8 +190,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/spacing_medium"
-                android:background="@color/grey_5"
-                />
+                android:background="@color/grey_5" />
 
 
         </LinearLayout>

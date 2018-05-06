@@ -16,6 +16,7 @@ public class AllThePosts
 
     private AllThePosts()
     {
+
         allThePosts = new ArrayList<>();
         walkersOnlyPosts = new ArrayList<>();
         searchingOnlyPosts = new ArrayList<>();
