@@ -64,25 +64,13 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         holder.profileName.setText(post.getPostOwner().getFullName());
         holder.aboutThePost.setText(post.getAboutThePost());
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-        {
-//            day =  post.getTimeOfPost().get(Calendar.DAY_OF_MONTH);
-//            month = post.getTimeOfPost().get(Calendar.MONTH);
-//            year = post.getTimeOfPost().get(Calendar.YEAR);
-            //TODO Enable this
-        }
+//            day =  post.getTimeOfPost().get(java.util.Calendar.DAY_OF_MONTH);
+//            month = post.getTimeOfPost().get(java.util.Calendar.MONTH);
+//            year = post.getTimeOfPost().get(java.util.Calendar.YEAR);
+
 
         holder.postDate.setText(day+"/"+month+"/"+year);
 
-        holder.viewPost.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Toast.makeText(context, ""+post.getPostOwner().getFullName()
-                        +" Is the owner of the post", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         holder.profileImage.setOnClickListener(new View.OnClickListener()
         {
@@ -93,6 +81,9 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
                         +" For the profile!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        holder.places.setText(post.getPlacesOfPost());
+        holder.prices.setText(post.getPrice());
 
     }
 
@@ -108,7 +99,8 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         TextView profileName;
         TextView aboutThePost;
         TextView postDate;
-        Button viewPost;
+        TextView prices;
+        TextView places;
 
         public PostViewHolder(View itemView)
         {
@@ -118,7 +110,8 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
             profileName = itemView.findViewById(R.id.post_userName);
             aboutThePost = itemView.findViewById(R.id.post_aboutJob);
             postDate = itemView.findViewById(R.id.post_postDate);
-            viewPost = itemView.findViewById(R.id.post_viewPost);
+            prices = itemView.findViewById(R.id.post_price);
+            places = itemView.findViewById(R.id.post_places);
 
         }
     }
