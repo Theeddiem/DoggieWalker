@@ -9,6 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AllThePosts
 {
@@ -18,7 +19,7 @@ public class AllThePosts
     private ArrayList<Post> walkersOnlyPosts;
     private ArrayList<Post> searchingOnlyPosts;
 
-    private ArrayList<User> userCache;
+    private HashMap<String,User> userCache;
 
 
 
@@ -29,7 +30,7 @@ public class AllThePosts
         walkersOnlyPosts = new ArrayList<>();
         searchingOnlyPosts = new ArrayList<>();
 
-        userCache = new ArrayList<>(30);
+        userCache = new HashMap<>(30);
 
     }
 
@@ -75,12 +76,14 @@ public class AllThePosts
 
     }
 
-    public void addUserToCache(User user)
+    public boolean addUserToCache(User user)
     {
-        userCache.add(user);
+        userCache.put(user.get_ID(),user);
+        return true;
     }
 
-    public synchronized ArrayList<User> getUserCache() {
+    public synchronized HashMap<String, User> getUserCache()
+    {
         return userCache;
     }
 
@@ -89,19 +92,9 @@ public class AllThePosts
         final User[] returnUser = {null};
         boolean foundInCache = false;
 
-        if(userCache.size() > 0)
-        {
-            for(User user: userCache)
-            {
-                if(user.get_ID().equals(id))
-                {
-                    returnUser[0] =  user;
-                    foundInCache = true;
-                    break;
-                }
-            }
-        }
-        if(!foundInCache)
+        returnUser[0] = userCache.get(id);
+
+        if(returnUser[0] == null)
         {
             Thread thread = new Thread(new Runnable()
             {
@@ -120,7 +113,7 @@ public class AllThePosts
                 e.printStackTrace();
             }
 
-            userCache.add(returnUser[0]);
+            userCache.put(returnUser[0].get_ID(),returnUser[0]);
         }
 
         return returnUser[0];

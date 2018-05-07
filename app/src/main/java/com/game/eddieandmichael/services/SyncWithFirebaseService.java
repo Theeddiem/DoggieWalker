@@ -43,6 +43,9 @@ public class SyncWithFirebaseService extends Service
     public int onStartCommand(Intent intent, int flags, int startId)
     {
 
+        AddUsersToDatabase addUsers = new AddUsersToDatabase();
+        addUsers.start();
+
         SyncDatabases syncDatabases = new SyncDatabases();
         syncDatabases.start();
 
@@ -108,6 +111,40 @@ public class SyncWithFirebaseService extends Service
                 localBroadcastManager.sendBroadcast(localIntent);
 
             }
+
+        }
+    }
+
+    private class AddUsersToDatabase extends Thread
+    {
+        CollectionReference collection;
+
+        public AddUsersToDatabase()
+        {
+            collection = firestore.collection("users");
+        }
+
+        @Override
+        public void run()
+        {
+            collection.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
+            {
+                @Override
+                public void onSuccess(QuerySnapshot documentSnapshots)
+                {
+                    List<User> users = documentSnapshots.toObjects(User.class);
+
+
+                    for(User user: users)
+                    {
+                        if(!allThePosts.addUserToCache(user))
+                        {
+                            break;
+                        }
+                    }
+
+                }
+            });
 
         }
     }
