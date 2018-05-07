@@ -107,12 +107,6 @@ public class AllThePosts
             });
 
             thread.start();
-            try {
-                thread.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
             userCache.put(returnUser[0].get_ID(),returnUser[0]);
         }
 
