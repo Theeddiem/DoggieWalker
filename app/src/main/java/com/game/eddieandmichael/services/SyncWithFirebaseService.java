@@ -13,6 +13,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -73,11 +74,13 @@ public class SyncWithFirebaseService extends Service
 
     private class SyncDatabases extends Thread
     {
-        CollectionReference collection;
+        CollectionReference postCollection;
+        CollectionReference userCollection;
 
         public SyncDatabases()
         {
-            collection = firestore.collection("Posts");
+            postCollection = firestore.collection("Posts");
+            userCollection = firestore.collection("users");
         }
 
         @Override
@@ -85,7 +88,7 @@ public class SyncWithFirebaseService extends Service
         {
             while(true)
             {
-                collection.get()
+                postCollection.orderBy("timeOfPost", Query.Direction.DESCENDING).get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
                         {
                             @Override
@@ -95,6 +98,7 @@ public class SyncWithFirebaseService extends Service
 
                                 for (Post post: postsFromDatabase)
                                 {
+                                    addUserToCache(post.getPostOwner_ID());
                                     allThePosts.updateList(allThePosts.getAllThePosts(), post);
                                 }
 
@@ -111,6 +115,23 @@ public class SyncWithFirebaseService extends Service
                 localBroadcastManager.sendBroadcast(localIntent);
 
             }
+
+
+
+        }
+
+        void addUserToCache(String id)
+        {
+            userCollection.whereEqualTo("_ID",id).get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
+                    {
+                        @Override
+                        public void onSuccess(QuerySnapshot documentSnapshots)
+                        {
+                            List<User> users = documentSnapshots.toObjects(User.class);
+                            allThePosts.addUserToCache(users.get(0));
+                        }
+                    });
 
         }
     }
