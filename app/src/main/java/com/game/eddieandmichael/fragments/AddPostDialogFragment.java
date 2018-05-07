@@ -90,7 +90,7 @@ public class AddPostDialogFragment extends DialogFragment
                     Toast.makeText(getActivity(), "Cant add empty post", Toast.LENGTH_SHORT).show();
                 }else
                 {
-                    Post post = new Post(currentUser,iswalker);
+                    Post post = new Post(currentUser.get_ID(),iswalker);
                     post.setPlacesOfPost(placesText.getText().toString());
                     if(priceText.getText().toString().equals(""))
                     {

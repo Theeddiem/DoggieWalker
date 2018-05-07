@@ -15,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.Post;
+import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.squareup.picasso.Picasso;
 
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 
 public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.PostViewHolder>
 {
-
+    AllThePosts AllThePostsSingleton;
     ArrayList<Post> allThePosts;
     Context context;
     Calendar calendar;
@@ -35,6 +37,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         }
         this.allThePosts = allThePosts;
         this.context = context;
+        AllThePostsSingleton = AllThePosts.getInstance();
 }
     @NonNull
     @Override
@@ -53,9 +56,9 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
     {
         final Post post = allThePosts.get(position);
         int day,month,year;
-        day = month = year = 0;
+        final User user = AllThePostsSingleton.findUserById(post.getPostOwner_ID());
 
-        String uri = post.getPostOwner().getProfilePhoto();
+        String uri = user.getProfilePhoto();
 
         if(uri != null)
         {
@@ -65,7 +68,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         }
 
 
-        holder.profileName.setText(post.getPostOwner().getFullName());
+        holder.profileName.setText(user.getFullName());
         holder.aboutThePost.setText(post.getAboutThePost());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -85,12 +88,13 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         holder.postDate.setText(day+"/"+month+"/"+year);
 
 
+
         holder.profileImage.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(context, ""+post.getPostOwner().getFullName()
+                Toast.makeText(context, ""+user.getFullName()
                         +" For the profile!", Toast.LENGTH_SHORT).show();
             }
         });
