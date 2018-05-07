@@ -23,7 +23,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/spacing_mlarge"
             android:layout_marginTop="@dimen/spacing_large"
-            android:src="@drawable/dog_logo"
+            android:src="@drawable/ic_public"
             android:id="@+id/login_logoImage"
             />
 
