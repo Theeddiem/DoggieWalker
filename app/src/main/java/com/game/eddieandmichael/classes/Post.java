@@ -1,5 +1,7 @@
 package com.game.eddieandmichael.classes;
 
+    import android.util.Log;
+
     import java.io.Serializable;
     import java.util.Calendar;
     import java.util.UUID;
@@ -10,8 +12,8 @@ public class Post implements Serializable
     private User postOwner;
     private String postOwner_ID;
     private String aboutThePost;
-    private Calendar timeOfPost;
     private boolean isAWalker;
+    private long timeOfPost;
     private String price;
     private String placesOfPost;
 
@@ -19,7 +21,8 @@ public class Post implements Serializable
     {
         this.postOwner_ID = user_ID;
 
-        timeOfPost = Calendar.getInstance();
+        timeOfPost = System.currentTimeMillis();
+        Log.d("Post Contractor", "Post Time: "+timeOfPost);
 
         this.isAWalker = isAWalker;
 
@@ -32,6 +35,7 @@ public class Post implements Serializable
         this.postOwner = user;
         this.isAWalker = isAWalker;
         this.postOwner_ID = user.get_ID();
+        timeOfPost = System.currentTimeMillis();
     }
 
     public Post(){}
@@ -56,8 +60,6 @@ public class Post implements Serializable
     public void setAboutThePost(String aboutThePost) {
         this.aboutThePost = aboutThePost;
     }
-
-
 
     public boolean isAWalker() {
         return isAWalker;
@@ -91,11 +93,7 @@ public class Post implements Serializable
         this.placesOfPost = placesOfPost;
     }
 
-    public Calendar getTimeOfPost() {
+    public long getTimeOfPost() {
         return timeOfPost;
-    }
-
-    public void setTimeOfPost(Calendar timeOfPost) {
-        this.timeOfPost = timeOfPost;
     }
 }

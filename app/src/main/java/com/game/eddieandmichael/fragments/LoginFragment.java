@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class LoginFragment extends Fragment
     TextView signUp_tv;
     EditText emailTv;
     EditText passwordTv;
+    ImageView logoImage;
 
 
     @Override
@@ -48,9 +51,11 @@ public class LoginFragment extends Fragment
 
         signUp_tv = view.findViewById(R.id.frag_signUpText);
         login_btn = view.findViewById(R.id.login_login_btn);
-
+        logoImage = view.findViewById(R.id.login_logoImage);
         emailTv = view.findViewById(R.id.login_email_et);
         passwordTv = view.findViewById(R.id.login_password_et);
+
+        Picasso.get().load(R.drawable.dog_logo).into(logoImage);
 
 
         signUp_tv.setOnClickListener(new View.OnClickListener()

@@ -18,13 +18,14 @@
         android:padding="@dimen/spacing_mlarge">
 
         <ImageView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/spacing_mlarge"
             android:layout_marginTop="@dimen/spacing_large"
-            android:src="@drawable/ic_image_white_24dp"
-            android:tint="@android:color/white" />
+            android:src="@drawable/dog_logo"
+            android:id="@+id/login_logoImage"
+            />
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"

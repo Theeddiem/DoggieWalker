@@ -223,3 +223,4 @@ public class MainActivity extends AppCompatActivity
 
 //TODO Fix upper action bar (looks weird)
 //TODO remove login option from menu when user is logged in
+//TODO add option for a user to remove his own posts...

@@ -2,6 +2,7 @@ package com.game.eddieandmichael.adapters;
 
 import android.content.Context;
 import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -25,10 +26,13 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
     ArrayList<Post> allThePosts;
     Context context;
+    Calendar calendar;
 
     public PostRecycleAdapter(ArrayList<Post> allThePosts, Context context)
     {
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            calendar = new GregorianCalendar();
+        }
         this.allThePosts = allThePosts;
         this.context = context;
 }
@@ -64,10 +68,19 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         holder.profileName.setText(post.getPostOwner().getFullName());
         holder.aboutThePost.setText(post.getAboutThePost());
 
-//            day =  post.getTimeOfPost().get(java.util.Calendar.DAY_OF_MONTH);
-//            month = post.getTimeOfPost().get(java.util.Calendar.MONTH);
-//            year = post.getTimeOfPost().get(java.util.Calendar.YEAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            calendar.setTimeInMillis(post.getTimeOfPost());
 
+
+        day =  calendar.get(Calendar.DAY_OF_MONTH);
+        month = calendar.get(Calendar.MONTH);
+        year =calendar.get(Calendar.YEAR);
+        }else
+        {
+            day = java.util.Calendar.DAY_OF_MONTH;
+            month = java.util.Calendar.MONTH;
+            year = java.util.Calendar.YEAR;
+        }
 
         holder.postDate.setText(day+"/"+month+"/"+year);
 
