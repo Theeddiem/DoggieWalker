@@ -44,8 +44,8 @@ public class SyncWithFirebaseService extends Service
     public int onStartCommand(Intent intent, int flags, int startId)
     {
 
-        AddUsersToDatabase addUsers = new AddUsersToDatabase();
-        addUsers.start();
+//        AddUsersToDatabase addUsers = new AddUsersToDatabase();
+//        addUsers.start();
 
         SyncDatabases syncDatabases = new SyncDatabases();
         syncDatabases.start();
@@ -98,7 +98,10 @@ public class SyncWithFirebaseService extends Service
 
                                 for (Post post: postsFromDatabase)
                                 {
-                                    addUserToCache(post.getPostOwner_ID());
+                                    if(!allThePosts.getUserCache().containsKey(post.get_ID()))
+                                    {
+                                        addUserToCache(post.getPostOwner_ID());
+                                    }
                                     allThePosts.updateList(allThePosts.getAllThePosts(), post);
                                 }
 
