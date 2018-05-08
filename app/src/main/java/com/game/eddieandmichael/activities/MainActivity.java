@@ -221,9 +221,6 @@ public class MainActivity extends AppCompatActivity
     }
 }
 
-//TODO Add more profile information
-//TODO Add Post class
-//TODO Fix the main screen to show posts (After last todo)
-//TODO Fix uppder action bar (looks weird)
+//TODO Fix upper action bar (looks weird)
 //TODO remove login option from menu when user is logged in
-//TODO add a sign out button when user is logged in
+//TODO add option for a user to remove his own posts...

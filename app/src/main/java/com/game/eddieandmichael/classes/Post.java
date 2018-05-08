@@ -1,12 +1,10 @@
 package com.game.eddieandmichael.classes;
 
+    import android.util.Log;
 
-import android.icu.util.Calendar;
-import android.os.Build;
-import android.util.Log;
-
-import java.io.Serializable;
-import java.util.UUID;
+    import java.io.Serializable;
+    import java.util.Calendar;
+    import java.util.UUID;
 
 public class Post implements Serializable
 {
@@ -14,17 +12,18 @@ public class Post implements Serializable
     private User postOwner;
     private String postOwner_ID;
     private String aboutThePost;
-    private Calendar timeOfPost;
-    private Calendar timeForService;
     private boolean isAWalker;
+    private long timeOfPost;
+    private String price;
+    private String placesOfPost;
 
     public Post(String user_ID,boolean isAWalker)
     {
         this.postOwner_ID = user_ID;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-        {
-            timeOfPost = Calendar.getInstance();
-        }
+
+        timeOfPost = System.currentTimeMillis();
+        Log.d("Post Contractor", "Post Time: "+timeOfPost);
+
         this.isAWalker = isAWalker;
 
         this._ID = UUID.randomUUID().toString();
@@ -36,6 +35,7 @@ public class Post implements Serializable
         this.postOwner = user;
         this.isAWalker = isAWalker;
         this.postOwner_ID = user.get_ID();
+        timeOfPost = System.currentTimeMillis();
     }
 
     public Post(){}
@@ -61,22 +61,6 @@ public class Post implements Serializable
         this.aboutThePost = aboutThePost;
     }
 
-    public Calendar getTimeOfPost() {
-        return timeOfPost;
-    }
-
-    public void setTimeOfPost(Calendar timeOfPost) {
-        this.timeOfPost = timeOfPost;
-    }
-
-    public Calendar getTimeForService() {
-        return timeForService;
-    }
-
-    public void setTimeForService(Calendar timeForService) {
-        this.timeForService = timeForService;
-    }
-
     public boolean isAWalker() {
         return isAWalker;
     }
@@ -91,5 +75,25 @@ public class Post implements Serializable
 
     public void setPostOwner(User postOwner) {
         this.postOwner = postOwner;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getPlacesOfPost() {
+        return placesOfPost;
+    }
+
+    public void setPlacesOfPost(String placesOfPost) {
+        this.placesOfPost = placesOfPost;
+    }
+
+    public long getTimeOfPost() {
+        return timeOfPost;
     }
 }

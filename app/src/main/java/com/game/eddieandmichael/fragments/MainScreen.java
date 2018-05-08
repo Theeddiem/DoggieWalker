@@ -125,6 +125,7 @@ public class MainScreen extends Fragment
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Fragment prev = getFragmentManager().findFragmentByTag("postDialog");
+
         if (prev != null)
         {
             transaction.remove(prev);
