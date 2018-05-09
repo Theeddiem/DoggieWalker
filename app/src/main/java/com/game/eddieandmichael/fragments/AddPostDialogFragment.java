@@ -43,14 +43,32 @@ public class AddPostDialogFragment extends DialogFragment
     boolean iswalker = false;
     User currentUser;
 
+    //Edit Post Fields
+    String aboutPost;
+    String pricePost;
+    String locationPost;
+    boolean isEdit = false;
+
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+    public AddPostDialogFragment()
+    {
+
+
+    }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
+
+
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)
     {
         View view = null;
         view = inflater.inflate(R.layout.dialog_add_post,container,false);
+
+        isEdit = getArguments().getBoolean("edit");
 
         allThePosts = AllThePosts.getInstance();
 
@@ -124,7 +142,26 @@ public class AddPostDialogFragment extends DialogFragment
         profileName.setText(currentUser.getFullName());
         Picasso.get().load(currentUser.getProfilePhoto()).into(profileImage);
 
+
+        if(isEdit)
+        {
+            pricePost = getArguments().getString("price");
+            aboutPost = getArguments().getString("about");
+            locationPost = getArguments().getString("places");
+
+            postText.setText(aboutPost);
+            priceText.setText(pricePost);
+            placesText.setText(locationPost);
+            submitBtn.setText("Update Post");
+        }
+
+
+
+
+
         return view;
     }
 
 }
+
+//TODO finish Edit post and update firestorm with the updated Post

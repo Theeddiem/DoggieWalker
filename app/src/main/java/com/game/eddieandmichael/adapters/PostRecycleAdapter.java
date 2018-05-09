@@ -5,7 +5,10 @@ import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,10 +21,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.game.eddieandmichael.activities.MainActivity;
 import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.Post;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
+import com.game.eddieandmichael.fragments.AddPostDialogFragment;
+import com.game.eddieandmichael.fragments.SignupFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -142,7 +148,8 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
                         {
                             case R.id.postMenu_editPost:
                             {
-                                Toast.makeText(context, "Edit!", Toast.LENGTH_SHORT).show();
+                                editPost(post.get_ID(),position);
+
                                 return true;
                             }
                             case R.id.postMenu_removePost:
@@ -160,6 +167,29 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
                 popup.show();
             }
         });
+
+    }
+
+    private void editPost(String id, int position)
+    {
+        Bundle bundle = new Bundle();
+        bundle.putString("about",allThePosts.get(position).getAboutThePost());
+        bundle.putString("price",allThePosts.get(position).getPrice());
+        bundle.putString("places",allThePosts.get(position).getPlacesOfPost());
+        bundle.putBoolean("edit",true);
+
+        AddPostDialogFragment addPost = new AddPostDialogFragment();
+        addPost.setArguments(bundle);
+
+        MainActivity mainActivity = (MainActivity)context;
+
+        FragmentTransaction transaction = mainActivity.getSupportFragmentManager()
+                .beginTransaction();
+
+        android.app.Fragment prev = mainActivity.getFragmentManager().findFragmentByTag("postDialog");
+
+        addPost.show(transaction,"PostDialog");
+
 
     }
 
