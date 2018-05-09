@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
     ArrayList<Post> allThePosts;
     Context context;
     Calendar calendar;
+    User currentUser;
 
     public PostRecycleAdapter(ArrayList<Post> allThePosts, Context context)
     {
@@ -38,7 +40,8 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         this.allThePosts = allThePosts;
         this.context = context;
         AllThePostsSingleton = AllThePosts.getInstance();
-}
+        currentUser = User.getInstance();
+    }
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
@@ -55,7 +58,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position)
     {
         final Post post = allThePosts.get(position);
-        int day,month,year;
+        int day,month,year,hour,minute;
         final User user = AllThePostsSingleton.findUserById(post.getPostOwner_ID());
 
         String uri = user.getProfilePhoto();
@@ -64,7 +67,6 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         {
             Uri photoUri = Uri.parse(uri);
             Picasso.get().load(photoUri).into(holder.profileImage);
-
         }
 
 
@@ -78,15 +80,19 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         day =  calendar.get(Calendar.DAY_OF_MONTH);
         month = calendar.get(Calendar.MONTH);
         year =calendar.get(Calendar.YEAR);
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
         }else
         {
             day = java.util.Calendar.DAY_OF_MONTH;
             month = java.util.Calendar.MONTH;
             year = java.util.Calendar.YEAR;
+            hour = java.util.Calendar.HOUR;
+            minute = java.util.Calendar.MINUTE;
+
         }
 
-        holder.postDate.setText(day+"/"+month+"/"+year);
-
+        holder.postDate.setText(day+"/"+month+"/"+year+" | "+hour+":"+minute);
 
 
         holder.profileImage.setOnClickListener(new View.OnClickListener()
@@ -101,6 +107,23 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
         holder.places.setText(post.getPlacesOfPost());
         holder.prices.setText(post.getPrice());
+
+        if(post.getPostOwner_ID().equals(currentUser.get_ID()))
+        {
+            holder.moreBtn.setVisibility(View.VISIBLE);
+        }else
+        {
+            holder.moreBtn.setVisibility(View.GONE);
+        }
+
+        holder.moreBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+            }
+        });
 
     }
 
@@ -118,6 +141,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         TextView postDate;
         TextView prices;
         TextView places;
+        ImageButton moreBtn;
 
         public PostViewHolder(View itemView)
         {
@@ -129,6 +153,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
             postDate = itemView.findViewById(R.id.post_postDate);
             prices = itemView.findViewById(R.id.post_price);
             places = itemView.findViewById(R.id.post_places);
+            moreBtn = itemView.findViewById(R.id.post_more_btn);
 
         }
     }
