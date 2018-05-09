@@ -6,8 +6,10 @@ import android.icu.util.GregorianCalendar;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,9 +22,16 @@ import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.Post;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.PostViewHolder>
 {
@@ -55,7 +64,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull final PostViewHolder holder, final int position)
     {
         final Post post = allThePosts.get(position);
         int day,month,year,hour,minute;
@@ -121,10 +130,65 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
             @Override
             public void onClick(View view)
             {
+                PopupMenu popup = new PopupMenu(context, holder.moreBtn);
+                popup.inflate(R.menu.post_menu);
 
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+                {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item)
+                    {
+                        switch (item.getItemId())
+                        {
+                            case R.id.postMenu_editPost:
+                            {
+                                Toast.makeText(context, "Edit!", Toast.LENGTH_SHORT).show();
+                                return true;
+                            }
+                            case R.id.postMenu_removePost:
+                            {
+                                removePost(post.get_ID(),position);
+
+                                return true;
+                            }
+                        }
+
+                        return false;
+                    }
+                });
+
+                popup.show();
             }
         });
 
+    }
+
+    private void removePost(String id, final int position)
+    {
+        final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+        final CollectionReference collection = firestore.collection("Posts");
+
+        collection.whereEqualTo("_ID",id).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
+                {
+                    @Override
+                    public void onSuccess(QuerySnapshot documentSnapshots)
+                    {
+                        List<DocumentSnapshot> documents = documentSnapshots.getDocuments();
+                        String id1 = documents.get(0).getId();
+
+                        collection.document(id1).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid)
+                            {
+                                notifyDataSetChanged();
+                                allThePosts.remove(position);
+                                Toast.makeText(context, "Item Removed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
     }
 
     @Override
