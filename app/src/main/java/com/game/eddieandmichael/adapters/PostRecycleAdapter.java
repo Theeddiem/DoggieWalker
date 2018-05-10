@@ -1,6 +1,7 @@
 package com.game.eddieandmichael.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -207,17 +209,43 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
                     public void onSuccess(QuerySnapshot documentSnapshots)
                     {
                         List<DocumentSnapshot> documents = documentSnapshots.getDocuments();
-                        String id1 = documents.get(0).getId();
+                        final String id1 = documents.get(0).getId();
 
-                        collection.document(id1).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                        builder.setTitle("Alert!");
+                        builder.setMessage("Are you sure you want to delete this post?");
+
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                        {
                             @Override
-                            public void onSuccess(Void aVoid)
+                            public void onClick(DialogInterface dialogInterface, int i)
                             {
-                                notifyDataSetChanged();
-                                allThePosts.remove(position);
-                                Toast.makeText(context, "Item Removed", Toast.LENGTH_SHORT).show();
+                                collection.document(id1).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid)
+                                    {
+                                        notifyDataSetChanged();
+                                        allThePosts.remove(position);
+                                        Toast.makeText(context, "Item Removed", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         });
+
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i)
+                            {
+
+                            }
+                        });
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+
+
                     }
                 });
     }
