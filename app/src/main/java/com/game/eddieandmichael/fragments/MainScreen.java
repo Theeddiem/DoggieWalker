@@ -154,6 +154,11 @@ public class MainScreen extends Fragment
         public void onReceive(Context context, Intent intent)
         {
             recycleAdapter.notifyDataSetChanged();
+
+            for(int i = 0; i < recycleAdapter.getItemCount(); i++)
+            {
+                recycleAdapter.notifyItemChanged(i,null);
+            }
         }
     };
 

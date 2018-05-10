@@ -176,6 +176,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         bundle.putString("about",allThePosts.get(position).getAboutThePost());
         bundle.putString("price",allThePosts.get(position).getPrice());
         bundle.putString("places",allThePosts.get(position).getPlacesOfPost());
+        bundle.putString("Id",allThePosts.get(position).get_ID());
         bundle.putBoolean("edit",true);
 
         AddPostDialogFragment addPost = new AddPostDialogFragment();
