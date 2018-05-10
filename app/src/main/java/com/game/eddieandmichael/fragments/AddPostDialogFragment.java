@@ -1,8 +1,10 @@
 package com.game.eddieandmichael.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +24,9 @@ import com.game.eddieandmichael.doggiewalker.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.UUID;
@@ -43,14 +47,41 @@ public class AddPostDialogFragment extends DialogFragment
     boolean iswalker = false;
     User currentUser;
 
+    //Edit Post Fields
+    String aboutPost;
+    String pricePost;
+    String locationPost;
+    String postID;
+    boolean isEdit = false;
+
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+    public AddPostDialogFragment()
+    {
+
+
+    }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
+
+
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)
     {
         View view = null;
         view = inflater.inflate(R.layout.dialog_add_post,container,false);
+
+        if(getArguments() != null)
+        {
+            isEdit = getArguments().getBoolean("edit");
+            pricePost = getArguments().getString("price");
+            aboutPost = getArguments().getString("about");
+            locationPost = getArguments().getString("places");
+            postID = getArguments().getString("Id");
+
+        }
 
         allThePosts = AllThePosts.getInstance();
 
@@ -83,39 +114,101 @@ public class AddPostDialogFragment extends DialogFragment
             public void onClick(View view)
             {
 
-                CollectionReference collection = firestore.collection("Posts");
+                final CollectionReference collection = firestore.collection("Posts");
 
                 if(postText.getText().toString().equals(""))
                 {
                     Toast.makeText(getActivity(), "Cant add empty post", Toast.LENGTH_SHORT).show();
-                }else
-                {
-                    Post post = new Post(currentUser.get_ID(),iswalker);
-                    post.setPlacesOfPost(placesText.getText().toString());
-                    if(priceText.getText().toString().equals(""))
+                }else {
+
+                    if (isEdit)
                     {
-                        post.setPrice("Unspecified");
-                    }else
-                    {
-                        post.setPrice(priceText.getText().toString());
-                    }
+                        collection.whereEqualTo("_ID",postID).get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
+                                {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot documentSnapshots)
+                                    {
+                                        DocumentSnapshot documentSnapshot = documentSnapshots.getDocuments().get(0);
+                                        final String postfireBaseId = documentSnapshot.getId();
 
-                    post.setAboutThePost(postText.getText().toString());
+                                        Post post = new Post(currentUser.get_ID(), iswalker);
 
-                    post.set_ID(UUID.randomUUID().toString());
+                                        final String PostPlaces = placesText.getText().toString();
 
-                    allThePosts.updateList(allThePosts.getAllThePosts(),post);
+                                        String postPrice = null;
 
-                    collection.add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
-                    {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference)
-                        {
-                            Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
-                            dismiss();
+
+                                        postPrice = priceText.getText().toString();
+
+                                        String aboutPost = postText.getText().toString();
+
+                                        final String finalPostPrice = postPrice;
+                                        collection.document(postfireBaseId).update("aboutThePost", aboutPost)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>()
+                                                {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid)
+                                                    {
+                                                        collection.document(postfireBaseId).update("awalker",iswalker)
+                                                                .addOnSuccessListener(new OnSuccessListener<Void>()
+                                                                {
+                                                                    @Override
+                                                                    public void onSuccess(Void aVoid)
+                                                                    {
+                                                                        collection.document(postfireBaseId).update("placesOfPost",PostPlaces)
+                                                                                .addOnSuccessListener(new OnSuccessListener<Void>()
+                                                                                {
+                                                                                    @Override
+                                                                                    public void onSuccess(Void aVoid)
+                                                                                    {
+                                                                                        collection.document(postfireBaseId).update("price", finalPostPrice)
+                                                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                                    @Override
+                                                                                                    public void onSuccess(Void aVoid)
+                                                                                                    {
+                                                                                                        Toast.makeText(getActivity(), "Post Updated", Toast.LENGTH_SHORT).show();
+                                                                                                        Intent localIntent = new Intent("Refresh_Adapter");
+
+                                                                                                        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
+                                                                                                        localBroadcastManager.sendBroadcast(localIntent);
+
+                                                                                                        dismiss();
+                                                                                                    }
+                                                                                                });
+                                                                                    }
+                                                                                });
+                                                                    }
+                                                                });
+                                                    }
+                                                });
+                                    }
+                                });
+
+
+                    } else {
+                        Post post = new Post(currentUser.get_ID(), iswalker);
+                        post.setPlacesOfPost(placesText.getText().toString());
+                        if (priceText.getText().toString().equals("")) {
+                            post.setPrice("Unspecified");
+                        } else {
+                            post.setPrice(priceText.getText().toString());
                         }
-                    });
 
+                        post.setAboutThePost(postText.getText().toString());
+
+                        post.set_ID(UUID.randomUUID().toString());
+
+                        allThePosts.updateList(allThePosts.getAllThePosts(), post);
+
+                        collection.add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
+                                dismiss();
+                            }
+                        });
+                    }
                 }
 
             }
@@ -124,7 +217,20 @@ public class AddPostDialogFragment extends DialogFragment
         profileName.setText(currentUser.getFullName());
         Picasso.get().load(currentUser.getProfilePhoto()).into(profileImage);
 
+
+        if(isEdit)
+        {
+            postText.setText(aboutPost);
+            priceText.setText(pricePost);
+            placesText.setText(locationPost);
+            submitBtn.setText("Update Post");
+
+        }
+
+
         return view;
     }
 
 }
+
+//TODO set new post by the user to the top of the page
