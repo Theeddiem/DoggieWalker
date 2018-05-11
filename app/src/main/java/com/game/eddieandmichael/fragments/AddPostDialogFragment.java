@@ -1,6 +1,7 @@
 package com.game.eddieandmichael.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -22,11 +23,16 @@ import com.game.eddieandmichael.classes.Post;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.UUID;
@@ -34,11 +40,17 @@ import java.util.UUID;
 public class AddPostDialogFragment extends DialogFragment
 {
 
+    final static int PICK_IMAGE_REQUEST = 1;
+    String photoURI;
+    Uri photoFromGalleryUri;
+
     AllThePosts allThePosts;
 
+    ImageView photoImageView;
     ImageView profileImage;
     TextView profileName;
     Button submitBtn;
+    Button addPhotoBtn;
     EditText postText;
     EditText priceText;
     EditText placesText;
@@ -55,6 +67,7 @@ public class AddPostDialogFragment extends DialogFragment
     boolean isEdit = false;
 
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    FirebaseAuth auth;
 
     public AddPostDialogFragment()
     {
@@ -87,12 +100,14 @@ public class AddPostDialogFragment extends DialogFragment
 
         currentUser = User.getInstance();
 
+        photoImageView = view.findViewById(R.id.addPost_photoImageView);
         profileImage = view.findViewById(R.id.addPost_profileImage);
         profileName = view.findViewById(R.id.addPost_profileName);
 
         postText = view.findViewById(R.id.dialogPost_looking_et);
 
         submitBtn = view.findViewById(R.id.addPost_submitBtn);
+        addPhotoBtn = view.findViewById(R.id.addPost_AddPhotoBtn);
 
         placesText = view.findViewById(R.id.dialogPost_places_et);
         priceText = view.findViewById(R.id.dialogPost_prices_et);
@@ -187,7 +202,7 @@ public class AddPostDialogFragment extends DialogFragment
 
 
                     } else {
-                        Post post = new Post(currentUser.get_ID(), iswalker);
+                        final Post post = new Post(currentUser.get_ID(), iswalker);
                         post.setPlacesOfPost(placesText.getText().toString());
                         if (priceText.getText().toString().equals("")) {
                             post.setPrice("Unspecified");
@@ -195,19 +210,55 @@ public class AddPostDialogFragment extends DialogFragment
                             post.setPrice(priceText.getText().toString());
                         }
 
+
                         post.setAboutThePost(postText.getText().toString());
 
                         post.set_ID(UUID.randomUUID().toString());
 
-                        allThePosts.updateList(allThePosts.getAllThePosts(), post);
+                        if(photoFromGalleryUri != null)
+                        {
+                            final Uri[] returnUri = new Uri[1];
+                            final boolean[] finishUpload = {false};
 
-                        collection.add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
-                                dismiss();
-                            }
-                        });
+                            FirebaseStorage storage = FirebaseStorage.getInstance();
+                            String firebasePath = ("postsPhotos/"+post.get_ID()+"/pic");
+
+                            StorageReference reference = storage.getReference(firebasePath);
+
+                            reference.putFile(photoFromGalleryUri)
+                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
+                                    {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+                                        {
+                                            returnUri[0] = taskSnapshot.getDownloadUrl();
+                                            post.setPostsPhotos(returnUri[0].toString());
+
+                                            collection.add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                @Override
+                                                public void onSuccess(DocumentReference documentReference) {
+                                                    Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
+                                                    dismiss();
+                                                }
+                                            });
+
+                                        }
+                                    });
+
+
+
+                        }else
+                        {
+                            post.setPostsPhotos(null);
+                            collection.add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
+                                    dismiss();
+                                }
+                            });
+
+                        }
                     }
                 }
 
@@ -228,7 +279,31 @@ public class AddPostDialogFragment extends DialogFragment
         }
 
 
+        addPhotoBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"),PICK_IMAGE_REQUEST);
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK)
+        {
+            photoFromGalleryUri = data.getData();
+            photoImageView.setVisibility(View.VISIBLE);
+            Picasso.get().load(photoFromGalleryUri).into(photoImageView);
+
+        }
     }
 
 }

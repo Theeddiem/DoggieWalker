@@ -121,7 +121,7 @@
             android:layout_centerHorizontal="true"
             />
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Are you a walker?"
@@ -130,6 +130,18 @@
 
     </RelativeLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Photos"
+        android:id="@+id/addPost_AddPhotoBtn"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addPost_photoImageView"
+        />
 
 
 

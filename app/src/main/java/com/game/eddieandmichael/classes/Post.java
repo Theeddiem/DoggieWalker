@@ -16,6 +16,7 @@ public class Post implements Serializable
     private long timeOfPost;
     private String price;
     private String placesOfPost;
+    private String postsPhotos;
 
     public Post(String user_ID,boolean isAWalker)
     {
@@ -95,5 +96,13 @@ public class Post implements Serializable
 
     public long getTimeOfPost() {
         return timeOfPost;
+    }
+
+    public String getPostsPhotos() {
+        return postsPhotos;
+    }
+
+    public void setPostsPhotos(String postsPhotos) {
+        this.postsPhotos = postsPhotos;
     }
 }
