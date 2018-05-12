@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -50,7 +51,7 @@ public class AddPostDialogFragment extends DialogFragment
     ImageView profileImage;
     TextView profileName;
     Button submitBtn;
-    Button addPhotoBtn;
+    ImageButton addPhotoBtn;
     EditText postText;
     EditText priceText;
     EditText placesText;
