@@ -11,7 +11,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,7 +33,9 @@ public class MainScreen extends Fragment
     AllThePosts allThePosts;
 
     RecyclerView recyclerView;
-    PostRecycleAdapter recycleAdapter;
+    PostRecycleAdapter allPostsAdapter;
+    PostRecycleAdapter walkersPostsAdapter;
+    PostRecycleAdapter searchingPostsAdapter;
     ArrayList<Post> listOfPosts;
 
     TextView filterTv;
@@ -75,27 +76,28 @@ public class MainScreen extends Fragment
                 if(textViewCounter == 0)
                 {
                     filterTv.setText("All Posts");
-                    //TODO add firestorm get all posts
+                   recyclerView.swapAdapter(allPostsAdapter,false);
                 }else if(textViewCounter == 1)
                 {
                     filterTv.setText("Walkers Only");
-                    //TODO add firestorm get Walkers Only
+                    recyclerView.swapAdapter(walkersPostsAdapter,false);
                 }else
                 {
                     filterTv.setText("Searching Only");
-                    //TODO add firestorm get Searching Only
+                    recyclerView.swapAdapter(searchingPostsAdapter,false);
                 }
 
             }
         });
 
-        listOfPosts = new ArrayList<>();
         recyclerView = view.findViewById(R.id.mainscreen_RecyclerViewPost);
-        recycleAdapter = new PostRecycleAdapter(allThePosts.getAllThePosts(),getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(recycleAdapter);
 
-        updateList();
+        walkersPostsAdapter = new PostRecycleAdapter(allThePosts.getWalkersOnlyPosts(),getContext());
+        allPostsAdapter = new PostRecycleAdapter(allThePosts.getAllThePosts(),getContext());
+        searchingPostsAdapter = new PostRecycleAdapter(allThePosts.getSearchingOnlyPosts(),getContext());
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(allPostsAdapter);
 
         floatingActionButton = view.findViewById(R.id.mainScreen_fab);
 
@@ -139,28 +141,22 @@ public class MainScreen extends Fragment
 
     }
 
-    void updateList()
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            Post p = new Post(user,true);
-            listOfPosts.add(p);
-        }
-    }
 
     private BroadcastReceiver adapterReceiver = new BroadcastReceiver()
     {
         @Override
         public void onReceive(Context context, Intent intent)
         {
-            recycleAdapter.notifyDataSetChanged();
+            allPostsAdapter.notifyDataSetChanged();
 
-            for(int i = 0; i < recycleAdapter.getItemCount(); i++)
+            for(int i = 0; i < allPostsAdapter.getItemCount(); i++)
             {
-                recycleAdapter.notifyItemChanged(i,null);
+                allPostsAdapter.notifyItemChanged(i,null);
             }
         }
     };
 
 
 }
+
+//TODO Fix photos showing in other posts issue

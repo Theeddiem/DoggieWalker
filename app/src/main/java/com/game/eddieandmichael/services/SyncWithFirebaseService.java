@@ -103,6 +103,14 @@ public class SyncWithFirebaseService extends Service
                                         addUserToCache(post.getPostOwner_ID());
                                     }
                                     allThePosts.updateList(allThePosts.getAllThePosts(), post);
+                                    if(post.isAWalker())
+                                    {
+                                        allThePosts.updateList(allThePosts.getWalkersOnlyPosts(),post);
+                                    }else
+                                    {
+                                        allThePosts.updateList(allThePosts.getSearchingOnlyPosts(),post);
+
+                                    }
                                 }
 
                             }

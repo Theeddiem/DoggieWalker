@@ -78,12 +78,19 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         int day,month,year,hour,minute;
         final User user = AllThePostsSingleton.findUserById(post.getPostOwner_ID());
 
-        String uri = user.getProfilePhoto();
+        String profilePhotoUri = user.getProfilePhoto();
+        String postPhotoUri = post.getPostsPhotos();
 
-        if(uri != null)
+        if(profilePhotoUri != null)
         {
-            Uri photoUri = Uri.parse(uri);
+            Uri photoUri = Uri.parse(profilePhotoUri);
             Picasso.get().load(photoUri).into(holder.profileImage);
+        }
+
+        if(postPhotoUri!= null)
+        {
+            holder.postImage.setVisibility(View.VISIBLE);
+            Picasso.get().load(postPhotoUri).into(holder.postImage);
         }
 
 
@@ -259,6 +266,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
     public class PostViewHolder extends RecyclerView.ViewHolder
     {
         ImageView profileImage;
+        ImageView postImage;
         TextView profileName;
         TextView aboutThePost;
         TextView postDate;
@@ -277,6 +285,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
             prices = itemView.findViewById(R.id.post_price);
             places = itemView.findViewById(R.id.post_places);
             moreBtn = itemView.findViewById(R.id.post_more_btn);
+            postImage = itemView.findViewById(R.id.post_ImageView);
 
         }
     }
@@ -286,3 +295,4 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
 
 //TODO different colors for seekers and walkers
+//TODO Add pictures to photos

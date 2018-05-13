@@ -144,11 +144,11 @@ public class SignupFragment extends Fragment
                                                             {
                                                                 if (task.isSuccessful())
                                                                 {
-                                                                    //Toast.makeText(getActivity(), "Signup success", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(getActivity(), "Signup success", Toast.LENGTH_SHORT).show();
 
                                                                 }else
                                                                 {
-                                                                    //Toast.makeText(getActivity(), "Signup Failed", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(getActivity(), "Signup Failed", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
@@ -316,7 +316,6 @@ public class SignupFragment extends Fragment
             user.setFullName(account.getDisplayName());
             user.setUserName(account.getEmail());
             user.setProfilePhoto(account.getPhotoUrl().toString());
-            Log.d("Google Photo", "handleSignInResult: "+account.getPhotoUrl().toString());
 
             getActivity().onBackPressed();
 
@@ -331,5 +330,7 @@ public class SignupFragment extends Fragment
         super.onStart();
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+
     }
 }
