@@ -76,7 +76,7 @@ public class AllThePosts
 
     }
 
-    public boolean addUserToCache(User user)
+    public synchronized boolean addUserToCache(User user)
     {
         userCache.put(user.get_ID(),user);
         return true;
@@ -113,7 +113,7 @@ public class AllThePosts
         return returnUser[0];
     }
 
-    private User findAndAddUser(String id)
+    private synchronized User findAndAddUser(String id)
     {
         final User[] user = new User[1];
 

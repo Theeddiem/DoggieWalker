@@ -29,27 +29,31 @@ import com.game.eddieandmichael.doggiewalker.R;
 import com.game.eddieandmichael.fragments.AddPostDialogFragment;
 import com.game.eddieandmichael.fragments.SignupFragment;
 import com.game.eddieandmichael.fragments.ViewPhotoFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.PostViewHolder>
-{
+public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.PostViewHolder> {
     AllThePosts AllThePostsSingleton;
     ArrayList<Post> allThePosts;
     Context context;
     Calendar calendar;
     User currentUser;
 
-    public PostRecycleAdapter(ArrayList<Post> allThePosts, Context context)
-    {
+    public PostRecycleAdapter(ArrayList<Post> allThePosts, Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             calendar = new GregorianCalendar();
         }
@@ -58,12 +62,12 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         AllThePostsSingleton = AllThePosts.getInstance();
         currentUser = User.getInstance();
     }
+
     @NonNull
     @Override
-    public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-    {
+    public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        view = LayoutInflater.from(context).inflate(R.layout.post_layout,parent,false);
+        view = LayoutInflater.from(context).inflate(R.layout.post_layout, parent, false);
 
         PostViewHolder post = new PostViewHolder(view);
 
@@ -71,33 +75,28 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final PostViewHolder holder, final int position)
-    {
+    public void onBindViewHolder(@NonNull final PostViewHolder holder, final int position) {
         final Post post = allThePosts.get(position);
-        int day,month,year,hour,minute;
+        int day, month, year, hour, minute;
         final User user = AllThePostsSingleton.findUserById(post.getPostOwner_ID());
 
         String profilePhotoUri = user.getProfilePhoto();
         final String postPhotoUri = post.getPostsPhotos();
 
-        if(profilePhotoUri != null)
-        {
+        if (profilePhotoUri != null) {
             Uri photoUri = Uri.parse(profilePhotoUri);
             Picasso.get().load(photoUri).into(holder.profileImage);
         }
 
-        if(postPhotoUri!= null)
-        {
+        if (postPhotoUri != null) {
             holder.postImage.setVisibility(View.VISIBLE);
-            Picasso.get().load(postPhotoUri).resize(200,200)
+            Picasso.get().load(postPhotoUri).resize(200, 200)
                     .into(holder.postImage);
 
 
-            holder.postImage.setOnClickListener(new View.OnClickListener()
-            {
+            holder.postImage.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view)
-                {
+                public void onClick(View view) {
                     Bundle bundle = new Bundle();
                     bundle.putString("uri", postPhotoUri);
 
@@ -110,7 +109,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
                     android.app.FragmentTransaction transaction = mainActivity.getFragmentManager()
                             .beginTransaction();
 
-                    viewPhoto.show(transaction,"ViewPhoto");
+                    viewPhoto.show(transaction, "ViewPhoto");
 
                 }
             });
@@ -123,13 +122,12 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
             calendar.setTimeInMillis(post.getTimeOfPost());
 
 
-        day =  calendar.get(Calendar.DAY_OF_MONTH);
-        month = calendar.get(Calendar.MONTH);
-        year =calendar.get(Calendar.YEAR);
-        hour = calendar.get(Calendar.HOUR_OF_DAY);
-        minute = calendar.get(Calendar.MINUTE);
-        }else
-        {
+            day = calendar.get(Calendar.DAY_OF_MONTH);
+            month = calendar.get(Calendar.MONTH);
+            year = calendar.get(Calendar.YEAR);
+            hour = calendar.get(Calendar.HOUR_OF_DAY);
+            minute = calendar.get(Calendar.MINUTE);
+        } else {
             day = java.util.Calendar.DAY_OF_MONTH;
             month = java.util.Calendar.MONTH;
             year = java.util.Calendar.YEAR;
@@ -138,54 +136,43 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
         }
 
-        holder.postDate.setText(day+"/"+month+"/"+year+" | "+hour+":"+minute);
+        holder.postDate.setText(day + "/" + month + "/" + year + " | " + hour + ":" + minute);
 
 
-        holder.profileImage.setOnClickListener(new View.OnClickListener()
-        {
+        holder.profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Toast.makeText(context, ""+user.getFullName()
-                        +" For the profile!", Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                Toast.makeText(context, "" + user.getFullName()
+                        + " For the profile!", Toast.LENGTH_SHORT).show();
             }
         });
 
         holder.places.setText(post.getPlacesOfPost());
         holder.prices.setText(post.getPrice());
 
-        if(post.getPostOwner_ID().equals(currentUser.get_ID()))
-        {
+        if (post.getPostOwner_ID().equals(currentUser.get_ID())) {
             holder.moreBtn.setVisibility(View.VISIBLE);
-        }else
-        {
+        } else {
             holder.moreBtn.setVisibility(View.GONE);
         }
 
-        holder.moreBtn.setOnClickListener(new View.OnClickListener()
-        {
+        holder.moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 PopupMenu popup = new PopupMenu(context, holder.moreBtn);
                 popup.inflate(R.menu.post_menu);
 
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-                {
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
-                    public boolean onMenuItemClick(MenuItem item)
-                    {
-                        switch (item.getItemId())
-                        {
-                            case R.id.postMenu_editPost:
-                            {
-                                editPost(post.get_ID(),position);
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.postMenu_editPost: {
+                                editPost(post.get_ID(), position);
 
                                 return true;
                             }
-                            case R.id.postMenu_removePost:
-                            {
-                                removePost(post.get_ID(),position);
+                            case R.id.postMenu_removePost: {
+                                removePost(post.get_ID(), position);
 
                                 return true;
                             }
@@ -201,83 +188,94 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
     }
 
-    private void editPost(String id, int position)
-    {
+    private void editPost(String id, int position) {
         Bundle bundle = new Bundle();
-        bundle.putString("about",allThePosts.get(position).getAboutThePost());
-        bundle.putString("price",allThePosts.get(position).getPrice());
-        bundle.putString("places",allThePosts.get(position).getPlacesOfPost());
-        bundle.putString("Id",allThePosts.get(position).get_ID());
-        bundle.putBoolean("edit",true);
+        bundle.putString("about", allThePosts.get(position).getAboutThePost());
+        bundle.putString("price", allThePosts.get(position).getPrice());
+        bundle.putString("places", allThePosts.get(position).getPlacesOfPost());
+        bundle.putString("Id", allThePosts.get(position).get_ID());
+        bundle.putBoolean("edit", true);
 
         AddPostDialogFragment addPost = new AddPostDialogFragment();
         addPost.setArguments(bundle);
 
-        MainActivity mainActivity = (MainActivity)context;
+        MainActivity mainActivity = (MainActivity) context;
 
         FragmentTransaction transaction = mainActivity.getSupportFragmentManager()
                 .beginTransaction();
 
         android.app.Fragment prev = mainActivity.getFragmentManager().findFragmentByTag("postDialog");
 
-        addPost.show(transaction,"PostDialog");
+        addPost.show(transaction, "PostDialog");
 
 
     }
 
-    private void removePost(String id, final int position)
-    {
+    private void removePost(final String id, final int position) {
         final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
         final CollectionReference collection = firestore.collection("Posts");
 
-        collection.whereEqualTo("_ID",id).get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
-                {
-                    @Override
-                    public void onSuccess(QuerySnapshot documentSnapshots)
-                    {
-                        List<DocumentSnapshot> documents = documentSnapshots.getDocuments();
-                        final String id1 = documents.get(0).getId();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Alert!");
+        builder.setMessage("Are you sure you want to delete this post?");
 
-                        builder.setTitle("Alert!");
-                        builder.setMessage("Are you sure you want to delete this post?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+                final StorageReference storageRef = firebaseStorage.getReference();
 
-                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                        {
+                storageRef.child("postsPhotos/" + id + "/pic").delete()
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i)
-                            {
-                                collection.document(id1).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid)
-                                    {
-                                        notifyDataSetChanged();
-                                        allThePosts.remove(position);
-                                        Toast.makeText(context, "Item Removed", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    collection.whereEqualTo("_ID", id).get()
+                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onSuccess(QuerySnapshot documentSnapshots) {
+                                                    List<DocumentSnapshot> documents = documentSnapshots.getDocuments();
+                                                    String firestoreId = documents.get(0).getId();
+
+                                                    collection.document(firestoreId).delete()
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid)
+                                                                {
+                                                                    Toast.makeText(context, "Item Removed", Toast.LENGTH_SHORT).show();
+                                                                    notifyDataSetChanged();
+                                                                    allThePosts.remove(position);
+                                                                }
+                                                            });
+                                                }
+                                            });
+
+                                } else {
+                                    Toast.makeText(context, "Something went wrong delete the file", Toast.LENGTH_SHORT).show();
+                                }
+
                             }
                         });
 
-                        builder.setNegativeButton("No", new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i)
-                            {
 
-                            }
-                        });
+            }
+        });
 
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
 
 
-                    }
-                });
     }
+
 
     @Override
     public int getItemCount() {
@@ -285,8 +283,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
     }
 
 
-    public class PostViewHolder extends RecyclerView.ViewHolder
-    {
+    public class PostViewHolder extends RecyclerView.ViewHolder {
         ImageView profileImage;
         ImageView postImage;
         TextView profileName;
@@ -296,8 +293,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         TextView places;
         ImageButton moreBtn;
 
-        public PostViewHolder(View itemView)
-        {
+        public PostViewHolder(View itemView) {
             super(itemView);
 
             profileImage = itemView.findViewById(R.id.post_profileImage);
