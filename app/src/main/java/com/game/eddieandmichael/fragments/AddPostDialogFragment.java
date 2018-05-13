@@ -70,11 +70,7 @@ public class AddPostDialogFragment extends DialogFragment
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     FirebaseAuth auth;
 
-    public AddPostDialogFragment()
-    {
-
-
-    }
+    public AddPostDialogFragment(){}
 
     @Nullable
     @Override
