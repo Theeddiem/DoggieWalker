@@ -257,6 +257,8 @@ public class AddPostDialogFragment extends DialogFragment
                     }
                 }
 
+
+
             }
         });
 

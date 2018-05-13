@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
         navigationView = findViewById(R.id.main_NavigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -108,6 +109,8 @@ public class MainActivity extends AppCompatActivity
 
                         if(user.get_ID() != null)
                         {
+
+
                             fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.main_fragment, new SignOutFragment(), "SignOut");
                             fragmentTransaction.commit();

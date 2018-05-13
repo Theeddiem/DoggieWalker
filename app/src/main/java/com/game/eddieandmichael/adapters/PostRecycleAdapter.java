@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -27,6 +28,8 @@ import com.game.eddieandmichael.classes.Post;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.game.eddieandmichael.fragments.AddPostDialogFragment;
+import com.game.eddieandmichael.fragments.MainScreen;
+import com.game.eddieandmichael.fragments.ProfileFragment;
 import com.game.eddieandmichael.fragments.ViewPhotoFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,6 +51,10 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
     Context context;
     Calendar calendar;
     User currentUser;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+
+
 
     public PostRecycleAdapter(ArrayList<Post> allThePosts, Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -138,8 +145,17 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         holder.profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(user.get_ID().equals(currentUser.get_ID())) {
+                    Toast.makeText(context, "this is you, you silly", Toast.LENGTH_SHORT).show();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.mainscreen_RecyclerViewPost, new ProfileFragment(), "ProfileScreen");
+                    fragmentTransaction.commit();
+                                    }
+
+                else
                 Toast.makeText(context, "" + user.getFullName()
                         + " For the profile!", Toast.LENGTH_SHORT).show();
+
             }
         });
 
