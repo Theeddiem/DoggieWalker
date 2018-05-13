@@ -108,6 +108,7 @@
                 android:id="@+id/addPost_isWalker_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/addPost_walkerText"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
 
@@ -177,6 +178,7 @@
                 android:tint="@color/grey_40"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_photo_camera"
+
                 />
 
         </LinearLayout>
