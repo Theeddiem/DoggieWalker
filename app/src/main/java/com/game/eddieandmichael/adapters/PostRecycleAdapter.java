@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -17,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +28,7 @@ import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.game.eddieandmichael.fragments.AddPostDialogFragment;
 import com.game.eddieandmichael.fragments.SignupFragment;
+import com.game.eddieandmichael.fragments.ViewPhotoFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -79,7 +78,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         final User user = AllThePostsSingleton.findUserById(post.getPostOwner_ID());
 
         String profilePhotoUri = user.getProfilePhoto();
-        String postPhotoUri = post.getPostsPhotos();
+        final String postPhotoUri = post.getPostsPhotos();
 
         if(profilePhotoUri != null)
         {
@@ -90,9 +89,32 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         if(postPhotoUri!= null)
         {
             holder.postImage.setVisibility(View.VISIBLE);
-            Picasso.get().load(postPhotoUri).into(holder.postImage);
-        }
+            Picasso.get().load(postPhotoUri).resize(200,200)
+                    .into(holder.postImage);
 
+
+            holder.postImage.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("uri", postPhotoUri);
+
+                    MainActivity mainActivity = (MainActivity) context;
+
+                    ViewPhotoFragment viewPhoto = new ViewPhotoFragment();
+
+                    viewPhoto.setArguments(bundle);
+
+                    android.app.FragmentTransaction transaction = mainActivity.getFragmentManager()
+                            .beginTransaction();
+
+                    viewPhoto.show(transaction,"ViewPhoto");
+
+                }
+            });
+        }
 
         holder.profileName.setText(user.getFullName());
         holder.aboutThePost.setText(post.getAboutThePost());
