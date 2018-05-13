@@ -27,15 +27,11 @@ import com.game.eddieandmichael.classes.Post;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.game.eddieandmichael.fragments.AddPostDialogFragment;
-import com.game.eddieandmichael.fragments.SignupFragment;
 import com.game.eddieandmichael.fragments.ViewPhotoFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -227,7 +223,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
                 FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
                 final StorageReference storageRef = firebaseStorage.getReference();
 
-                storageRef.child("postsPhotos/" + id + "/pic").delete()
+                storageRef.child("postsPhotos/" + id + "/"+id).delete()
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -252,8 +248,28 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
                                                 }
                                             });
 
-                                } else {
-                                    Toast.makeText(context, "Something went wrong delete the file", Toast.LENGTH_SHORT).show();
+                                } else
+                                    {
+                                        collection.whereEqualTo("_ID", id).get()
+                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(QuerySnapshot documentSnapshots) {
+                                                        List<DocumentSnapshot> documents = documentSnapshots.getDocuments();
+                                                        String firestoreId = documents.get(0).getId();
+
+                                                        collection.document(firestoreId).delete()
+                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void aVoid)
+                                                                    {
+                                                                        Toast.makeText(context, "Item Removed", Toast.LENGTH_SHORT).show();
+                                                                        notifyDataSetChanged();
+                                                                        allThePosts.remove(position);
+                                                                    }
+                                                                });
+                                                    }
+                                                });
+
                                 }
 
                             }

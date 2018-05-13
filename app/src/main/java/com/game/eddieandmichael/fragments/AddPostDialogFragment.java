@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -218,7 +216,7 @@ public class AddPostDialogFragment extends DialogFragment
                             final boolean[] finishUpload = {false};
 
                             FirebaseStorage storage = FirebaseStorage.getInstance();
-                            String firebasePath = ("postsPhotos/"+post.get_ID()+"/pic");
+                            String firebasePath = ("postsPhotos/"+post.get_ID()+"/"+post.get_ID());
 
                             StorageReference reference = storage.getReference(firebasePath);
 
