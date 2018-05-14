@@ -28,7 +28,6 @@ import com.game.eddieandmichael.classes.Post;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.game.eddieandmichael.fragments.AddPostDialogFragment;
-import com.game.eddieandmichael.fragments.MainScreen;
 import com.game.eddieandmichael.fragments.ProfileFragment;
 import com.game.eddieandmichael.fragments.ViewPhotoFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -150,11 +149,11 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
                     fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.mainscreen_RecyclerViewPost, new ProfileFragment(), "ProfileScreen");
                     fragmentTransaction.commit();
-                                    }
+                }
 
                 else
-                Toast.makeText(context, "" + user.getFullName()
-                        + " For the profile!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "" + user.getFullName()
+                            + " For the profile!", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -265,26 +264,26 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
                                             });
 
                                 } else
-                                    {
-                                        collection.whereEqualTo("_ID", id).get()
-                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(QuerySnapshot documentSnapshots) {
-                                                        List<DocumentSnapshot> documents = documentSnapshots.getDocuments();
-                                                        String firestoreId = documents.get(0).getId();
+                                {
+                                    collection.whereEqualTo("_ID", id).get()
+                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onSuccess(QuerySnapshot documentSnapshots) {
+                                                    List<DocumentSnapshot> documents = documentSnapshots.getDocuments();
+                                                    String firestoreId = documents.get(0).getId();
 
-                                                        collection.document(firestoreId).delete()
-                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                    @Override
-                                                                    public void onSuccess(Void aVoid)
-                                                                    {
-                                                                        Toast.makeText(context, "Item Removed", Toast.LENGTH_SHORT).show();
-                                                                        notifyDataSetChanged();
-                                                                        allThePosts.remove(position);
-                                                                    }
-                                                                });
-                                                    }
-                                                });
+                                                    collection.document(firestoreId).delete()
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid)
+                                                                {
+                                                                    Toast.makeText(context, "Item Removed", Toast.LENGTH_SHORT).show();
+                                                                    notifyDataSetChanged();
+                                                                    allThePosts.remove(position);
+                                                                }
+                                                            });
+                                                }
+                                            });
 
                                 }
 
