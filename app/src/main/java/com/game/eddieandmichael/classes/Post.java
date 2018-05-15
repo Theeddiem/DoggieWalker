@@ -16,6 +16,7 @@ public class Post implements Serializable
     private String price;
     private String placesOfPost;
     private String postsPhotos;
+    private boolean hasPhoto;
 
     public Post(String user_ID,boolean isAWalker)
     {
@@ -28,6 +29,7 @@ public class Post implements Serializable
 
         this._ID = UUID.randomUUID().toString();
 
+        hasPhoto = false;
     }
 
     public Post(User user, boolean isAWalker)
@@ -36,6 +38,9 @@ public class Post implements Serializable
         this.isAWalker = isAWalker;
         this.postOwner_ID = user.get_ID();
         timeOfPost = System.currentTimeMillis();
+
+        hasPhoto = false;
+
     }
 
     public Post(){}
@@ -107,5 +112,13 @@ public class Post implements Serializable
 
     public void setTimeOfPost(long timeOfPost) {
         this.timeOfPost = timeOfPost;
+    }
+
+    public boolean isHasPhoto() {
+        return hasPhoto;
+    }
+
+    public void setHasPhoto(boolean hasPhoto) {
+        this.hasPhoto = hasPhoto;
     }
 }

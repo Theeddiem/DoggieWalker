@@ -153,6 +153,7 @@ public class AddPostDialogFragment extends DialogFragment
                                         newPost.setPrice(priceText.getText().toString());
                                         newPost.setPostsPhotos(oldPost.getPostsPhotos());
                                         newPost.setTimeOfPost(oldPost.getTimeOfPost());
+                                        newPost.setHasPhoto(oldPost.isHasPhoto());
 
                                         collection.document(postfireBaseId).delete()
                                                 .addOnSuccessListener(new OnSuccessListener<Void>()
@@ -206,6 +207,7 @@ public class AddPostDialogFragment extends DialogFragment
                                         {
                                             Uri uri = taskSnapshot.getDownloadUrl();
                                             post.setPostsPhotos(uri.toString());
+                                            post.setHasPhoto(true);
 
                                             collection.add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                 @Override
@@ -283,4 +285,4 @@ public class AddPostDialogFragment extends DialogFragment
 
 }
 
-//TODO set new post by the user to the top of the page
+//TODO set new post by the currentUser to the top of the page

@@ -90,7 +90,8 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
             Picasso.get().load(photoUri).into(holder.profileImage);
         }
 
-        if (postPhotoUri != null) {
+        if ((postPhotoUri != null) && (post.isHasPhoto()))
+        {
             holder.postImage.setVisibility(View.VISIBLE);
             Picasso.get().load(postPhotoUri).resize(200, 200)
                     .into(holder.postImage);
@@ -115,6 +116,10 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
                 }
             });
+        }else
+        {
+            holder.postImage.setVisibility(View.GONE);
+
         }
 
         holder.profileName.setText(user.getFullName());
@@ -359,4 +364,3 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
 
 //TODO different colors for seekers and walkers
-//TODO Add pictures to photos
