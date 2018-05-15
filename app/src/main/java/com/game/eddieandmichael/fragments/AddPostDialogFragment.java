@@ -152,7 +152,7 @@ public class AddPostDialogFragment extends DialogFragment
                                         newPost.setPlacesOfPost(placesText.getText().toString());
                                         newPost.setPrice(priceText.getText().toString());
                                         newPost.setPostsPhotos(oldPost.getPostsPhotos());
-
+                                        newPost.setTimeOfPost(oldPost.getTimeOfPost());
 
                                         collection.document(postfireBaseId).delete()
                                                 .addOnSuccessListener(new OnSuccessListener<Void>()

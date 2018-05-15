@@ -1,10 +1,9 @@
 package com.game.eddieandmichael.classes;
 
-    import android.util.Log;
+import android.util.Log;
 
-    import java.io.Serializable;
-    import java.util.Calendar;
-    import java.util.UUID;
+import java.io.Serializable;
+import java.util.UUID;
 
 public class Post implements Serializable
 {
@@ -104,5 +103,9 @@ public class Post implements Serializable
 
     public void setPostsPhotos(String postsPhotos) {
         this.postsPhotos = postsPhotos;
+    }
+
+    public void setTimeOfPost(long timeOfPost) {
+        this.timeOfPost = timeOfPost;
     }
 }
