@@ -132,6 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dialogPost_looking_et"
                 android:layout_marginTop="15dp"
+                android:inputType="numberDecimal"
                 android:hint="Enter Price (Optional)"
                 android:id="@+id/dialogPost_prices_et"
                 />
