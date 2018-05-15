@@ -82,7 +82,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         int day, month, year, hour, minute;
         final User user = AllThePostsSingleton.findUserById(post.getPostOwner_ID());
 
-        String profilePhotoUri = user.getProfilePhoto();
+        final String profilePhotoUri = user.getProfilePhoto();
         final String postPhotoUri = post.getPostsPhotos();
 
         if (profilePhotoUri != null) {
@@ -141,19 +141,35 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         holder.postDate.setText(day + "/" + month + "/" + year + " | " + hour + ":" + minute);
 
 
-        holder.profileImage.setOnClickListener(new View.OnClickListener() {
+        holder.profileImage.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 if(user.get_ID().equals(currentUser.get_ID())) {
-                    Toast.makeText(context, "this is you, you silly", Toast.LENGTH_SHORT).show();
+                    MainActivity mainActivity = (MainActivity) context;
+                    fragmentManager = ((MainActivity) context).getSupportFragmentManager();
                     fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.mainscreen_RecyclerViewPost, new ProfileFragment(), "ProfileScreen");
+                    fragmentTransaction.replace(R.id.main_fragment, new ProfileFragment(), "ProfileScreen");
                     fragmentTransaction.commit();
                 }
 
                 else
-                    Toast.makeText(context, "" + user.getFullName()
-                            + " For the profile!", Toast.LENGTH_SHORT).show();
+                {
+                    MainActivity mainActivity = (MainActivity) context;
+                    fragmentManager = ((MainActivity) context).getSupportFragmentManager();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("photoUri",user.getProfilePhoto());
+                    bundle.putString("userName",user.getFullName());
+
+                    ProfileFragment profileFragment = new ProfileFragment();
+                    profileFragment.setArguments(bundle);
+
+                    fragmentTransaction.replace(R.id.main_fragment,profileFragment,"profileFragment");
+                    fragmentTransaction.commit();
+                }
 
             }
         });

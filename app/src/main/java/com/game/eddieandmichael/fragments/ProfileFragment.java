@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.squareup.picasso.Picasso;
@@ -24,7 +23,10 @@ public class ProfileFragment extends Fragment
     TextView profileName;
 
     User user;
+    boolean otherProfile = false;
 
+    String userName;
+    String profilePhotoUri;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -34,31 +36,38 @@ public class ProfileFragment extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle bundle)
     {
-        user = User.getInstance();
 
+        user = User.getInstance();
+        if(getArguments() != null)
+        {
+            profilePhotoUri = getArguments().getString("photoUri");
+            userName = getArguments().getString("userName");
+        }else
+        {
+            profilePhotoUri = user.getProfilePhoto();
+            userName = user.getUserName();
+        }
+
+        user = User.getInstance();
         thisView = inflater.inflate(R.layout.profile_fragment,container,false);
 
         profile_image = thisView.findViewById(R.id.profile_frag_imageProfile);
         profileName = thisView.findViewById(R.id.profile_frag_fullName);
 
-
-        if(user != null)
-        {
-            updateUI();
-        }
+        updateUI();
 
         return thisView;
     }
 
-    private void updateUI()
-    {
-        profileName.setText(user.getFullName());
+    private void updateUI() {
+        profileName.setText(userName);
 
         Picasso.get()
-                .load(user.getProfilePhoto())
+                .load(profilePhotoUri)
                 .into(profile_image);
+
 
     }
 
