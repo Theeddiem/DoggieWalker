@@ -192,8 +192,6 @@ public class AddPostDialogFragment extends DialogFragment
 
                         if(photoFromGalleryUri != null)
                         {
-                            final Uri[] returnUri = new Uri[1];
-                            final boolean[] finishUpload = {false};
 
                             FirebaseStorage storage = FirebaseStorage.getInstance();
                             String firebasePath = ("postsPhotos/"+post.get_ID()+"/"+post.get_ID());
@@ -206,8 +204,8 @@ public class AddPostDialogFragment extends DialogFragment
                                         @Override
                                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
                                         {
-                                            returnUri[0] = taskSnapshot.getDownloadUrl();
-                                            post.setPostsPhotos(returnUri[0].toString());
+                                            Uri uri = taskSnapshot.getDownloadUrl();
+                                            post.setPostsPhotos(uri.toString());
 
                                             collection.add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                 @Override

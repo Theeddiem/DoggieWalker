@@ -161,8 +161,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
                     fragmentTransaction = fragmentManager.beginTransaction();
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("photoUri",user.getProfilePhoto());
-                    bundle.putString("userName",user.getFullName());
+                    bundle.putString("id",user.get_ID());
 
                     ProfileFragment profileFragment = new ProfileFragment();
                     profileFragment.setArguments(bundle);

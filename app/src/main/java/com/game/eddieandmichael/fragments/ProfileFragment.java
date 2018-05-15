@@ -1,7 +1,6 @@
 package com.game.eddieandmichael.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.squareup.picasso.Picasso;
@@ -17,7 +17,6 @@ import com.squareup.picasso.Picasso;
 public class ProfileFragment extends Fragment
 {
     View thisView;
-    CollapsingToolbarLayout collapsingToolbar;
 
     ImageView profile_image;
     TextView profileName;
@@ -25,8 +24,11 @@ public class ProfileFragment extends Fragment
     User user;
     boolean otherProfile = false;
 
+    String userId;
     String userName;
     String profilePhotoUri;
+
+    AllThePosts allThePosts;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -39,11 +41,19 @@ public class ProfileFragment extends Fragment
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle bundle)
     {
 
+        allThePosts = AllThePosts.getInstance();
+
         user = User.getInstance();
         if(getArguments() != null)
         {
-            profilePhotoUri = getArguments().getString("photoUri");
-            userName = getArguments().getString("userName");
+            userId = getArguments().getString("id");
+            User userById = allThePosts.findUserById(userId);
+
+            profilePhotoUri = userById.getProfilePhoto();
+            userName = userById.getUserName();
+
+            //Use the "userId" veriable to get all the data we need from the post's user
+
         }else
         {
             profilePhotoUri = user.getProfilePhoto();
