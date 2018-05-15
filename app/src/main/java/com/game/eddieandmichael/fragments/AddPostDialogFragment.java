@@ -151,6 +151,8 @@ public class AddPostDialogFragment extends DialogFragment
                                         newPost.setAboutThePost(postText.getText().toString());
                                         newPost.setPlacesOfPost(placesText.getText().toString());
                                         newPost.setPrice(priceText.getText().toString());
+                                        newPost.setPostsPhotos(oldPost.getPostsPhotos());
+
 
                                         collection.document(postfireBaseId).delete()
                                                 .addOnSuccessListener(new OnSuccessListener<Void>()
@@ -164,6 +166,7 @@ public class AddPostDialogFragment extends DialogFragment
                                                                     public void onSuccess(DocumentReference documentReference)
                                                                     {
                                                                         Toast.makeText(getContext(), "Post Updated", Toast.LENGTH_SHORT).show();
+                                                                        dismiss();
                                                                     }
                                                                 });
                                                     }
