@@ -1,12 +1,11 @@
 package com.game.eddieandmichael.classes;
 
-    import android.util.Log;
+import android.util.Log;
 
-    import java.io.Serializable;
-    import java.util.Calendar;
-    import java.util.UUID;
+import java.io.Serializable;
+import java.util.UUID;
 
-public class Post implements Serializable
+public class Post implements Serializable, Comparable<Post>
 {
     private String _ID;
     private User postOwner;
@@ -16,6 +15,8 @@ public class Post implements Serializable
     private long timeOfPost;
     private String price;
     private String placesOfPost;
+    private String postsPhotos;
+    private boolean hasPhoto;
 
     public Post(String user_ID,boolean isAWalker)
     {
@@ -28,6 +29,7 @@ public class Post implements Serializable
 
         this._ID = UUID.randomUUID().toString();
 
+        hasPhoto = false;
     }
 
     public Post(User user, boolean isAWalker)
@@ -36,6 +38,9 @@ public class Post implements Serializable
         this.isAWalker = isAWalker;
         this.postOwner_ID = user.get_ID();
         timeOfPost = System.currentTimeMillis();
+
+        hasPhoto = false;
+
     }
 
     public Post(){}
@@ -95,5 +100,39 @@ public class Post implements Serializable
 
     public long getTimeOfPost() {
         return timeOfPost;
+    }
+
+    public String getPostsPhotos() {
+        return postsPhotos;
+    }
+
+    public void setPostsPhotos(String postsPhotos) {
+        this.postsPhotos = postsPhotos;
+    }
+
+    public void setTimeOfPost(long timeOfPost) {
+        this.timeOfPost = timeOfPost;
+    }
+
+    public boolean isHasPhoto() {
+        return hasPhoto;
+    }
+
+    public void setHasPhoto(boolean hasPhoto) {
+        this.hasPhoto = hasPhoto;
+    }
+
+    public int compareTo(Post post)
+    {
+        if(this.getTimeOfPost() < post.getTimeOfPost())
+        {
+            return 1;
+        }
+        if(this.getTimeOfPost() > post.getTimeOfPost())
+        {
+            return -1;
+        }
+
+        return 0;
     }
 }

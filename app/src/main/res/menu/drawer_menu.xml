@@ -9,6 +9,8 @@
                 <item
                     android:id="@+id/navi_mainScreen"
                     android:title="Main Screen"
+                    android:icon="@drawable/ic_airplay_black_24dp"
+
 
                     />
 

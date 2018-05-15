@@ -26,6 +26,8 @@ public class SyncWithFirebaseService extends Service
     AllThePosts allThePosts;
     User currentUser;
 
+    private int postsLimit = 30;
+
     LocalBroadcastManager localBroadcastManager;
 
     @Override
@@ -86,9 +88,11 @@ public class SyncWithFirebaseService extends Service
         @Override
         public void run()
         {
-            while(true)
+            while((allThePosts.getAllThePosts().size() <= postsLimit))
             {
-                postCollection.orderBy("timeOfPost", Query.Direction.DESCENDING).get()
+                postCollection.orderBy("timeOfPost", Query.Direction.DESCENDING)
+                        .limit(postsLimit)
+                        .get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
                         {
                             @Override
@@ -103,6 +107,14 @@ public class SyncWithFirebaseService extends Service
                                         addUserToCache(post.getPostOwner_ID());
                                     }
                                     allThePosts.updateList(allThePosts.getAllThePosts(), post);
+                                    if(post.isAWalker())
+                                    {
+                                        allThePosts.updateList(allThePosts.getWalkersOnlyPosts(),post);
+                                    }else
+                                    {
+                                        allThePosts.updateList(allThePosts.getSearchingOnlyPosts(),post);
+
+                                    }
                                 }
 
                             }
@@ -173,3 +185,7 @@ public class SyncWithFirebaseService extends Service
         }
     }
 }
+
+
+//TODO enable service again if user want more posts
+//TODO Remove removed posts from other devices

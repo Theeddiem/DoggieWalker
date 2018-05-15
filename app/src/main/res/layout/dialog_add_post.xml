@@ -1,136 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:minWidth="1000dp"
-    android:minHeight="450dp"
-    >
+
+<ScrollView
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/spacing_large">
-
-        <ImageView
-            android:layout_width="@dimen/spacing_xxlarge"
-            android:layout_height="@dimen/spacing_xxlarge"
-            android:id="@+id/addPost_profileImage"
-            />
-
-        <View
-            android:layout_width="@dimen/spacing_large"
-            android:layout_height="0dp" />
+        android:orientation="vertical"
+        android:minWidth="1000dp"
+        android:minHeight="450dp"
+        >
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing_large"
+            android:id="@+id/addPost_ProfileInfo"
+            >
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="David Park"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/grey_90"
-                android:textStyle="bold"
-                android:id="@+id/addPost_profileName"
+            <ImageView
+                android:layout_width="@dimen/spacing_xxlarge"
+                android:layout_height="@dimen/spacing_xxlarge"
+                android:id="@+id/addPost_profileImage"
                 />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:gravity="center_vertical">
+            <View
+                android:layout_width="@dimen/spacing_large"
+                android:layout_height="0dp" />
 
-                <ImageView
-                    android:layout_width="@dimen/spacing_mlarge"
-                    android:layout_height="match_parent"
-                    android:tint="@color/colorPrimary"
-                    android:src="@drawable/ic_public"
-                    android:clickable="true"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="David Park"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/grey_90"
+                    android:textStyle="bold"
+                    android:id="@+id/addPost_profileName"
                     />
 
-                <View
-                    android:layout_width="@dimen/spacing_medium"
-                    android:layout_height="0dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:gravity="center_vertical">
 
+                    <ImageView
+                        android:layout_width="@dimen/spacing_mlarge"
+                        android:layout_height="match_parent"
+                        android:tint="@color/colorPrimary"
+                        android:src="@drawable/ic_public"
+                        android:clickable="true"
+                        />
+
+                    <View
+                        android:layout_width="@dimen/spacing_medium"
+                        android:layout_height="0dp" />
+
+
+                </LinearLayout>
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/addPost_submitBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minWidth="0dp"
+                android:paddingLeft="@dimen/spacing_large"
+                android:paddingRight="@dimen/spacing_large"
+                android:text="POST"
+                android:clickable="true"
+                />
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/addPost_submitBtn"
+        <RelativeLayout
+            android:id="@+id/addPost_walkerSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Are you a walker?"
+                android:textSize="20sp"
+                android:id="@+id/addPost_walkerText"
+                />
+
+            <Switch
+                android:id="@+id/addPost_isWalker_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/addPost_walkerText"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            >
+
+            <EditText
+                android:id="@+id/dialogPost_looking_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:hint="What do you need?" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dialogPost_looking_et"
+                android:layout_marginTop="15dp"
+                android:inputType="numberDecimal"
+                android:hint="Enter Price (Optional)"
+                android:id="@+id/dialogPost_prices_et"
+                />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Locations..."
+                android:id="@+id/dialogPost_places_et"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/dialogPost_prices_et"
+                />
+
+
+        </RelativeLayout>
+
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:minWidth="0dp"
-            android:paddingLeft="@dimen/spacing_large"
-            android:paddingRight="@dimen/spacing_large"
-            android:text="POST"
-            android:clickable="true"
+            android:id="@+id/addPost_photoImageView"
+            android:layout_gravity="center"
             />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Photo"
+                android:textSize="20sp"
+                android:layout_marginEnd="10dp"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/addPost_AddPhotoBtn"
+                android:tint="@color/grey_40"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_photo_camera"
+
+                />
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        >
-
-        <EditText
-            android:id="@+id/dialogPost_looking_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:hint="What do you need?" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/dialogPost_looking_et"
-            android:layout_marginTop="15dp"
-            android:hint="Enter Price (Optional)"
-            android:id="@+id/dialogPost_prices_et"
-            />
 
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Locations..."
-            android:id="@+id/dialogPost_places_et"
-            android:layout_marginTop="15dp"
-            android:layout_below="@id/dialogPost_prices_et"
-            />
-
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/addPost_isWalker_switch"
-            android:layout_below="@id/dialogPost_places_et"
-            android:layout_marginTop="25dp"
-            android:layout_centerHorizontal="true"
-            />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Are you a walker?"
-            android:layout_alignBaseline="@id/addPost_isWalker_switch"
-            />
-
-    </RelativeLayout>
-
-
-
-
-</LinearLayout>
+</ScrollView>

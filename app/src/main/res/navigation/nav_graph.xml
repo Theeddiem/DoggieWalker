@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/mainScreen">
+
+    <fragment
+        android:id="@+id/mainScreen"
+        android:name="com.game.eddieandmichael.fragments.MainScreen"
+        android:label="main_screen"
+        tools:layout="@layout/main_screen" >
+        <action
+            android:id="@+id/action_mainScreen_to_addPostDialogFragment"
+            app:destination="@id/addPostDialogFragment"
+            app:launchDocument="true"
+            app:popUpToInclusive="false"
+            />
+        <action
+            android:id="@+id/action_mainScreen_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_mainScreen_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPostDialogFragment"
+        android:name="com.game.eddieandmichael.fragments.AddPostDialogFragment"
+        android:label="dialog_add_post"
+        tools:layout="@layout/dialog_add_post" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.game.eddieandmichael.fragments.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.game.eddieandmichael.fragments.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.game.eddieandmichael.fragments.SignupFragment"
+        android:label="signup_fragment"
+        tools:layout="@layout/signup_fragment" />
+</navigation>
