@@ -55,7 +55,8 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
 
 
-    public PostRecycleAdapter(ArrayList<Post> allThePosts, Context context) {
+    public PostRecycleAdapter(ArrayList<Post> allThePosts, Context context)
+    {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             calendar = new GregorianCalendar();
         }

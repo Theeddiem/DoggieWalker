@@ -1,6 +1,7 @@
 package com.game.eddieandmichael.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,17 +9,19 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.game.eddieandmichael.classes.User;
-import com.game.eddieandmichael.fragments.*;
+import com.game.eddieandmichael.doggiewalker.R;
+import com.game.eddieandmichael.fragments.LoginFragment;
+import com.game.eddieandmichael.fragments.MainScreen;
+import com.game.eddieandmichael.fragments.ProfileFragment;
+import com.game.eddieandmichael.fragments.SignOutFragment;
 import com.game.eddieandmichael.services.SyncWithFirebaseService;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.game.eddieandmichael.doggiewalker.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar=findViewById(R.id.main_ToolBar);
         setSupportActionBar(toolbar);
 
-        ActionBar actionBar=getSupportActionBar();
+        final ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
@@ -98,6 +101,7 @@ public class MainActivity extends AppCompatActivity
                         fragmentTransaction.replace(R.id.main_fragment,new MainScreen(),"MainScreen");
                         fragmentTransaction.commit();
                         drawerLayout.closeDrawers();
+
 
 
                         return true;
@@ -225,6 +229,4 @@ public class MainActivity extends AppCompatActivity
 }
 
 
-//TODO Fix upper action bar (looks weird)
 //TODO remove login option from menu when user is logged in
-//TODO add option for a user to remove his own posts...

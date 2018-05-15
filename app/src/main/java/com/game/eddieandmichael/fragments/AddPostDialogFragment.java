@@ -287,4 +287,3 @@ public class AddPostDialogFragment extends DialogFragment
 
 }
 
-//TODO set new post by the currentUser to the top of the page
