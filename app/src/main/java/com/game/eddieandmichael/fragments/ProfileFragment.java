@@ -69,7 +69,11 @@ public class ProfileFragment extends Fragment
                 public void onClick(View view)
                 {
                     //TODO Start Chat Fragment
-                    Toast.makeText(getContext(), "Fab Click!", Toast.LENGTH_SHORT).show();
+                    ChatFragment nextFrag= new ChatFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.main_fragment, nextFrag,"ChatScreen")
+                            .addToBackStack(null)
+                            .commit();
                 }
             });
 
