@@ -55,7 +55,7 @@ public class LoginFragment extends Fragment
         emailTv = view.findViewById(R.id.login_email_et);
         passwordTv = view.findViewById(R.id.login_password_et);
 
-        Picasso.get().load(R.drawable.dog_logo).into(logoImage);
+        Picasso.get().load(R.drawable.ic_public).into(logoImage);
 
 
         signUp_tv.setOnClickListener(new View.OnClickListener()
