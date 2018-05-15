@@ -1,8 +1,12 @@
 package com.game.eddieandmichael.fragments;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.game.eddieandmichael.activities.MainActivity;
 import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
@@ -21,7 +26,7 @@ public class ProfileFragment extends Fragment
     View thisView;
     ImageView profile_image;
     TextView profileName;
-    FloatingActionButton floatingActionButton;
+    FloatingActionButton floatingMessageButton;
 
     AllThePosts allThePosts;
     User currentUser;
@@ -60,21 +65,25 @@ public class ProfileFragment extends Fragment
 
             //Use the "userId" veriable to get all the data we need from the post's currentUser
 
-            floatingActionButton.setOnClickListener(new View.OnClickListener()
+            floatingMessageButton.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
                 {
                     //TODO Start Chat Fragment
-                    Toast.makeText(getContext(), "Fab Click!", Toast.LENGTH_SHORT).show();
-                }
+                                    ChatFragment nextFrag= new ChatFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.main_fragment, nextFrag,"ChatScreen")
+                            .addToBackStack(null)
+                            .commit();
+                    }
             });
 
         }else
         {
             profilePhotoUri = currentUser.getProfilePhoto();
             userName = currentUser.getUserName();
-            floatingActionButton.setVisibility(View.GONE);
+            floatingMessageButton.setVisibility(View.GONE);
         }
 
 
@@ -94,11 +103,13 @@ public class ProfileFragment extends Fragment
     }
 
 
+
+
     public void getReferences()
     {
         profile_image = thisView.findViewById(R.id.profile_frag_imageProfile);
         profileName = thisView.findViewById(R.id.profile_frag_fullName);
-        floatingActionButton = thisView.findViewById(R.id.profile_Fab);
+        floatingMessageButton = thisView.findViewById(R.id.profile_Fab);
 
     }
 }
