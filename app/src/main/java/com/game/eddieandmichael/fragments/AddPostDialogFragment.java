@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,58 +139,36 @@ public class AddPostDialogFragment extends DialogFragment
                                     public void onSuccess(QuerySnapshot documentSnapshots)
                                     {
                                         DocumentSnapshot documentSnapshot = documentSnapshots.getDocuments().get(0);
+
                                         final String postfireBaseId = documentSnapshot.getId();
 
-                                        Post post = new Post(currentUser.get_ID(), iswalker);
+                                        Post oldPost = documentSnapshot.toObject(Post.class);
 
-                                        final String PostPlaces = placesText.getText().toString();
+                                        final Post newPost = new Post();
 
-                                        String postPrice = null;
+                                        newPost.set_ID(oldPost.get_ID());
+                                        newPost.setPostOwner_ID(oldPost.getPostOwner_ID());
+                                        newPost.setAboutThePost(postText.getText().toString());
+                                        newPost.setPlacesOfPost(placesText.getText().toString());
+                                        newPost.setPrice(priceText.getText().toString());
 
-
-                                        postPrice = priceText.getText().toString();
-
-                                        String aboutPost = postText.getText().toString();
-
-                                        final String finalPostPrice = postPrice;
-                                        collection.document(postfireBaseId).update("aboutThePost", aboutPost)
+                                        collection.document(postfireBaseId).delete()
                                                 .addOnSuccessListener(new OnSuccessListener<Void>()
                                                 {
                                                     @Override
                                                     public void onSuccess(Void aVoid)
                                                     {
-                                                        collection.document(postfireBaseId).update("awalker",iswalker)
-                                                                .addOnSuccessListener(new OnSuccessListener<Void>()
-                                                                {
+                                                        collection.add(newPost)
+                                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                                     @Override
-                                                                    public void onSuccess(Void aVoid)
+                                                                    public void onSuccess(DocumentReference documentReference)
                                                                     {
-                                                                        collection.document(postfireBaseId).update("placesOfPost",PostPlaces)
-                                                                                .addOnSuccessListener(new OnSuccessListener<Void>()
-                                                                                {
-                                                                                    @Override
-                                                                                    public void onSuccess(Void aVoid)
-                                                                                    {
-                                                                                        collection.document(postfireBaseId).update("price", finalPostPrice)
-                                                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                                                    @Override
-                                                                                                    public void onSuccess(Void aVoid)
-                                                                                                    {
-                                                                                                        Toast.makeText(getActivity(), "Post Updated", Toast.LENGTH_SHORT).show();
-                                                                                                        Intent localIntent = new Intent("Refresh_Adapter");
-
-                                                                                                        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
-                                                                                                        localBroadcastManager.sendBroadcast(localIntent);
-
-                                                                                                        dismiss();
-                                                                                                    }
-                                                                                                });
-                                                                                    }
-                                                                                });
+                                                                        Toast.makeText(getContext(), "Post Updated", Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 });
                                                     }
                                                 });
+
                                     }
                                 });
 
