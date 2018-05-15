@@ -5,7 +5,7 @@ import android.util.Log;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class Post implements Serializable
+public class Post implements Serializable, Comparable<Post>
 {
     private String _ID;
     private User postOwner;
@@ -120,5 +120,19 @@ public class Post implements Serializable
 
     public void setHasPhoto(boolean hasPhoto) {
         this.hasPhoto = hasPhoto;
+    }
+
+    public int compareTo(Post post)
+    {
+        if(this.getTimeOfPost() < post.getTimeOfPost())
+        {
+            return 1;
+        }
+        if(this.getTimeOfPost() > post.getTimeOfPost())
+        {
+            return -1;
+        }
+
+        return 0;
     }
 }

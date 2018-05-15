@@ -1,7 +1,5 @@
 package com.game.eddieandmichael.classes;
 
-import android.util.Log;
-
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -9,6 +7,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class AllThePosts
@@ -21,6 +21,7 @@ public class AllThePosts
 
     private HashMap<String,User> userCache;
 
+    PostComparator postComparator;
 
 
     private AllThePosts()
@@ -32,6 +33,7 @@ public class AllThePosts
 
         userCache = new HashMap<>(30);
 
+        postComparator = new PostComparator();
     }
 
     public static AllThePosts getInstance()
@@ -74,6 +76,7 @@ public class AllThePosts
             list.add(post);
         }
 
+        Collections.sort(list,postComparator);
     }
 
     public synchronized boolean addUserToCache(User user)
@@ -134,4 +137,25 @@ public class AllThePosts
 
         return user[0];
     }
+
+
+    private class PostComparator implements Comparator<Post>
+    {
+
+        @Override
+        public int compare(Post post1, Post post2)
+        {
+            if(post1.getTimeOfPost() < post2.getTimeOfPost())
+            {
+                return 1;
+            }
+            if(post1.getTimeOfPost() > post2.getTimeOfPost())
+            {
+                return -1;
+            }
+
+            return 0;
+        }
+    }
+
 }

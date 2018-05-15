@@ -209,9 +209,11 @@ public class AddPostDialogFragment extends DialogFragment
                                             post.setPostsPhotos(uri.toString());
                                             post.setHasPhoto(true);
 
-                                            collection.add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            collection.add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                                            {
                                                 @Override
-                                                public void onSuccess(DocumentReference documentReference) {
+                                                public void onSuccess(DocumentReference documentReference)
+                                                {
                                                     Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
                                                     dismiss();
                                                 }
