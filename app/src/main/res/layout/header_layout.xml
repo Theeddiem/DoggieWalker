@@ -17,8 +17,8 @@
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:textSize="20dp"
-       android:textColor="#fff"
-       android:text="DoggieWalker"
+       android:textColor="#c21b1b"
+       android:text="aaaaaaaaaaaaa"
        />
 
     </LinearLayout>
