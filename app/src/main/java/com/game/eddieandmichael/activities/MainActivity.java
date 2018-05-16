@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity
                                 user.setFullName(users.get(0).getFullName());
                                 user.setEmail(users.get(0).getEmail());
                                 user.setProfilePhoto(users.get(0).getProfilePhoto());
-
+                                user.setAboutUser(users.get(0).getAboutUser());
                             }
 
                         }
