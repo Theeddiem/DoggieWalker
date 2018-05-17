@@ -68,36 +68,29 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
 
     @Override
     public void onClick(View v) {
-        ;
+
         String msgInput = messegeInput.getText().toString();
 
         Map<String, Object> messageMap = new HashMap<>();
-        //ChatMessage hello = new ChatMessage("s", "s", "s");
-       // message.put("yo,", hello);
+
         ChatMessage message = new ChatMessage(msgInput,currentUser.get_ID(),"110400685642351129051"); //to do change it to the user your chating with.
-        //newMsgRef.set(message);
 
         messageMap.put("MessageText",message.getMessageText());
         messageMap.put("currentUserID",message.getCurrentUserID());
         messageMap.put("messageUserID",message.getMessageUserID());
-
-        Map<String, Object> city = new HashMap<>();
-        city.put("name", msgInput);
-        city.put("state", "CA");
-        city.put("country", "USA");
 
         db.collection("Chats").document()
                 .set(messageMap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                        Log.d(TAG, "Msg sent ");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
+                        Log.w(TAG, "Msg failed", e);
                     }
                 });
     }
