@@ -75,9 +75,10 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
 
         ChatMessage message = new ChatMessage(msgInput,currentUser.get_ID(),"110400685642351129051"); //to do change it to the user your chating with.
 
-        messageMap.put("MessageText",message.getMessageText());
+        messageMap.put("essageText",message.getMessageText());
         messageMap.put("currentUserID",message.getCurrentUserID());
         messageMap.put("messageUserID",message.getMessageUserID());
+        messageMap.put("timeStamp",message.getMessageTime());
 
         db.collection("Chats").document()
                 .set(messageMap)
