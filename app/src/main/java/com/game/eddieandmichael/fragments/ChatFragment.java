@@ -1,27 +1,19 @@
 package com.game.eddieandmichael.fragments;
 
-import android.app.Fragment;
-import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.Toast;
 
 import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.ChatMessage;
-import com.game.eddieandmichael.classes.Post;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,7 +21,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,8 +43,8 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
     ArrayAdapter<String> listviewAdapater ;
 
     private static final String TAG = "ChatFragment";
-    private FirebaseFirestore db= FirebaseFirestore.getInstance();
-    private CollectionReference chatsCollectionRef=db.collection("Chats");
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference chatsCollectionRef = db.collection("Chats");
     private DocumentReference newMsgRef = db.collection("Chats").document();
 
 
