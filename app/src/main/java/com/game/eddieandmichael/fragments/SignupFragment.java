@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
@@ -26,7 +24,6 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -34,7 +31,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -126,37 +122,61 @@ public class SignupFragment extends Fragment
 
                                         storageReference = firebaseStorage.getReference(firebasePath);
 
-                                        storageReference.putFile(photoUri)
-                                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
-                                                {
-                                            @Override
-                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-                                            {
-                                                Uri uri = taskSnapshot.getDownloadUrl();
-                                                user.setProfilePhoto(uri.toString());
-
-                                                firestoreDatabase.collection("users")
-                                                        .add(user)
-                                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>()
+                                        if(photoUri != null)
+                                        {
+                                            storageReference.putFile(photoUri)
+                                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
+                                                    {
+                                                        @Override
+                                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
                                                         {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<DocumentReference> task)
+                                                            Uri uri = taskSnapshot.getDownloadUrl();
+                                                            user.setProfilePhoto(uri.toString());
+
+                                                            firestoreDatabase.collection("users")
+                                                                    .add(user)
+                                                                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>()
+                                                                    {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<DocumentReference> task)
+                                                                        {
+                                                                            if (task.isSuccessful())
+                                                                            {
+                                                                                Toast.makeText(getActivity(), "Signup success", Toast.LENGTH_SHORT).show();
+
+                                                                            }else
+                                                                            {
+                                                                                Toast.makeText(getActivity(), "Signup Failed", Toast.LENGTH_SHORT).show();
+
+                                                                            }
+
+                                                                        }
+                                                                    });
+
+                                                        }
+                                                    });
+                                        }else
+                                        {
+                                            firestoreDatabase.collection("users")
+                                                    .add(user)
+                                                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>()
+                                                    {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<DocumentReference> task)
+                                                        {
+                                                            if (task.isSuccessful())
                                                             {
-                                                                if (task.isSuccessful())
-                                                                {
-                                                                    Toast.makeText(getActivity(), "Signup success", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(getActivity(), "Signup success", Toast.LENGTH_SHORT).show();
 
-                                                                }else
-                                                                {
-                                                                    Toast.makeText(getActivity(), "Signup Failed", Toast.LENGTH_SHORT).show();
-
-                                                                }
+                                                            }else
+                                                            {
+                                                                Toast.makeText(getActivity(), "Signup Failed", Toast.LENGTH_SHORT).show();
 
                                                             }
-                                                        });
 
-                                            }
-                                        });
+                                                        }
+                                                    });
+                                        }
 
 
                                         getActivity().onBackPressed();
