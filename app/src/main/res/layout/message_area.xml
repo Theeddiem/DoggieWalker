@@ -16,6 +16,7 @@
         android:id="@+id/messageArea"
         android:background="@drawable/round_editext"
         android:maxHeight="80dp"
+        android:textSize="20sp"
         />
 
     <ImageView

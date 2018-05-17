@@ -3,6 +3,7 @@ package com.game.eddieandmichael.fragments;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,8 +56,8 @@ public class ProfileFragment extends Fragment
         if(getArguments() != null)
         {
             userId = getArguments().getString("id");
-            User userById = allThePosts.findUserById(userId);
-
+            final User userById = allThePosts.findUserById(userId);
+            Toast.makeText(getActivity(), userById.get_ID(), Toast.LENGTH_SHORT).show();
             profilePhotoUri = userById.getProfilePhoto();
             userName = userById.getFullName();
             aboutUserString = userById.getAboutUser();
@@ -69,11 +70,15 @@ public class ProfileFragment extends Fragment
                 public void onClick(View view)
                 {
                     //TODO Start Chat Fragment
-                    ChatFragment nextFrag= new ChatFragment();
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_fragment, nextFrag,"ChatScreen")
-                            .addToBackStack(null)
-                            .commit();
+                    String Uid= userById.get_ID();
+                    Fragment fr=new ChatFragment();
+                    FragmentManager fm=getFragmentManager();
+                    FragmentTransaction ft=fm.beginTransaction();
+                    Bundle args = new Bundle();
+                    args.putString("UserID", Uid);
+                    fr.setArguments(args);
+                    ft.replace(R.id.main_fragment, fr,"ChatScreen").addToBackStack(null).
+                    commit();
                 }
             });
 
