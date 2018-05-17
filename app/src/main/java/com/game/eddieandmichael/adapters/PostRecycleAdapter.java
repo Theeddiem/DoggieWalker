@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.transition.AutoTransition;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -28,6 +29,7 @@ import com.game.eddieandmichael.classes.Post;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.game.eddieandmichael.fragments.AddPostDialogFragment;
+import com.game.eddieandmichael.fragments.MainScreen;
 import com.game.eddieandmichael.fragments.ProfileFragment;
 import com.game.eddieandmichael.fragments.ViewPhotoFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -152,11 +154,21 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
             @Override
             public void onClick(View view)
             {
-                if(user.get_ID().equals(currentUser.get_ID())) {
+                if(user.get_ID().equals(currentUser.get_ID()))
+                {
+                    ProfileFragment profileFragment = new ProfileFragment();
+
+
+
                     MainActivity mainActivity = (MainActivity) context;
                     fragmentManager = ((MainActivity) context).getSupportFragmentManager();
+
+                    profileFragment.setSharedElementEnterTransition(new AutoTransition());
+                    profileFragment.setEnterTransition(new AutoTransition());
+
                     fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.main_fragment, new ProfileFragment(), "ProfileScreen");
+                    fragmentTransaction.addSharedElement(holder.profileImage,"transition_profilePhoto");
+                    fragmentTransaction.replace(R.id.main_fragment, profileFragment, "ProfileScreen");
                     fragmentTransaction.commit();
                 }
 
@@ -172,6 +184,14 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
                     ProfileFragment profileFragment = new ProfileFragment();
                     profileFragment.setArguments(bundle);
 
+                    profileFragment.setSharedElementEnterTransition(new AutoTransition());
+                    profileFragment.setEnterTransition(new AutoTransition());
+
+
+                    MainScreen screen = (MainScreen) fragmentManager.findFragmentByTag("MainScreen");
+
+                    screen.setExitTransition(new AutoTransition());
+                    fragmentTransaction.addSharedElement(holder.profileImage,"transition_profilePhoto");
                     fragmentTransaction.replace(R.id.main_fragment,profileFragment,"profileFragment");
                     fragmentTransaction.commit();
                 }

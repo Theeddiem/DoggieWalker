@@ -59,6 +59,7 @@ public class EditProfileFragment extends Fragment
         view = inflater.inflate(R.layout.edit_profile_fragment,container,false);
         getReferences(view);
 
+
         profilePhotoUrl = getArguments().getString("photoUrl");
         fullName = getArguments().getString("fullName");
         userName = getArguments().getString("userName");
