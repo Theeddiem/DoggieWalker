@@ -139,6 +139,9 @@ public class MainActivity extends AppCompatActivity
 
         Intent syncServiceIntent = new Intent(this, SyncWithFirebaseService.class);
         startService(syncServiceIntent);
+
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
     }
 
     @Override

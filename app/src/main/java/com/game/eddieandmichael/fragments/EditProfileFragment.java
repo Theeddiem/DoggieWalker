@@ -1,5 +1,7 @@
 package com.game.eddieandmichael.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -15,12 +17,17 @@ import android.widget.Toast;
 
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class EditProfileFragment extends Fragment
@@ -36,9 +43,11 @@ public class EditProfileFragment extends Fragment
     String fullName;
     String userName;
     String about;
+    Uri newPhotoUri;
 
     User currentUser;
 
+    final int PICK_IMAGE_REQUEST = 1;
 
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle bundle)
     {
@@ -57,6 +66,18 @@ public class EditProfileFragment extends Fragment
 
         updateUI();
 
+        floatingActionButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"),PICK_IMAGE_REQUEST);
+
+            }
+        });
 
         return view;
     }
@@ -103,6 +124,11 @@ public class EditProfileFragment extends Fragment
 
         final CollectionReference collection = firestore.collection("users");
 
+        if(newPhotoUri != null)
+        {
+            uploadNewProfilePhoto();
+        }
+
         collection.whereEqualTo("_ID",currentUser.get_ID()).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
                 {
@@ -110,35 +136,115 @@ public class EditProfileFragment extends Fragment
                     public void onSuccess(QuerySnapshot documentSnapshots)
                     {
                         DocumentSnapshot userInFirebase = documentSnapshots.getDocuments().get(0);
-                        String firebaseID = userInFirebase.getId();
+                        final String firebaseID = userInFirebase.getId();
 
                         currentUser.setFullName(fullName_ET.getText().toString());
                         currentUser.setUserName(userName_ET.getText().toString());
                         currentUser.setAboutUser(about_ET.getText().toString());
 
-                        collection.document(firebaseID).delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>()
-                                {
-                                    @Override
-                                    public void onSuccess(Void aVoid)
-                                    {
-                                        collection.add(currentUser)
-                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
-                                                {
-                                                    @Override
-                                                    public void onSuccess(DocumentReference documentReference)
-                                                    {
-                                                        Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
-                                                        getActivity().onBackPressed();
-                                                    }
-                                                });
+                        if(newPhotoUri != null)
+                        {
+                            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+                            final StorageReference storageRef = firebaseStorage.getReference();
 
-                                    }
-                                });
+                            storageRef.child("postsPhotos/"+currentUser.get_ID()).delete()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(Task<Void> task)
+                                        {
+                                                storageRef.child("profilePhotos/"+currentUser.get_ID()).putFile(newPhotoUri)
+                                                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                            @Override
+                                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+                                                            {
+
+                                                                String downloadUrl = taskSnapshot.getDownloadUrl().toString();
+                                                                currentUser.setProfilePhoto(downloadUrl);
+                                                                collection.document(firebaseID).delete()
+                                                                        .addOnSuccessListener(new OnSuccessListener<Void>()
+                                                                        {
+                                                                            @Override
+                                                                            public void onSuccess(Void aVoid)
+                                                                            {
+                                                                                collection.add(currentUser)
+                                                                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                                                                                        {
+                                                                                            @Override
+                                                                                            public void onSuccess(DocumentReference documentReference)
+                                                                                            {
+                                                                                                Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
+                                                                                                getActivity().onBackPressed();
+                                                                                            }
+                                                                                        });
+
+                                                                            }
+                                                                        });
+
+                                                            }
+                                                        });
+
+                                        }
+                                    });
+
+
+                        }else
+                        {
+
+                        }
+
 
 
                     }
                 });
+
+    }
+
+    private void uploadNewProfilePhoto()
+    {
+        final boolean[] isFinished = {false};
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        final StorageReference storageRef = firebaseStorage.getReference();
+
+        storageRef.child("postsPhotos/"+currentUser.get_ID()).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>()
+                {
+                    @Override
+                    public void onSuccess(Void aVoid)
+                    {
+                        storageRef.child("postsPhotos/"+currentUser.get_ID()).putFile(newPhotoUri)
+                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+                                    {
+
+                                        String downloadUrl = taskSnapshot.getDownloadUrl().toString();
+                                        currentUser.setProfilePhoto(downloadUrl);
+                                        isFinished[0] = true;
+
+                                    }
+                                });
+
+                    }
+                });
+
+        while(!isFinished[0])
+        {
+            return;
+        }
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+       if(requestCode == PICK_IMAGE_REQUEST)
+       {
+           if(resultCode == getActivity().RESULT_OK)
+           {
+               newPhotoUri = data.getData();
+               Picasso.get().load(newPhotoUri).into(profilePhoto_IV);
+           }
+       }
 
     }
 }
