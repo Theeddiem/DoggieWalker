@@ -57,7 +57,6 @@ public class ProfileFragment extends Fragment
         {
             userId = getArguments().getString("id");
             final User userById = allThePosts.findUserById(userId);
-            Toast.makeText(getActivity(), userById.get_ID(), Toast.LENGTH_SHORT).show();
             profilePhotoUri = userById.getProfilePhoto();
             userName = userById.getFullName();
             aboutUserString = userById.getAboutUser();
