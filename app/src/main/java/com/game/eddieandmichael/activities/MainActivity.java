@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity
 
 
         Toolbar toolbar=findViewById(R.id.main_ToolBar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.overlay_light_90));
         setSupportActionBar(toolbar);
 
         final ActionBar actionBar=getSupportActionBar();
@@ -138,6 +139,9 @@ public class MainActivity extends AppCompatActivity
 
         Intent syncServiceIntent = new Intent(this, SyncWithFirebaseService.class);
         startService(syncServiceIntent);
+
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
     }
 
     @Override
@@ -197,7 +201,7 @@ public class MainActivity extends AppCompatActivity
                                 user.setFullName(users.get(0).getFullName());
                                 user.setEmail(users.get(0).getEmail());
                                 user.setProfilePhoto(users.get(0).getProfilePhoto());
-
+                                user.setAboutUser(users.get(0).getAboutUser());
                             }
 
                         }

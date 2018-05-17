@@ -57,7 +57,8 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
     public PostRecycleAdapter(ArrayList<Post> allThePosts, Context context)
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        {
             calendar = new GregorianCalendar();
         }
         this.allThePosts = allThePosts;
@@ -66,9 +67,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         currentUser = User.getInstance();
     }
 
-    @NonNull
-    @Override
-    public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         view = LayoutInflater.from(context).inflate(R.layout.post_layout, parent, false);
 
@@ -77,8 +76,8 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         return post;
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull final PostViewHolder holder, final int position) {
+
+    public void onBindViewHolder(final PostViewHolder holder, final int position) {
         final Post post = allThePosts.get(position);
         int day, month, year, hour, minute;
         final User user = AllThePostsSingleton.findUserById(post.getPostOwner_ID());
@@ -86,7 +85,8 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         final String profilePhotoUri = user.getProfilePhoto();
         final String postPhotoUri = post.getPostsPhotos();
 
-        if (profilePhotoUri != null) {
+        if (profilePhotoUri != null)
+        {
             Uri photoUri = Uri.parse(profilePhotoUri);
             Picasso.get().load(photoUri).into(holder.profileImage);
         }

@@ -3,6 +3,7 @@ package com.game.eddieandmichael.fragments;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ public class ProfileFragment extends Fragment
     ImageView profile_image;
     TextView profileName;
     FloatingActionButton floatingActionButton;
+    TextView aboutUser;
 
     AllThePosts allThePosts;
     User currentUser;
@@ -30,7 +32,7 @@ public class ProfileFragment extends Fragment
     String userId;
     String userName;
     String profilePhotoUri;
-
+    String aboutUserString;
 
 
     @Override
@@ -41,7 +43,7 @@ public class ProfileFragment extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle bundle)
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle bundle)
     {
         thisView = inflater.inflate(R.layout.profile_fragment,container,false);
 
@@ -57,6 +59,7 @@ public class ProfileFragment extends Fragment
 
             profilePhotoUri = userById.getProfilePhoto();
             userName = userById.getFullName();
+            aboutUserString = userById.getAboutUser();
 
             //Use the "userId" veriable to get all the data we need from the post's currentUser
 
@@ -66,7 +69,11 @@ public class ProfileFragment extends Fragment
                 public void onClick(View view)
                 {
                     //TODO Start Chat Fragment
-                    Toast.makeText(getContext(), "Fab Click!", Toast.LENGTH_SHORT).show();
+                    ChatFragment nextFrag= new ChatFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.main_fragment, nextFrag,"ChatScreen")
+                            .addToBackStack(null)
+                            .commit();
                 }
             });
 
@@ -74,7 +81,29 @@ public class ProfileFragment extends Fragment
         {
             profilePhotoUri = currentUser.getProfilePhoto();
             userName = currentUser.getUserName();
-            floatingActionButton.setVisibility(View.GONE);
+            aboutUserString = currentUser.getAboutUser();
+
+            floatingActionButton.setImageResource(R.drawable.ic_create);
+            floatingActionButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    Bundle b = new Bundle();
+                    EditProfileFragment editProfileFragment = new EditProfileFragment();
+
+                    b.putString("userName",currentUser.getUserName());
+                    b.putString("fullName",currentUser.getFullName());
+                    b.putString("about",currentUser.getAboutUser());
+                    b.putString("photoUrl",currentUser.getProfilePhoto());
+
+                    editProfileFragment.setArguments(b);
+
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.main_fragment,editProfileFragment);
+                    transaction.commit();
+                }
+            });
         }
 
 
@@ -85,6 +114,8 @@ public class ProfileFragment extends Fragment
 
     private void updateUI() {
         profileName.setText(userName);
+
+        aboutUser.setText(aboutUserString);
 
         Picasso.get()
                 .load(profilePhotoUri)
@@ -99,6 +130,7 @@ public class ProfileFragment extends Fragment
         profile_image = thisView.findViewById(R.id.profile_frag_imageProfile);
         profileName = thisView.findViewById(R.id.profile_frag_fullName);
         floatingActionButton = thisView.findViewById(R.id.profile_Fab);
+        aboutUser = thisView.findViewById(R.id.profile_aboutUser);
 
     }
 }

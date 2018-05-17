@@ -1,7 +1,5 @@
 package com.game.eddieandmichael.classes;
 
-import android.net.Uri;
-
 import java.io.Serializable;
 
 public class User implements Serializable
@@ -11,10 +9,23 @@ public class User implements Serializable
     private String email;
     private String _ID;
     private String profilePhoto;
+    private String aboutUser;
 
     private static User instance = null;
 
-    private User() {
+    private User()
+    {
+        aboutUser = "";
+    }
+
+    public static User getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new User();
+        }
+
+        return instance;
     }
 
     public String getFullName() {
@@ -60,15 +71,11 @@ public class User implements Serializable
         this.profilePhoto = profilePhoto;
     }
 
-    public static User getInstance()
-    {
-        if(instance == null)
-        {
-            instance = new User();
-        }
-
-        return instance;
+    public String getAboutUser() {
+        return aboutUser;
     }
 
-
+    public void setAboutUser(String aboutUser) {
+        this.aboutUser = aboutUser;
+    }
 }
