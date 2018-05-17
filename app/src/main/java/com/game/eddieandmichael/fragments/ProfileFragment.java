@@ -71,11 +71,13 @@ public class ProfileFragment extends Fragment
                 {
                     //TODO Start Chat Fragment
                     String Uid= userById.get_ID();
+                    String UserfullName=userById.getFullName();
                     Fragment fr=new ChatFragment();
                     FragmentManager fm=getFragmentManager();
                     FragmentTransaction ft=fm.beginTransaction();
                     Bundle args = new Bundle();
                     args.putString("UserID", Uid);
+                    args.putString("UserFullName",UserfullName);
                     fr.setArguments(args);
                     ft.replace(R.id.main_fragment, fr,"ChatScreen").addToBackStack(null).
                     commit();

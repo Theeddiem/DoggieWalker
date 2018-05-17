@@ -63,11 +63,12 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
 
 
         String OtherUserID = getArguments().getString("UserID");
+        String OtherFullName = getArguments().getString("UserFullName");
 
         thisView = inflater.inflate(R.layout.chatwindow_fragment,container,false);
         listviewAdapater = new ArrayAdapter<>( getActivity(), android.R.layout.simple_list_item_1,conversation);;
         getReferences();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(OtherUserID);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(OtherFullName);
         currentUser = User.getInstance();
         sendMessege.setOnClickListener(this);
 
