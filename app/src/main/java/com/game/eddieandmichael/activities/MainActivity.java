@@ -3,6 +3,7 @@ package com.game.eddieandmichael.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.transition.AutoTransition;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         drawerLayout=findViewById(R.id.drawer_layout);
 
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_fragment,new MainScreen());
+        fragmentTransaction.replace(R.id.main_fragment,new MainScreen(),"MainScreen");
         fragmentTransaction.commit();
 
 
@@ -224,8 +225,10 @@ public class MainActivity extends AppCompatActivity
             finish();
         }else
         {
+            MainScreen mainScreenFrag = new MainScreen();
+            mainScreenFrag.setEnterTransition(new AutoTransition());
             fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.main_fragment,new MainScreen(),"MainScreen");
+            fragmentTransaction.replace(R.id.main_fragment,mainScreenFrag,"MainScreen");
             fragmentTransaction.commit();
         }
 

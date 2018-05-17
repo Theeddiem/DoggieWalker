@@ -2,6 +2,7 @@ package com.game.eddieandmichael.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.transition.AutoTransition;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.User;
@@ -57,7 +57,6 @@ public class ProfileFragment extends Fragment
         {
             userId = getArguments().getString("id");
             final User userById = allThePosts.findUserById(userId);
-            Toast.makeText(getActivity(), userById.get_ID(), Toast.LENGTH_SHORT).show();
             profilePhotoUri = userById.getProfilePhoto();
             userName = userById.getFullName();
             aboutUserString = userById.getAboutUser();
@@ -106,7 +105,11 @@ public class ProfileFragment extends Fragment
 
                     editProfileFragment.setArguments(b);
 
+                    editProfileFragment.setSharedElementEnterTransition(new AutoTransition());
+                    editProfileFragment.setEnterTransition(new AutoTransition());
+
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.addSharedElement(profile_image,"transition_profilePhoto");
                     transaction.replace(R.id.main_fragment,editProfileFragment);
                     transaction.commit();
                 }
@@ -141,5 +144,7 @@ public class ProfileFragment extends Fragment
 
     }
 }
+
+
 
 //TODO let the currentUser edit his personal information

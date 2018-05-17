@@ -1,7 +1,5 @@
 package com.game.eddieandmichael.classes;
 
-import java.util.Date;
-
 public class ChatMessage {
 
     private String messageText;
@@ -14,7 +12,7 @@ public class ChatMessage {
         this.messageUserID = messageUserID;
         this.currentUserID=currentUserID;
         // Initialize to current time
-        messageTime = new Date().getTime();
+        messageTime = System.currentTimeMillis();
     }
 
     public String getMessageUserID() {
