@@ -105,7 +105,7 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
         String msgInput = messegeInput.getText().toString();
         ChatMessage message = new ChatMessage(msgInput,currentUser.get_ID(),OtherUserID);
 
-
+        //my SideBackUp
         db.collection("Chats").document(currentUser.get_ID()+ " " + OtherUserID).
                 collection(currentUser.getFullName()+ "  with " + OtherFullName).add(message)
         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -114,6 +114,21 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
                 Log.d(TAG, "onSuccess: WORKS ");
             }
         }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, e.toString());
+            }
+        });
+
+        //His SideBackUp
+        db.collection("Chats").document(OtherUserID+ " " + currentUser.get_ID()).
+                collection(OtherFullName+ "  with " + currentUser.getFullName()).add(message)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "onSuccess: WORKS ");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, e.toString());
@@ -139,7 +154,15 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots)
                 {
                     ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
-                    String text = message.getMessageText();
+                    String text;
+                    if(message.getCurrentUserID().equals(currentUser.get_ID()))
+                    {
+
+                        text = "                         " + message.getMessageText();
+
+                    }
+                    else
+                        text=message.getMessageText();
                     conversation.add(text);
                     listviewAdapater.notifyDataSetChanged();
                 }
