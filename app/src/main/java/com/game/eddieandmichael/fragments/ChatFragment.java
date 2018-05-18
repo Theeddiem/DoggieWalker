@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.game.eddieandmichael.adapters.MessageRecycleAdapter;
@@ -39,7 +41,6 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
     ////////////////////////////////////////////////////
     ImageView sendMessege;
     EditText messegeInput;
-    Button testBtn;
     ////////////////////////////////////////////////////
     String OtherUserID;
     String OtherFullName;
@@ -50,6 +51,7 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
     RecyclerView myRecyclerView ;
     ArrayList <ChatMessage> conversation=new ArrayList<>();
     MessageRecycleAdapter adapter;
+    CardView cardView;
 
 ////////////////////////////////////////////////////
     @Override
@@ -61,23 +63,11 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
         Toast.makeText(getActivity(), OtherUserID, Toast.LENGTH_SHORT).show();
 
         thisView = inflater.inflate(R.layout.chatwindow_fragmnet,container,false);
-       // conversation.clear();
 
         getReferences();
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(OtherFullName);
         currentUser = User.getInstance();
         sendMessege.setOnClickListener(this);
-
-        testBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                conversation.clear();
-                adapter.notifyDataSetChanged();
-                Toast.makeText(getActivity(), "yo", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
         return thisView;
     }
 
@@ -88,8 +78,9 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
 
         sendMessege = thisView.findViewById(R.id.sendButton);
         messegeInput = thisView.findViewById(R.id.messageArea);
-        testBtn=thisView.findViewById(R.id.testBtn);
 
+
+      //  cardView=thisView.findViewById(R.id.cardView);
         myRecyclerView=thisView.findViewById(R.id.RecyclerListView);
         myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MessageRecycleAdapter(getActivity(),conversation);
@@ -156,14 +147,8 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots)
                 {
                     ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
-                    String text;
-                    if(message.getCurrentUserID().equals(currentUser.get_ID()))
-                    {
-                        text = "                         " + message.getMessageText();
-                        conversation.add(new ChatMessage(text,message.getCurrentUserID(),message.getMessageUserID()));
-                    }
-                    else
-                        conversation.add(message);
+
+                     conversation.add(message);
                     adapter.notifyDataSetChanged();
                      }
 

@@ -10,19 +10,13 @@
     <android.support.v7.widget.RecyclerView
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/testBtn"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/message_area"
         android:id="@+id/RecyclerListView">
 
     </android.support.v7.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/testBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/message_area"
-        android:layout_alignParentEnd="true"
-        android:text="test" />
+
 
     <include
         android:id="@+id/message_area"

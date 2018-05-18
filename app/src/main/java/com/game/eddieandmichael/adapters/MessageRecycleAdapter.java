@@ -10,15 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.game.eddieandmichael.classes.ChatMessage;
+import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleAdapter.ViewHolder> {
+    User currentUser;
     Calendar calendar;
     ArrayList<ChatMessage> ChatMessageList;
     Context context;
@@ -53,7 +58,27 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
        // }
 
         holder.messageTime.setText(hour + ":" + minute);
+
+       if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(ChatMessageList.get(position).getCurrentUserID())) {
+                        holder.messageRelativeLayout.setBackgroundResource(R.drawable.rect_mycolor);
+
+
+         //  FrameLayout frameLayout
+         //  setLayoutParams(new FrameLayout.LayoutParams(100,100);
+          // this.layout
+
+
+       }
+       else {
+           holder.messageRelativeLayout.setBackgroundResource(R.drawable.rect_hiscolor);
+
+       }
+
+
+
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -63,9 +88,12 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
     public class ViewHolder extends RecyclerView.ViewHolder {
                 TextView messageInput ;
                 TextView messageTime;
+                RelativeLayout messageRelativeLayout;
+                FrameLayout messageFrameLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            messageRelativeLayout=itemView.findViewById(R.id.messageRelativeLayout);
             messageInput= itemView.findViewById(R.id.messageText);
             messageTime =itemView.findViewById(R.id.messageTime);
         }
