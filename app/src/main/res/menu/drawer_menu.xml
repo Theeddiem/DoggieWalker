@@ -24,6 +24,10 @@
                     android:icon="@drawable/ic_attachemnt"
                     android:id="@+id/navi_login"
                     android:title="Login"/>
+                <item
+                    android:icon="@drawable/ic_email_black_24dp"
+                    android:id="@+id/navi_messenger"
+                    android:title="Messenger"/>
 
             </menu>
         </item>
