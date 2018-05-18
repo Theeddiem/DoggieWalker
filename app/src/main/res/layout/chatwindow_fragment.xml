@@ -10,10 +10,18 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/message_area"
+        android:layout_above="@+id/btn"
         android:id="@+id/ListView">
 
     </ListView>
+
+    <Button
+        android:id="@+id/testBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/message_area"
+        android:layout_alignParentEnd="true"
+        android:text="test" />
 
     <include
         android:id="@+id/message_area"
