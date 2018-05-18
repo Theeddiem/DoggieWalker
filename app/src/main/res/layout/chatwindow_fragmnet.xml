@@ -4,17 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#dbd8d8"
-       android:orientation="vertical"
+    android:orientation="vertical"
     >
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/testBtn"
-        android:id="@+id/ListView">
+        android:id="@+id/RecyclerListView">
 
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
     <Button
         android:id="@+id/testBtn"

@@ -1,7 +1,10 @@
 package com.game.eddieandmichael.adapters;
 
 import android.content.Context;
+import android.icu.util.Calendar;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +19,15 @@ import com.game.eddieandmichael.doggiewalker.R;
 import java.util.ArrayList;
 
 public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleAdapter.ViewHolder> {
-
+    Calendar calendar;
     ArrayList<ChatMessage> ChatMessageList;
     Context context;
+
 
     public MessageRecycleAdapter(Context context,  ArrayList<ChatMessage> ChatMessageList) {
         this.ChatMessageList = ChatMessageList;
         this.context = context;
-    }
+         }
 
     @NonNull
     @Override
@@ -33,9 +37,22 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
         return viewholder;
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull MessageRecycleAdapter.ViewHolder holder, int position) {
         holder.messageInput.setText(ChatMessageList.get(position).getMessageText());
+        int hour, minute ;
+    //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+       //     calendar.setTimeInMillis(ChatMessageList.get(position).getMessageTime());
+      //      hour = calendar.get(Calendar.HOUR_OF_DAY);
+        //    minute = calendar.get(Calendar.MINUTE);
+       // } else {
+            hour = java.util.Calendar.HOUR;
+            minute = java.util.Calendar.MINUTE;
+
+       // }
+
+        holder.messageTime.setText(hour + ":" + minute);
     }
 
     @Override
@@ -44,11 +61,13 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-                EditText messageInput ;
+                TextView messageInput ;
+                TextView messageTime;
 
         public ViewHolder(View itemView) {
             super(itemView);
             messageInput= itemView.findViewById(R.id.messageText);
+            messageTime =itemView.findViewById(R.id.messageTime);
         }
     }
 
