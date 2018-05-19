@@ -4,6 +4,7 @@ import android.content.Context;
 import android.icu.util.Calendar;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,17 +56,21 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
         holder.messageTime.setText(hour + ":" + minute);
 
        if(currentUser.get_ID().equals(ChatMessageList.get(position).getCurrentUserID())) {
-                        holder.messageRelativeLayout.setBackgroundResource(R.drawable.rect_mycolor);
+                        holder.messageRelativeLayout.setBackgroundResource(R.drawable.rect_mycolor); //set background of the chat bubble
 
-
-         //  FrameLayout frameLayout
-         //  setLayoutParams(new FrameLayout.LayoutParams(100,100);
-          // this.layout
-
+           FrameLayout.LayoutParams Rightparams = new FrameLayout.LayoutParams  //set the bubble to the right
+                   (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.END);
+           holder.messageRelativeLayout.setLayoutParams(Rightparams);
 
        }
        else {
-           holder.messageRelativeLayout.setBackgroundResource(R.drawable.rect_hiscolor);
+           holder.messageRelativeLayout.setBackgroundResource(R.drawable.rect_hiscolor); //set background of the chat bubble
+
+           FrameLayout.LayoutParams Leftparams = new FrameLayout.LayoutParams //set the bubble to the left
+                   (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.START);
+           holder.messageRelativeLayout.setLayoutParams(Leftparams);
+
+
 
        }
 
@@ -84,13 +89,14 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
                 TextView messageInput ;
                 TextView messageTime;
                 RelativeLayout messageRelativeLayout;
-                FrameLayout messageFrameLayout;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
             messageRelativeLayout=itemView.findViewById(R.id.messageRelativeLayout);
             messageInput= itemView.findViewById(R.id.messageText);
             messageTime =itemView.findViewById(R.id.messageTime);
+
         }
     }
 
