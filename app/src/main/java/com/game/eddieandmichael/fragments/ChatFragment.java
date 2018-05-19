@@ -44,12 +44,10 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
     String OtherFullName;
     private static final String TAG = "ChatFragment";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     ////////////////////////////////////////////////////
     RecyclerView myRecyclerView ;
     ArrayList <ChatMessage> conversation=new ArrayList<>();
     MessageRecycleAdapter adapter;
-    CardView cardView;
 
     ////////////////////////////////////////////////////
     @Override
@@ -68,23 +66,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 
         return thisView;
     }
-
-
-
-    public void getReferences()
-    {
-
-        sendMessege = thisView.findViewById(R.id.sendButton);
-        messegeInput = thisView.findViewById(R.id.messageArea);
-
-
-        //  cardView=thisView.findViewById(R.id.cardView);
-        myRecyclerView=thisView.findViewById(R.id.RecyclerListView);
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new MessageRecycleAdapter(getActivity(),conversation);
-        myRecyclerView.setAdapter(adapter);
-    }
-
 
 
     @Override
@@ -165,31 +146,16 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    public void getReferences()
+    {
 
+        sendMessege = thisView.findViewById(R.id.sendButton);
+        messegeInput = thisView.findViewById(R.id.messageArea);
 
-
-    public void load(){
-
-        String msgInput = messegeInput.getText().toString();
-        db.collection("Chats").document(currentUser.get_ID()+ " " + OtherUserID).
-                collection(currentUser.getFullName()+ "  with " + OtherFullName).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                String data= "";
-                for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-                    ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
-
-                    conversation.add(message);
-                    adapter.notifyDataSetChanged();
-
-                }
-                int lastpos = myRecyclerView.getAdapter().getItemCount() - 1; /// scroll to last item
-                if (lastpos < 0)
-                    return;
-                else /// scroll to last item
-                    myRecyclerView.smoothScrollToPosition(lastpos);
-
-            }
-        });
+        myRecyclerView=thisView.findViewById(R.id.RecyclerListView);
+        myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new MessageRecycleAdapter(getActivity(),conversation);
+        myRecyclerView.setAdapter(adapter);
     }
+
 }
