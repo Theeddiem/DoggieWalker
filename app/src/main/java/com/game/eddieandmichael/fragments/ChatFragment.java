@@ -3,6 +3,7 @@ package com.game.eddieandmichael.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,11 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.game.eddieandmichael.adapters.MessageRecycleAdapter;
 import com.game.eddieandmichael.classes.ChatMessage;
@@ -34,7 +32,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 
-public class ChatFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
+public class ChatFragment extends Fragment implements View.OnClickListener {
 
     View thisView;
     User currentUser;
@@ -60,7 +58,6 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
 
         OtherUserID= getArguments().getString("UserID");
         OtherFullName = getArguments().getString("UserFullName");
-        Toast.makeText(getActivity(), OtherUserID, Toast.LENGTH_SHORT).show();
 
         thisView = inflater.inflate(R.layout.chatwindow_fragmnet,container,false);
 
@@ -68,6 +65,7 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(OtherFullName);
         currentUser = User.getInstance();
         sendMessege.setOnClickListener(this);
+
         return thisView;
     }
 
@@ -136,7 +134,8 @@ public class ChatFragment extends android.support.v4.app.Fragment implements Vie
 
 
         db.collection("Chats").document(currentUser.get_ID() + " " + OtherUserID).
-                collection(currentUser.getFullName() + "  with " + OtherFullName).orderBy("messageTime", Query.Direction.ASCENDING).addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+                collection(currentUser.getFullName() + "  with " + OtherFullName).orderBy("messageTime", Query.Direction.ASCENDING)
+                .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if(e!=null)
