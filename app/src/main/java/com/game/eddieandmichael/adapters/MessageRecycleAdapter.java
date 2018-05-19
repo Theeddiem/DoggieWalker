@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,7 +38,8 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
 
 
     @Override
-    public void onBindViewHolder(@NonNull MessageRecycleAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(MessageRecycleAdapter.ViewHolder holder, int position)
+    {
         holder.messageInput.setText(ChatMessageList.get(position).getMessageText());
         int hour, minute ;
     //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -54,8 +54,14 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
 
         holder.messageTime.setText(hour + ":" + minute);
 
-       if(currentUser.get_ID().equals(ChatMessageList.get(position).getCurrentUserID())) {
-                        holder.messageRelativeLayout.setBackgroundResource(R.drawable.rect_mycolor);
+       if(currentUser.get_ID().equals(ChatMessageList.get(position).getCurrentUserID()))
+       {
+           holder.messageRelativeLayout.setBackgroundResource(R.drawable.rect_mycolor);
+
+           RelativeLayout.LayoutParams layoutParams =
+                   new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+
+
 
 
          //  FrameLayout frameLayout
@@ -84,7 +90,7 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
                 TextView messageInput ;
                 TextView messageTime;
                 RelativeLayout messageRelativeLayout;
-                FrameLayout messageFrameLayout;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
