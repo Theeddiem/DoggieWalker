@@ -2,6 +2,8 @@ package com.game.eddieandmichael.adapters;
 
 import android.content.Context;
 import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.game.eddieandmichael.classes.ChatMessage;
 import com.game.eddieandmichael.classes.User;
@@ -43,15 +46,19 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
     public void onBindViewHolder(@NonNull MessageRecycleAdapter.ViewHolder holder, int position) {
         holder.messageInput.setText(ChatMessageList.get(position).getMessageText());
         int hour, minute ;
-    //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-       //     calendar.setTimeInMillis(ChatMessageList.get(position).getMessageTime());
-      //      hour = calendar.get(Calendar.HOUR_OF_DAY);
-        //    minute = calendar.get(Calendar.MINUTE);
-       // } else {
+
+       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+           calendar = new GregorianCalendar();
+           long time = ChatMessageList.get(position).getMessageTime();
+
+           calendar.setTimeInMillis(time);
+           hour = calendar.get(Calendar.HOUR_OF_DAY);
+           minute = calendar.get(Calendar.MINUTE);
+       } else {
             hour = java.util.Calendar.HOUR;
             minute = java.util.Calendar.MINUTE;
 
-       // }
+        }
 
         holder.messageTime.setText(hour + ":" + minute);
 
