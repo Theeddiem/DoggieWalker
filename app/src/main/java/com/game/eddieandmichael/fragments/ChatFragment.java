@@ -51,7 +51,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
     MessageRecycleAdapter adapter;
     CardView cardView;
 
-////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle)
     {
@@ -78,7 +78,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         messegeInput = thisView.findViewById(R.id.messageArea);
 
 
-      //  cardView=thisView.findViewById(R.id.cardView);
+        //  cardView=thisView.findViewById(R.id.cardView);
         myRecyclerView=thisView.findViewById(R.id.RecyclerListView);
         myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MessageRecycleAdapter(getActivity(),conversation);
@@ -96,12 +96,12 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         //my SideBackUp
         db.collection("Chats").document(currentUser.get_ID()+ " " + OtherUserID).
                 collection(currentUser.getFullName()+ "  with " + OtherFullName).add(message)
-        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Log.d(TAG, "onSuccess: WORKS ");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "onSuccess: WORKS ");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, e.toString());
@@ -136,25 +136,30 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         db.collection("Chats").document(currentUser.get_ID() + " " + OtherUserID).
                 collection(currentUser.getFullName() + "  with " + OtherFullName).orderBy("messageTime", Query.Direction.ASCENDING)
                 .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if(e!=null)
-                    return;
-                conversation.clear();
-                adapter.notifyDataSetChanged();;
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if(e!=null)
+                            return;
+                        conversation.clear();
+                        adapter.notifyDataSetChanged();;
 
-                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots)
-                {
-                    ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots)
+                        {
+                            ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
 
-                     conversation.add(message);
-                    adapter.notifyDataSetChanged();
-                     }
+                            conversation.add(message);
+                            adapter.notifyDataSetChanged();
 
+                        }
+                        int lastpos = myRecyclerView.getAdapter().getItemCount() - 1; /// scroll to last item
+                        if (lastpos < 0)
+                            return;
+                        else /// scroll to last item
+                            myRecyclerView.smoothScrollToPosition(lastpos);
 
-            }
+                    }
 
-        });
+                });
 
 
     }
@@ -174,25 +179,17 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
                 for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
                     ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
 
-                    String text = message.getMessageText();
-                    String from = message.getCurrentUserID();
-                    String to = message.getMessageUserID();
-
-                    data+=text+" " + "from " + from +"\n" + "to " + to;
                     conversation.add(message);
                     adapter.notifyDataSetChanged();
 
                 }
+                int lastpos = myRecyclerView.getAdapter().getItemCount() - 1; /// scroll to last item
+                if (lastpos < 0)
+                    return;
+                else /// scroll to last item
+                    myRecyclerView.smoothScrollToPosition(lastpos);
 
-                // Toast.makeText(getActivity(),data, Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-
-
-
 }
-
-//TODO let the currentUser edit his personal information
-
