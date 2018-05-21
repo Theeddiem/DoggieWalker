@@ -18,6 +18,7 @@ import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.game.eddieandmichael.fragments.LoginFragment;
 import com.game.eddieandmichael.fragments.MainScreen;
+import com.game.eddieandmichael.fragments.MessengerFragment;
 import com.game.eddieandmichael.fragments.ProfileFragment;
 import com.game.eddieandmichael.fragments.SignOutFragment;
 import com.game.eddieandmichael.services.SyncWithFirebaseService;
@@ -131,6 +132,17 @@ public class MainActivity extends AppCompatActivity
                         }
 
                     }
+                  /*   case R.id.navi_messenger:
+                    {
+                        if(user.get_ID() != null) {
+                            fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.main_fragment, new MessengerFragment(), "MessengerScreen");
+                            fragmentTransaction.commit();
+                            drawerLayout.closeDrawers();
+                        }
+
+
+                    }*/
 
                 }
 

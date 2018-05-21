@@ -80,7 +80,7 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
 
 
        }
-
+//
 
 
     }
