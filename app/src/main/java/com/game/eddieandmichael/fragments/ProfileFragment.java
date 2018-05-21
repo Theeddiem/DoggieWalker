@@ -1,21 +1,29 @@
 package com.game.eddieandmichael.fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.transition.AutoTransition;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.game.eddieandmichael.activities.MainActivity;
 import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 
 
 public class ProfileFragment extends Fragment
@@ -116,13 +124,42 @@ public class ProfileFragment extends Fragment
             });
         }
 
-
         updateUI();
+
+        Thread thread = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                    ActionBar supportActionBar = ((MainActivity) getActivity()).getSupportActionBar();
+
+                    Bitmap bitmap = null;
+                    try {
+                        bitmap = Picasso.get().load(profilePhotoUri).get();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    Palette p = Palette.from(bitmap).generate();
+
+                    int darkMutedColor = p.getDarkMutedColor(1);
+
+                    supportActionBar.setBackgroundDrawable(new ColorDrawable(darkMutedColor));
+
+                    Window window = getActivity().getWindow();
+
+                    window.setStatusBarColor(darkMutedColor);
+
+            }
+        });
+
+        thread.start();
 
         return thisView;
     }
 
-    private void updateUI() {
+    private void updateUI()
+    {
         profileName.setText(userName);
 
         aboutUser.setText(aboutUserString);
@@ -130,7 +167,6 @@ public class ProfileFragment extends Fragment
         Picasso.get()
                 .load(profilePhotoUri)
                 .into(profile_image);
-
 
     }
 
