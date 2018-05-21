@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout
-    android:id="@+id/messageRelativeLayout"
-    android:layout_width="wrap_content"
-    android:background="@drawable/rect_mycolor"
-    android:layout_height="wrap_content"
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_margin="10dp"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="8dp"
+    android:id="@+id/messageFrameLayout"
+    android:layout_marginStart="8dp">
 
+    <RelativeLayout
+        android:id="@+id/messageRelativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="@drawable/rect_mycolor">
         <TextView
             android:id="@+id/messageText"
             android:layout_width="wrap_content"
@@ -19,7 +26,7 @@
             android:paddingEnd="8dp"
             android:paddingTop="4dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-            android:text="@string/lorem_ipsum" />
+            tools:text="@string/lorem_ipsum" />
         <TextView
             android:id="@+id/messageTime"
             android:layout_width="wrap_content"
@@ -28,5 +35,6 @@
             android:layout_alignEnd="@id/messageText"
             android:layout_marginEnd="8dp"
             android:textSize="12sp"
-            android:text="15:00"/>
+            tools:text="15:00"/>
     </RelativeLayout>
+</FrameLayout>
