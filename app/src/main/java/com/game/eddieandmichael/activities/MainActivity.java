@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.transition.AutoTransition;
 import android.support.v4.app.FragmentManager;
@@ -16,16 +17,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.game.eddieandmichael.fragments.LoginFragment;
+import com.game.eddieandmichael.fragments.LottieAnimation;
 import com.game.eddieandmichael.fragments.MainScreen;
 import com.game.eddieandmichael.fragments.ProfileFragment;
 import com.game.eddieandmichael.fragments.SignOutFragment;
 import com.game.eddieandmichael.services.SyncWithFirebaseService;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,6 +50,8 @@ public class MainActivity extends AppCompatActivity
     FragmentTransaction fragmentTransaction;
 
     User user;
+
+    LottieAnimation lottieAnimation;
 
 
     @Override
@@ -154,8 +161,6 @@ public class MainActivity extends AppCompatActivity
         Intent syncServiceIntent = new Intent(this, SyncWithFirebaseService.class);
         startService(syncServiceIntent);
 
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
     }
 
     @Override
@@ -172,6 +177,17 @@ public class MainActivity extends AppCompatActivity
     protected void onStart()
     {
         super.onStart();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        lottieAnimation = new LottieAnimation();
+        Bundle bundle = new Bundle();
+        bundle.putInt("animation",R.raw.material_wave_loading);
+        bundle.putString("text","Loading User Data");
+        lottieAnimation.setArguments(bundle);
+
+        lottieAnimation.show(transaction,"lottieDialog");
+
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         user = User.getInstance();
@@ -200,6 +216,7 @@ public class MainActivity extends AppCompatActivity
             allTheUsers.whereEqualTo("_ID",accountId).get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
                     {
+
                         @Override
                         public void onSuccess(QuerySnapshot documentSnapshots)
                         {
@@ -216,12 +233,31 @@ public class MainActivity extends AppCompatActivity
                                 user.setEmail(users.get(0).getEmail());
                                 user.setProfilePhoto(users.get(0).getProfilePhoto());
                                 user.setAboutUser(users.get(0).getAboutUser());
+
+                                AllThePosts allThePosts = AllThePosts.getInstance();
+
+                                allThePosts.addUserToCache(user);
+
+                                lottieAnimation.dismiss();
+
                             }
 
                         }
-                    });
+
+                    }).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+            {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task)
+                {
+                    lottieAnimation.dismiss();
+                }
+            })
+            ;
 
 
+        }else
+        {
+            lottieAnimation.dismiss();
         }
 
 

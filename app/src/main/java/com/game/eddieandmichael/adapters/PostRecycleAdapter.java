@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +29,7 @@ import com.game.eddieandmichael.classes.Post;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.game.eddieandmichael.fragments.AddPostDialogFragment;
+import com.game.eddieandmichael.fragments.LottieAnimation;
 import com.game.eddieandmichael.fragments.MainScreen;
 import com.game.eddieandmichael.fragments.ProfileFragment;
 import com.game.eddieandmichael.fragments.ViewPhotoFragment;
@@ -276,7 +276,21 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+
+                MainActivity mainActivity = (MainActivity) context;
+                FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
+
+                final LottieAnimation lottieAnimation = new LottieAnimation();
+                Bundle bundle = new Bundle();
+                bundle.putInt("animation",R.raw.fall_animation);
+                bundle.putString("text","Deleting Post");
+                lottieAnimation.setArguments(bundle);
+
+                lottieAnimation.show(transaction,"lottieDialog");
+
+
                 FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
                 final StorageReference storageRef = firebaseStorage.getReference();
 
@@ -300,6 +314,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
                                                                     Toast.makeText(context, "Item Removed", Toast.LENGTH_SHORT).show();
                                                                     notifyDataSetChanged();
                                                                     allThePosts.remove(position);
+                                                                    lottieAnimation.dismiss();
                                                                 }
                                                             });
                                                 }
@@ -322,6 +337,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
                                                                     Toast.makeText(context, "Item Removed", Toast.LENGTH_SHORT).show();
                                                                     notifyDataSetChanged();
                                                                     allThePosts.remove(position);
+                                                                    lottieAnimation.dismiss();
                                                                 }
                                                             });
                                                 }
