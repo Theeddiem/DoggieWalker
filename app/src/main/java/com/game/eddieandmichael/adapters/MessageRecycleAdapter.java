@@ -62,7 +62,7 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
         holder.messageTime.setText(hour + ":" + minute);
 
        if(currentUser.get_ID().equals(ChatMessageList.get(position).getCurrentUserID())) {
-                        holder.messageRelativeLayout.setBackgroundResource(R.color.grey_20); //set background of the chat bubble
+                        holder.messageRelativeLayout.setBackgroundResource(R.drawable.rect_mycolor); //set background of the chat bubble
 
            FrameLayout.LayoutParams Rightparams = new FrameLayout.LayoutParams  //set the bubble to the right
                    (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.END);
@@ -70,7 +70,7 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
 
        }
        else {
-           holder.messageRelativeLayout.setBackgroundResource(R.color.blue_700); //set background of the chat bubble
+           holder.messageRelativeLayout.setBackgroundResource(R.drawable.rect_hiscolor); //set background of the chat bubble
 
            holder.messageInput.setTextColor(context.getResources().getColor(R.color.grey_10));
            holder.messageTime.setTextColor(context.getResources().getColor(R.color.grey_10));

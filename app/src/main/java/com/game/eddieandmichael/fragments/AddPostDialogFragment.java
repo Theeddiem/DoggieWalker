@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +69,8 @@ public class AddPostDialogFragment extends DialogFragment
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     FirebaseAuth auth;
 
+    LottieAnimation lottieAnimation;
+
     public AddPostDialogFragment(){}
 
     @Nullable
@@ -123,6 +127,18 @@ public class AddPostDialogFragment extends DialogFragment
             public void onClick(View view)
             {
 
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+                Fragment prev = getFragmentManager().findFragmentByTag("lottieDialog");
+
+
+                lottieAnimation = new LottieAnimation();
+                Bundle bundle = new Bundle();
+                bundle.putInt("animation",R.raw.loading);
+                lottieAnimation.setArguments(bundle);
+
+                lottieAnimation.show(transaction,"lottieDialog");
+
                 final CollectionReference collection = firestore.collection("Posts");
 
                 if(postText.getText().toString().equals(""))
@@ -167,6 +183,7 @@ public class AddPostDialogFragment extends DialogFragment
                                                                     public void onSuccess(DocumentReference documentReference)
                                                                     {
                                                                         Toast.makeText(getContext(), "Post Updated", Toast.LENGTH_SHORT).show();
+                                                                        lottieAnimation.dismiss();
                                                                         dismiss();
                                                                     }
                                                                 });
@@ -215,6 +232,7 @@ public class AddPostDialogFragment extends DialogFragment
                                                 public void onSuccess(DocumentReference documentReference)
                                                 {
                                                     Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
+                                                    lottieAnimation.dismiss();
                                                     dismiss();
                                                 }
                                             });
@@ -231,6 +249,7 @@ public class AddPostDialogFragment extends DialogFragment
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
                                     Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
+                                    lottieAnimation.dismiss();
                                     dismiss();
                                 }
                             });
