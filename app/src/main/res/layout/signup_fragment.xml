@@ -138,53 +138,6 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_middle"
-                    android:layout_marginTop="@dimen/spacing_middle"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/spacing_medium"
-                        android:paddingRight="@dimen/spacing_medium"
-                        android:text="Gender"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/grey_90" />
-
-                    <RadioGroup
-                        android:id="@+id/gender"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_medium"
-                        android:orientation="horizontal">
-
-                        <android.support.v7.widget.AppCompatRadioButton
-                            android:id="@+id/radio_female"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Female"
-                            android:checked="true"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/grey_90" />
-
-                        <View
-                            android:layout_width="@dimen/spacing_mlarge"
-                            android:layout_height="0dp" />
-
-                        <android.support.v7.widget.AppCompatRadioButton
-                            android:id="@+id/radio_male"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Male"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/grey_90" />
-
-                    </RadioGroup>
-
-                </LinearLayout>
 
                 <Button
                     android:id="@+id/signup_email_btn"
