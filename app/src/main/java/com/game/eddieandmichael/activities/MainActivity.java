@@ -1,6 +1,8 @@
 package com.game.eddieandmichael.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.transition.AutoTransition;
@@ -18,7 +20,6 @@ import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.game.eddieandmichael.fragments.LoginFragment;
 import com.game.eddieandmichael.fragments.MainScreen;
-import com.game.eddieandmichael.fragments.MessengerFragment;
 import com.game.eddieandmichael.fragments.ProfileFragment;
 import com.game.eddieandmichael.fragments.SignOutFragment;
 import com.game.eddieandmichael.services.SyncWithFirebaseService;
@@ -242,6 +243,12 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.main_fragment,mainScreenFrag,"MainScreen");
             fragmentTransaction.commit();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.colorPrimaryDark)));
+                getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+            }
         }
 
     }

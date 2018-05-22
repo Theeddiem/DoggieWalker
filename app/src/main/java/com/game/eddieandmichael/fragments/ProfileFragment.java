@@ -1,7 +1,9 @@
 package com.game.eddieandmichael.fragments;
 
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.transition.AutoTransition;
@@ -13,7 +15,6 @@ import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -126,34 +127,7 @@ public class ProfileFragment extends Fragment
 
         updateUI();
 
-        Thread thread = new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                    ActionBar supportActionBar = ((MainActivity) getActivity()).getSupportActionBar();
-
-                    Bitmap bitmap = null;
-                    try {
-                        bitmap = Picasso.get().load(profilePhotoUri).get();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    Palette p = Palette.from(bitmap).generate();
-
-                    int darkMutedColor = p.getDarkMutedColor(1);
-
-                    supportActionBar.setBackgroundDrawable(new ColorDrawable(darkMutedColor));
-
-                    Window window = getActivity().getWindow();
-
-                    window.setStatusBarColor(darkMutedColor);
-
-            }
-        });
-
-        thread.start();
+        new changeColor().execute();
 
         return thisView;
     }
@@ -178,6 +152,64 @@ public class ProfileFragment extends Fragment
         floatingActionButton = thisView.findViewById(R.id.profile_Fab);
         aboutUser = thisView.findViewById(R.id.profile_aboutUser);
 
+    }
+
+
+
+    private class changeColor extends AsyncTask<Void,Void,Void>
+    {
+        int color = 0;
+        int defaultColor;
+        int defultFabColor;
+        Palette p;
+
+        ActionBar supportActionBar;
+
+        public changeColor()
+        {
+            supportActionBar = ((MainActivity) getActivity()).getSupportActionBar();
+            defaultColor = getResources().getColor(R.color.colorPrimaryDark);
+            defultFabColor = getResources().getColor(R.color.deep_orange_500);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid)
+        {
+
+            if(p.getDarkVibrantColor(defaultColor) != defaultColor)
+            {
+
+                supportActionBar.setBackgroundDrawable(new ColorDrawable(p.getDarkVibrantColor(defaultColor)));
+                getActivity().getWindow().setStatusBarColor(p.getDarkVibrantColor(defaultColor));
+                floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(p.getMutedColor(defultFabColor)));
+
+            }
+
+            if(p.getDarkMutedColor(defaultColor) != defaultColor)
+            {
+                supportActionBar.setBackgroundDrawable(new ColorDrawable(p.getDarkMutedColor(defaultColor)));
+                getActivity().getWindow().setStatusBarColor(p.getDarkMutedColor(defaultColor));
+                floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(p.getMutedColor(defultFabColor)));
+
+            }
+
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids)
+        {
+
+            Bitmap bitmap = null;
+            try {
+                bitmap = Picasso.get().load(profilePhotoUri).get();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            p = Palette.from(bitmap).generate();
+            return null;
+        }
     }
 }
 

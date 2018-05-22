@@ -190,7 +190,25 @@ public class EditProfileFragment extends Fragment
 
                         }else
                         {
+                            collection.document(firebaseID).delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>()
+                                    {
+                                        @Override
+                                        public void onSuccess(Void aVoid)
+                                        {
+                                            collection.add(currentUser)
+                                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                                                    {
+                                                        @Override
+                                                        public void onSuccess(DocumentReference documentReference)
+                                                        {
+                                                            Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
+                                                            getActivity().onBackPressed();
+                                                        }
+                                                    });
 
+                                        }
+                                    });
                         }
 
 
