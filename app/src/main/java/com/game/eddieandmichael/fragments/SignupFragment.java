@@ -34,6 +34,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.List;
+
 
 public class SignupFragment extends Fragment
 {
@@ -309,6 +311,7 @@ public class SignupFragment extends Fragment
                 @Override
                 public void onSuccess(QuerySnapshot documentSnapshots)
                 {
+                    List<User> users = documentSnapshots.toObjects(User.class);
                     if(documentSnapshots.isEmpty())
                     {
                         user.set_ID(account.getId());
@@ -325,6 +328,18 @@ public class SignupFragment extends Fragment
 
                             }
                         });
+                    }else
+                    {
+                        User Firebaseuser = users.get(0);
+
+                        user.set_ID(Firebaseuser.get_ID());
+                        user.setEmail(Firebaseuser.getEmail());
+                        user.setFullName(Firebaseuser.getFullName());
+                        user.setUserName(Firebaseuser.getUserName());
+                        user.setProfilePhoto(Firebaseuser.getProfilePhoto());
+                        user.setAboutUser(Firebaseuser.getAboutUser());
+
+
                     }
 
                 }
