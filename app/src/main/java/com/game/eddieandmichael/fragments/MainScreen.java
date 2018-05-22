@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,9 +58,21 @@ public class MainScreen extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("DoggieWalker");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+
+
         View view = null;
         view = inflater.inflate(R.layout.main_screen, container,false);
+
+        Toolbar toolbar = view.findViewById(R.id.appbar);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            toolbar.setBackgroundColor(getActivity().getColor(R.color.colorPrimaryDark));
+        }
+        getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+
 
         user = User.getInstance();
 
@@ -122,6 +136,8 @@ public class MainScreen extends Fragment
 
         LocalBroadcastManager.getInstance(getActivity())
                 .registerReceiver(adapterReceiver, new IntentFilter("Refresh_Adapter"));
+
+
         return view;
     }
 
