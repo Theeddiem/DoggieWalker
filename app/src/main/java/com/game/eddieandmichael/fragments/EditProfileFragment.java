@@ -46,6 +46,7 @@ public class EditProfileFragment extends Fragment
     String userName;
     String about;
     Uri newPhotoUri;
+    int toolBarColor;
 
     User currentUser;
 
@@ -72,6 +73,9 @@ public class EditProfileFragment extends Fragment
         fullName = getArguments().getString("fullName");
         userName = getArguments().getString("userName");
         about = getArguments().getString("about");
+        toolBarColor = getArguments().getInt("toolBarColor");
+
+        toolbar.setBackgroundColor(toolBarColor);
 
         updateUI();
 
@@ -133,10 +137,7 @@ public class EditProfileFragment extends Fragment
 
         final CollectionReference collection = firestore.collection("users");
 
-        if(newPhotoUri != null)
-        {
-            uploadNewProfilePhoto();
-        }
+
 
         collection.whereEqualTo("_ID",currentUser.get_ID()).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()

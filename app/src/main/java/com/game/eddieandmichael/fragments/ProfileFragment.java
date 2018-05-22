@@ -45,6 +45,8 @@ public class ProfileFragment extends Fragment
     String profilePhotoUri;
     String aboutUserString;
 
+    int toolBarColor = 0;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -121,6 +123,7 @@ public class ProfileFragment extends Fragment
                     b.putString("fullName",currentUser.getFullName());
                     b.putString("about",currentUser.getAboutUser());
                     b.putString("photoUrl",currentUser.getProfilePhoto());
+                    b.putInt("toolBarColor",toolBarColor);
 
                     editProfileFragment.setArguments(b);
 
@@ -192,6 +195,8 @@ public class ProfileFragment extends Fragment
                 supportActionBar.setBackgroundDrawable(new ColorDrawable(p.getDarkVibrantColor(defaultColor)));
                 getActivity().getWindow().setStatusBarColor(p.getDarkVibrantColor(defaultColor));
                 floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(p.getMutedColor(defultFabColor)));
+
+                toolBarColor = p.getDarkVibrantColor(defaultColor);
 
             }
 

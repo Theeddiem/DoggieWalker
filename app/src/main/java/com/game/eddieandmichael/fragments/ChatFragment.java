@@ -39,6 +39,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 
     View thisView;
     User currentUser;
+    User otherUser;
+
     ////////////////////////////////////////////////////
     ImageView sendMessege;
     EditText messegeInput;
@@ -77,10 +79,10 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        User userById = allThePosts.findUserById(OtherUserID);
+        otherUser = allThePosts.findUserById(OtherUserID);
 
-        otherUserName.setText(userById.getFullName());
-        Picasso.get().load(userById.getProfilePhoto()).into(otherUserImage);
+        otherUserName.setText(otherUser.getFullName());
+        Picasso.get().load(otherUser.getProfilePhoto()).into(otherUserImage);
 
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(OtherFullName);
@@ -99,7 +101,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         messegeInput.getText().clear();
         //my SideBackUp
         db.collection("Chats").document(currentUser.get_ID()+ " " + OtherUserID).
-                collection(currentUser.getFullName()+ "  with " + OtherFullName).add(message)
+                collection(currentUser.get_ID()+ "  with " + otherUser.get_ID()).add(message)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -114,7 +116,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 
         //His SideBackUp
         db.collection("Chats").document(OtherUserID+ " " + currentUser.get_ID()).
-                collection(OtherFullName+ "  with " + currentUser.getFullName()).add(message)
+                collection(otherUser.get_ID()+ "  with " + currentUser.get_ID()).add(message)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -138,7 +140,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 
 
         db.collection("Chats").document(currentUser.get_ID() + " " + OtherUserID).
-                collection(currentUser.getFullName() + "  with " + OtherFullName).orderBy("messageTime", Query.Direction.ASCENDING)
+                collection(currentUser.get_ID() + "  with " + otherUser.get_ID()).orderBy("messageTime", Query.Direction.ASCENDING)
                 .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {

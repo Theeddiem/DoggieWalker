@@ -1,7 +1,10 @@
 package com.game.eddieandmichael.classes;
 
-public class ChatMessage {
+import java.util.UUID;
 
+public class ChatMessage
+{
+    private String message_ID;
     private String messageText;
     private String currentUserID;
     private String messageUserID;
@@ -16,6 +19,7 @@ public class ChatMessage {
         this.currentUserID = currentUserID;
         this.messageUserID = messageUserID;
         messageTime = System.currentTimeMillis();
+        this.message_ID = UUID.randomUUID().toString();
      }
 
     public String getMessageText() {
@@ -32,5 +36,9 @@ public class ChatMessage {
 
     public long getMessageTime() {
         return messageTime;
+    }
+
+    public String getMessage_ID() {
+        return message_ID;
     }
 }
