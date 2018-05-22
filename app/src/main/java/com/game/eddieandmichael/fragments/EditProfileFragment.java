@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -58,6 +60,12 @@ public class EditProfileFragment extends Fragment
 
         view = inflater.inflate(R.layout.edit_profile_fragment,container,false);
         getReferences(view);
+
+        Toolbar toolbar = view.findViewById(R.id.editProfile_toolBar);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
         profilePhotoUrl = getArguments().getString("photoUrl");
