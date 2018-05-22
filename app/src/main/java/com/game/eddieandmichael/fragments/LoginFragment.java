@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.game.eddieandmichael.activities.MainActivity;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,7 +23,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -54,8 +52,6 @@ public class LoginFragment extends Fragment
         logoImage = view.findViewById(R.id.login_logoImage);
         emailTv = view.findViewById(R.id.login_email_et);
         passwordTv = view.findViewById(R.id.login_password_et);
-
-        Picasso.get().load(R.drawable.empty_blue_star).into(logoImage);
 
 
         signUp_tv.setOnClickListener(new View.OnClickListener()

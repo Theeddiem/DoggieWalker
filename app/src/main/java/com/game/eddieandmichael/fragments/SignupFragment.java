@@ -331,7 +331,6 @@ public class SignupFragment extends Fragment
                     }else
                     {
                         User Firebaseuser = users.get(0);
-
                         user.set_ID(Firebaseuser.get_ID());
                         user.setEmail(Firebaseuser.getEmail());
                         user.setFullName(Firebaseuser.getFullName());
