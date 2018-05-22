@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.game.eddieandmichael.activities.MainActivity;
 import com.game.eddieandmichael.classes.AllThePosts;
@@ -72,23 +73,32 @@ public class ProfileFragment extends Fragment
 
             //Use the "userId" veriable to get all the data we need from the post's currentUser
 
+
+
             floatingActionButton.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
                 {
                     //TODO Start Chat Fragment
-                    String Uid= userById.get_ID();
-                    String UserfullName=userById.getFullName();
-                    Fragment fr=new ChatFragment();
-                    FragmentManager fm=getFragmentManager();
-                    FragmentTransaction ft=fm.beginTransaction();
-                    Bundle args = new Bundle();
-                    args.putString("UserID", Uid);
-                    args.putString("UserFullName",UserfullName);
-                    fr.setArguments(args);
-                    ft.replace(R.id.main_fragment, fr,"ChatScreen").addToBackStack(null).
-                    commit();
+
+                    if(currentUser.get_ID() == null)
+                    {
+                        Toast.makeText(getActivity(), "Login to send message", Toast.LENGTH_SHORT).show();
+                    }else
+                    {
+                        String Uid= userById.get_ID();
+                        String UserfullName=userById.getFullName();
+                        Fragment fr=new ChatFragment();
+                        FragmentManager fm=getFragmentManager();
+                        FragmentTransaction ft=fm.beginTransaction();
+                        Bundle args = new Bundle();
+                        args.putString("UserID", Uid);
+                        args.putString("UserFullName",UserfullName);
+                        fr.setArguments(args);
+                        ft.replace(R.id.main_fragment, fr,"ChatScreen").addToBackStack(null).
+                                commit();
+                    }
                 }
             });
 
