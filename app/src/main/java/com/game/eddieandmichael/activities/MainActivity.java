@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.transition.AutoTransition;
 import android.support.v4.app.FragmentManager;
@@ -28,9 +27,7 @@ import com.game.eddieandmichael.fragments.SignOutFragment;
 import com.game.eddieandmichael.services.SyncWithFirebaseService;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,6 +50,7 @@ public class MainActivity extends AppCompatActivity
 
     LottieAnimation lottieAnimation;
 
+    Intent syncServiceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -158,7 +156,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        Intent syncServiceIntent = new Intent(this, SyncWithFirebaseService.class);
+        syncServiceIntent = new Intent(this, SyncWithFirebaseService.class);
         startService(syncServiceIntent);
 
     }
@@ -244,14 +242,7 @@ public class MainActivity extends AppCompatActivity
 
                         }
 
-                    }).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-            {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task)
-                {
-                    lottieAnimation.dismiss();
-                }
-            })
+                    })
             ;
 
 
@@ -287,6 +278,13 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        stopService(syncServiceIntent);
+        super.onDestroy();
     }
 }
 

@@ -83,6 +83,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
     public void onBindViewHolder(final PostViewHolder holder, final int position) {
         final Post post = allThePosts.get(position);
         int day, month, year, hour, minute;
+
         final User user = AllThePostsSingleton.findUserById(post.getPostOwner_ID());
 
         final String profilePhotoUri = user.getProfilePhoto();
@@ -400,6 +401,5 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
 
 }
-
 
 //TODO different colors for seekers and walkers
