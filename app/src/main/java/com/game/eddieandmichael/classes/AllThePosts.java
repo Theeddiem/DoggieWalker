@@ -110,7 +110,10 @@ public class AllThePosts
             });
 
             thread.start();
-            userCache.put(returnUser[0].get_ID(),returnUser[0]);
+            if(returnUser[0] != null)
+            {
+                userCache.put(returnUser[0].get_ID(),returnUser[0]);
+            }
         }
 
         return returnUser[0];
