@@ -234,8 +234,6 @@ public class MainActivity extends AppCompatActivity
 
                                 AllThePosts allThePosts = AllThePosts.getInstance();
 
-                                allThePosts.addUserToCache(user);
-
                                 lottieAnimation.dismiss();
 
                             }

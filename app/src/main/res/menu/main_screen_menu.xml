@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/mainScreen_menu_search"
+        android:title="Search"
+        android:icon="@drawable/ic_search_24dp"
+        app:showAsAction="always"
+        />
+
+    <item
         android:id="@+id/mainScreen_menu_searchUsers"
         android:title="Search Users"
         android:icon="@drawable/ic_search_24dp"
@@ -18,7 +25,7 @@
 
     <item
         android:id="@+id/mainScreen_menu_searchPrices"
-        android:title="Search Users"
+        android:title="Search Prices"
         android:icon="@drawable/ic_search_24dp"
         app:showAsAction="never"
         />

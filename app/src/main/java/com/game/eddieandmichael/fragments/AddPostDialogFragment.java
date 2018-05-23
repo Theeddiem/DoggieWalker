@@ -162,7 +162,7 @@ public class AddPostDialogFragment extends DialogFragment
                                         newPost.setPostOwner_ID(oldPost.getPostOwner_ID());
                                         newPost.setAboutThePost(postText.getText().toString());
                                         newPost.setPlacesOfPost(placesText.getText().toString());
-                                        newPost.setPrice(priceText.getText().toString());
+                                        newPost.setPrice(Integer.parseInt(priceText.getText().toString()));
                                         newPost.setPostsPhotos(oldPost.getPostsPhotos());
                                         newPost.setTimeOfPost(oldPost.getTimeOfPost());
                                         newPost.setHasPhoto(oldPost.isHasPhoto());
@@ -194,9 +194,9 @@ public class AddPostDialogFragment extends DialogFragment
                         final Post post = new Post(currentUser.get_ID(), iswalker);
                         post.setPlacesOfPost(placesText.getText().toString());
                         if (priceText.getText().toString().equals("")) {
-                            post.setPrice("Unspecified");
+                            post.setPrice(0);
                         } else {
-                            post.setPrice(priceText.getText().toString());
+                            post.setPrice(Integer.parseInt(priceText.getText().toString()));
                         }
 
 

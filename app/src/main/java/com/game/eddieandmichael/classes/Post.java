@@ -13,7 +13,7 @@ public class Post implements Serializable, Comparable<Post>
     private String aboutThePost;
     private boolean isAWalker;
     private long timeOfPost;
-    private String price;
+    private int price;
     private String placesOfPost;
     private String postsPhotos;
     private boolean hasPhoto;
@@ -82,11 +82,11 @@ public class Post implements Serializable, Comparable<Post>
         this.postOwner = postOwner;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

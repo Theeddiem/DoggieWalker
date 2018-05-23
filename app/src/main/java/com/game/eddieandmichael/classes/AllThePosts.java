@@ -58,7 +58,7 @@ public class AllThePosts
         return searchingOnlyPosts;
     }
 
-    public synchronized void updateList(ArrayList<Post> list, Post post)
+    public void updateList(ArrayList<Post> list, Post post)
     {
         boolean found = false;
 
@@ -79,7 +79,7 @@ public class AllThePosts
         Collections.sort(list,postComparator);
     }
 
-    public synchronized boolean addUserToCache(User user)
+    public boolean addUserToCache(User user)
     {
         userCache.put(user.get_ID(),user);
 
@@ -92,12 +92,12 @@ public class AllThePosts
 
     }
 
-    public synchronized HashMap<String, User> getUserCache()
+    public HashMap<String, User> getUserCache()
     {
         return userCache;
     }
 
-    public User findUserById(final String id)
+    public synchronized User findUserById(final String id)
     {
         final User[] returnUser = {null};
         boolean foundInCache = false;
