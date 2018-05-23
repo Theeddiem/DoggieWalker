@@ -83,7 +83,13 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
     public void onBindViewHolder(final PostViewHolder holder, final int position) {
         final Post post = allThePosts.get(position);
         int day, month, year, hour, minute;
+
         final User user = AllThePostsSingleton.findUserById(post.getPostOwner_ID());
+
+        if(user == null)
+        {
+            return;
+        }
 
         final String profilePhotoUri = user.getProfilePhoto();
         final String postPhotoUri = post.getPostsPhotos();
@@ -201,7 +207,14 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         });
 
         holder.places.setText(post.getPlacesOfPost());
-        holder.prices.setText(post.getPrice());
+        if(post.getPrice() == 0)
+        {
+            holder.prices.setText("Unspecified");
+        }else
+        {
+            holder.prices.setText(post.getPrice()+"");
+        }
+
 
         if (post.getPostOwner_ID().equals(currentUser.get_ID())) {
             holder.moreBtn.setVisibility(View.VISIBLE);
@@ -244,7 +257,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
     private void editPost(String id, int position) {
         Bundle bundle = new Bundle();
         bundle.putString("about", allThePosts.get(position).getAboutThePost());
-        bundle.putString("price", allThePosts.get(position).getPrice());
+        bundle.putInt("price", allThePosts.get(position).getPrice());
         bundle.putString("places", allThePosts.get(position).getPlacesOfPost());
         bundle.putString("Id", allThePosts.get(position).get_ID());
         bundle.putBoolean("edit", true);
@@ -400,6 +413,5 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
 
 }
-
 
 //TODO different colors for seekers and walkers

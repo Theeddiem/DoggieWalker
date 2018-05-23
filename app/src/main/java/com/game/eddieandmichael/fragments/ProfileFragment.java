@@ -228,6 +228,3 @@ public class ProfileFragment extends Fragment
     }
 }
 
-
-
-//TODO let the currentUser edit his personal information

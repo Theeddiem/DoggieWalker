@@ -58,7 +58,7 @@ public class AllThePosts
         return searchingOnlyPosts;
     }
 
-    public synchronized void updateList(ArrayList<Post> list, Post post)
+    public void updateList(ArrayList<Post> list, Post post)
     {
         boolean found = false;
 
@@ -79,13 +79,20 @@ public class AllThePosts
         Collections.sort(list,postComparator);
     }
 
-    public synchronized boolean addUserToCache(User user)
+    public boolean addUserToCache(User user)
     {
         userCache.put(user.get_ID(),user);
+
+        if(userCache.size() > 20)
+        {
+            return false;
+        }
+
         return true;
+
     }
 
-    public synchronized HashMap<String, User> getUserCache()
+    public HashMap<String, User> getUserCache()
     {
         return userCache;
     }
@@ -119,7 +126,7 @@ public class AllThePosts
         return returnUser[0];
     }
 
-    private synchronized User findAndAddUser(String id)
+    private User findAndAddUser(String id)
     {
         final User[] user = new User[1];
 

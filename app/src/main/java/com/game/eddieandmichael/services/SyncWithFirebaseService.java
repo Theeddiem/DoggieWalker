@@ -46,8 +46,8 @@ public class SyncWithFirebaseService extends Service
     public int onStartCommand(Intent intent, int flags, int startId)
     {
 
-//        AddUsersToDatabase addUsers = new AddUsersToDatabase();
-//        addUsers.start();
+        //AddUsersToDatabase addUsers = new AddUsersToDatabase();
+        //addUsers.start();
 
         SyncDatabases syncDatabases = new SyncDatabases();
         syncDatabases.start();
