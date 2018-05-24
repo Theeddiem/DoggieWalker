@@ -49,6 +49,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha01'
     implementation 'com.airbnb.android:lottie:2.5.4'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
 
 

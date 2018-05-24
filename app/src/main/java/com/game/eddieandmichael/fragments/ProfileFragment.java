@@ -93,7 +93,7 @@ public class ProfileFragment extends Fragment
                         String Uid= userById.get_ID();
                         String UserfullName=userById.getFullName();
 
-                        currentUser.addUserToChat(Uid);
+                       // currentUser.addUserToChat(Uid);
 
                         Fragment fr=new ChatFragment();
                         FragmentManager fm=getFragmentManager();
