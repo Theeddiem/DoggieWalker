@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.game.eddieandmichael.adapters.MessageRecycleAdapter;
-import com.game.eddieandmichael.adapters.RecyclerItemClickListener;
+
 import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.ChatMessage;
 import com.game.eddieandmichael.classes.User;
@@ -79,7 +79,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
         activity.setSupportActionBar(toolbar);
-        //activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         otherUser = allThePosts.findUserById(OtherUserID);
