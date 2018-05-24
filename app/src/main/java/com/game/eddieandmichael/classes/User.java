@@ -2,6 +2,7 @@ package com.game.eddieandmichael.classes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class User implements Serializable
 {
@@ -11,7 +12,7 @@ public class User implements Serializable
     private String _ID;
     private String profilePhoto;
     private String aboutUser;
-    private String[] chatWithUser;
+    private List<String> chatWithUser;
 
 
     private static User instance = null;
@@ -19,7 +20,7 @@ public class User implements Serializable
     private User()
     {
         aboutUser = "";
-        this.chatWithUser = new String[1];
+        this.chatWithUser = new ArrayList<>();
     }
 
     public static User getInstance()
@@ -83,33 +84,16 @@ public class User implements Serializable
         this.aboutUser = aboutUser;
     }
 
-    public String[] getChatWithUser() {
+    public List<String> getChatWithUser() {
         return chatWithUser;
     }
 
-    public void setChatWithUser(String[] chatWithUser) {
+    public void setChatWithUser(List<String> chatWithUser) {
         this.chatWithUser = chatWithUser;
     }
 
     public void addUserToChat(String id)
     {
-        ArrayList<String> temp = new ArrayList<>();
-
-        for(String s: chatWithUser)
-        {
-            temp.add(s);
-        }
-
-        if(!temp.contains(id))
-        {
-            temp.add(id);
-            chatWithUser = new String[chatWithUser.length+1];
-
-            for (int i = 0; i < 10; i++)
-            {
-                chatWithUser[i] = temp.get(i);
-            }
-        }
-
+        chatWithUser.add(id);
     }
 }

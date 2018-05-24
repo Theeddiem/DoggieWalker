@@ -32,6 +32,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 public class EditProfileFragment extends Fragment
 {
 
@@ -145,7 +147,17 @@ public class EditProfileFragment extends Fragment
                     @Override
                     public void onSuccess(QuerySnapshot documentSnapshots)
                     {
+                        List<DocumentSnapshot> documents = documentSnapshots.getDocuments();
+
+                        if (documents.isEmpty())
+                        {
+                            collection.add(currentUser);
+                            return;
+                        }
+
                         DocumentSnapshot userInFirebase = documentSnapshots.getDocuments().get(0);
+
+
                         final String firebaseID = userInFirebase.getId();
 
                         currentUser.setFullName(fullName_ET.getText().toString());
