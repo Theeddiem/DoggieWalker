@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity
 
                     case R.id.navi_login:
                     {
-                        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
 
                         if(user.get_ID() != null)
                         {
@@ -131,6 +130,7 @@ public class MainActivity extends AppCompatActivity
                             fragmentTransaction.replace(R.id.main_fragment, new SignOutFragment(), "SignOut");
                             fragmentTransaction.commit();
                             drawerLayout.closeDrawers();
+                            return true;
 
                         }else {
 
@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity
                             fragmentTransaction.replace(R.id.main_fragment, new LoginFragment(), "LoginScreen");
                             fragmentTransaction.commit();
                             drawerLayout.closeDrawers();
+                            return true;
                         }
 
                     }
@@ -148,6 +149,7 @@ public class MainActivity extends AppCompatActivity
                             fragmentTransaction.replace(R.id.main_fragment, new MessengerFragment(), "MessengerScreen");
                             fragmentTransaction.commit();
                             drawerLayout.closeDrawers();
+                            return true;
                         }
 
 

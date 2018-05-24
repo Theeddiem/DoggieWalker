@@ -79,7 +79,7 @@ public class AllThePosts
         Collections.sort(list,postComparator);
     }
 
-    public boolean addUserToCache(User user)
+    public synchronized boolean addUserToCache(User user)
     {
         userCache.put(user.get_ID(),user);
 

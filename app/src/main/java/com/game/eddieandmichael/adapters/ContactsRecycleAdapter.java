@@ -62,5 +62,6 @@ public class ContactsRecycleAdapter extends RecyclerView.Adapter<ContactsRecycle
         }
 
 
+
     }
 }

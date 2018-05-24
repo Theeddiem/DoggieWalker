@@ -94,6 +94,9 @@ public class User implements Serializable
 
     public void addUserToChat(String id)
     {
-        chatWithUser.add(id);
+        if(!chatWithUser.contains(id))
+        {
+            chatWithUser.add(id);
+        }
     }
 }

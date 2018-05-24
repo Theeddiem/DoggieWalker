@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.Post;
@@ -46,8 +47,8 @@ public class SyncWithFirebaseService extends Service
     public int onStartCommand(Intent intent, int flags, int startId)
     {
 
-        //AddUsersToDatabase addUsers = new AddUsersToDatabase();
-        //addUsers.start();
+        AddUsersToDatabase addUsers = new AddUsersToDatabase();
+        addUsers.start();
 
         SyncDatabases syncDatabases = new SyncDatabases();
         syncDatabases.start();
@@ -135,7 +136,7 @@ public class SyncWithFirebaseService extends Service
 
         }
 
-        void addUserToCache(String id)
+        void addUserToCache(final String id)
         {
             userCollection.whereEqualTo("_ID",id).get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
@@ -143,8 +144,12 @@ public class SyncWithFirebaseService extends Service
                         @Override
                         public void onSuccess(QuerySnapshot documentSnapshots)
                         {
+                            Log.d("Service ID", "onSuccess: "+id);
                             List<User> users = documentSnapshots.toObjects(User.class);
-                            allThePosts.addUserToCache(users.get(0));
+                            if(users.size() > 0)
+                            {
+                                allThePosts.addUserToCache(users.get(0));
+                            }
                         }
                     });
 
