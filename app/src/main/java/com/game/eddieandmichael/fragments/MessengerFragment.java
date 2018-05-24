@@ -55,7 +55,7 @@ public class MessengerFragment extends Fragment {
         adapter.notifyDataSetChanged();
 
 
-        myRecyclerView.addOnItemTouchListener(
+       /* myRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         String id = chatWithUser.get(position);
@@ -79,7 +79,7 @@ public class MessengerFragment extends Fragment {
                                 commit();
                     }
                 })
-        );
+        );*/
 
         return thisView;
 
