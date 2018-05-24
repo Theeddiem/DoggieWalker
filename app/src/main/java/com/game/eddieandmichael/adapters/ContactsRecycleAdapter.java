@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.game.eddieandmichael.classes.ChatMessage;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -36,7 +36,13 @@ public class ContactsRecycleAdapter extends RecyclerView.Adapter<ContactsRecycle
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContactsRecycleAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ContactsRecycleAdapter.ViewHolder holder, int position)
+    {
+        User user = ContactsArraylist.get(position);
+
+        holder.fullname.setText(user.getFullName());
+
+        Picasso.get().load(user.getProfilePhoto()).into(holder.profilePhoto);
 
     }
 
@@ -54,5 +60,7 @@ public class ContactsRecycleAdapter extends RecyclerView.Adapter<ContactsRecycle
             fullname=itemView.findViewById(R.id.messenger_fullname);
             profilePhoto=itemView.findViewById(R.id.messenger_prophoto_row);
         }
+
+
     }
 }

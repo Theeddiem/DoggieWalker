@@ -16,12 +16,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.game.eddieandmichael.fragments.LoginFragment;
 import com.game.eddieandmichael.fragments.LottieAnimation;
 import com.game.eddieandmichael.fragments.MainScreen;
+import com.game.eddieandmichael.fragments.MessengerFragment;
 import com.game.eddieandmichael.fragments.ProfileFragment;
 import com.game.eddieandmichael.fragments.SignOutFragment;
 import com.game.eddieandmichael.services.SyncWithFirebaseService;
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity
                         }
 
                     }
-                  /*   case R.id.navi_messenger:
+                     case R.id.navi_messenger:
                     {
                         if(user.get_ID() != null) {
                             fragmentTransaction = fragmentManager.beginTransaction();
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity
                         }
 
 
-                    }*/
+                    }
 
                 }
 
@@ -249,8 +249,7 @@ public class MainActivity extends AppCompatActivity
                                 user.setEmail(users.get(0).getEmail());
                                 user.setProfilePhoto(users.get(0).getProfilePhoto());
                                 user.setAboutUser(users.get(0).getAboutUser());
-
-                                AllThePosts allThePosts = AllThePosts.getInstance();
+                                user.setChatWithUser(users.get(0).getChatWithUser());
 
                                 lottieAnimation.dismiss();
 
