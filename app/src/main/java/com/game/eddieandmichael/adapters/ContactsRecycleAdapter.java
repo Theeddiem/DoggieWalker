@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
@@ -16,7 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ContactsRecycleAdapter extends RecyclerView.Adapter<ContactsRecycleAdapter.ViewHolder> {
+public class ContactsRecycleAdapter extends RecyclerView.Adapter<ContactsRecycleAdapter.ViewHolder>  {
     User currentUser = User.getInstance();
     Calendar calendar;
     ArrayList<User> ContactsArraylist;
@@ -50,6 +51,8 @@ public class ContactsRecycleAdapter extends RecyclerView.Adapter<ContactsRecycle
     public int getItemCount() {
         return ContactsArraylist.size();
     }
+
+
 
     public class ViewHolder    extends RecyclerView.ViewHolder{
         TextView fullname;
