@@ -103,7 +103,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         messegeInput.getText().clear();
         //my SideBackUp
 
-
+        if(msgInput.length()>0) {
             db.collection("Chats").document(currentUser.get_ID() + " " + OtherUserID).
                     collection(currentUser.get_ID() + "  with " + otherUser.get_ID()).add(message)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -133,7 +133,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
                 }
             });
 
-
+        }
 
 
     }
