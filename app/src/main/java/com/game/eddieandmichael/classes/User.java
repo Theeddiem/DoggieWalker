@@ -1,6 +1,7 @@
 package com.game.eddieandmichael.classes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable
 {
@@ -90,5 +91,25 @@ public class User implements Serializable
         this.chatWithUser = chatWithUser;
     }
 
+    public void addUserToChat(String id)
+    {
+        ArrayList<String> temp = new ArrayList<>();
 
+        for(String s: chatWithUser)
+        {
+            temp.add(s);
+        }
+
+        if(!temp.contains(id))
+        {
+            temp.add(id);
+            chatWithUser = new String[chatWithUser.length+1];
+
+            for (int i = 0; i < 10; i++)
+            {
+                chatWithUser[i] = temp.get(i);
+            }
+        }
+
+    }
 }

@@ -32,6 +32,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -188,10 +190,10 @@ public class MainActivity extends AppCompatActivity
         lottieAnimation.show(transaction,"lottieDialog");
 
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        final GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         user = User.getInstance();
 
-        FirebaseAuth instance = FirebaseAuth.getInstance();
+        final FirebaseAuth instance = FirebaseAuth.getInstance();
         final FirebaseUser currentUser = instance.getCurrentUser();
 
         if(currentUser != null || account != null)
@@ -212,6 +214,7 @@ public class MainActivity extends AppCompatActivity
                 accountId = account.getId();
             }
 
+            final String finalAccountId = accountId;
             allTheUsers.whereEqualTo("_ID",accountId).get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
                     {
@@ -222,6 +225,21 @@ public class MainActivity extends AppCompatActivity
                             if(documentSnapshots.isEmpty())
                             {
                                 Toast.makeText(MainActivity.this, "No User Data Found", Toast.LENGTH_SHORT).show();
+                                user = User.getInstance();
+
+                                user.set_ID(finalAccountId);
+
+                                if(account != null)
+                                {
+                                    user.setProfilePhoto(account.getPhotoUrl().toString());
+                                    user.setEmail(account.getEmail());
+                                    user.setUserName(account.getDisplayName());
+                                }
+
+
+                                lottieAnimation.dismiss();
+
+
                             }else
                             {
                                 List<User> users = documentSnapshots.toObjects(User.class);
@@ -283,7 +301,46 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy()
     {
         stopService(syncServiceIntent);
+
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+        final CollectionReference collection = firestore.collection("users");
+
+        collection.whereEqualTo("_ID",user.get_ID()).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
+                {
+                    @Override
+                    public void onSuccess(QuerySnapshot documentSnapshots)
+                    {
+                        DocumentSnapshot userInFirebase = documentSnapshots.getDocuments().get(0);
+
+                        String fireBaseId = userInFirebase.getId();
+
+                        collection.document(fireBaseId).delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>()
+                                {
+                                    @Override
+                                    public void onSuccess(Void aVoid)
+                                    {
+                                        collection.add(user)
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentReference documentReference)
+                                                    {
+
+                                                    }
+                                                });
+
+                                    }
+                                });
+
+
+
+                    }
+                });
+
         super.onDestroy();
+
     }
 }
 

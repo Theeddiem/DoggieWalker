@@ -89,15 +89,21 @@ public class ProfileFragment extends Fragment
                         Toast.makeText(getActivity(), "Login to send message", Toast.LENGTH_SHORT).show();
                     }else
                     {
+
                         String Uid= userById.get_ID();
                         String UserfullName=userById.getFullName();
+
+                        currentUser.addUserToChat(Uid);
+
                         Fragment fr=new ChatFragment();
                         FragmentManager fm=getFragmentManager();
                         FragmentTransaction ft=fm.beginTransaction();
+
                         Bundle args = new Bundle();
                         args.putString("UserID", Uid);
                         args.putString("UserFullName",UserfullName);
                         fr.setArguments(args);
+
                         ft.replace(R.id.main_fragment, fr,"ChatScreen").addToBackStack(null).
                                 commit();
                     }

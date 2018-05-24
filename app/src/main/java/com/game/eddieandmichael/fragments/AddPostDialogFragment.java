@@ -140,6 +140,7 @@ public class AddPostDialogFragment extends DialogFragment
                 if(postText.getText().toString().equals(""))
                 {
                     Toast.makeText(getActivity(), "Cant add empty post", Toast.LENGTH_SHORT).show();
+                    lottieAnimation.dismiss();
                 }else {
 
                     if (isEdit)
