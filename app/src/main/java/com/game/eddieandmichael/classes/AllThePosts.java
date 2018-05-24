@@ -140,8 +140,8 @@ public class AllThePosts
                     @Override
                     public void onEvent(
                             QuerySnapshot documentSnapshots, FirebaseFirestoreException e)
-                    {
-                        user[0] = documentSnapshots.toObjects(User.class).get(0);
+                        {
+                        user[0] = (documentSnapshots.toObjects(User.class).get(0));
                     }
                 });
 

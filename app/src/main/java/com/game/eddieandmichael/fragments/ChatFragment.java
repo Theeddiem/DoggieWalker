@@ -102,34 +102,36 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         ChatMessage message = new ChatMessage(msgInput,currentUser.get_ID(),OtherUserID);
         messegeInput.getText().clear();
         //my SideBackUp
-        db.collection("Chats").document(currentUser.get_ID()+ " " + OtherUserID).
-                collection(currentUser.get_ID()+ "  with " + otherUser.get_ID()).add(message)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "onSuccess: WORKS ");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, e.toString());
-            }
-        });
 
-        //His SideBackUp
-        db.collection("Chats").document(OtherUserID+ " " + currentUser.get_ID()).
-                collection(otherUser.get_ID()+ "  with " + currentUser.get_ID()).add(message)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "onSuccess: WORKS ");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, e.toString());
-            }
-        });
+
+            db.collection("Chats").document(currentUser.get_ID() + " " + OtherUserID).
+                    collection(currentUser.get_ID() + "  with " + otherUser.get_ID()).add(message)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "onSuccess: WORKS ");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, e.toString());
+                }
+            });
+
+            //His SideBackUp
+            db.collection("Chats").document(OtherUserID + " " + currentUser.get_ID()).
+                    collection(otherUser.get_ID() + "  with " + currentUser.get_ID()).add(message)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "onSuccess: WORKS ");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, e.toString());
+                }
+            });
 
 
 
@@ -164,6 +166,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
                             return;
                         else /// scroll to last item
                             myRecyclerView.smoothScrollToPosition(lastpos);
+
 
                     }
 
