@@ -9,7 +9,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Allready sign in as: "
+        android:text="Already sign in as: "
         android:textSize="55sp"
         android:gravity="center"
         android:layout_marginTop="?attr/actionBarSize"
@@ -17,7 +17,7 @@
         android:id="@+id/signout_as_tv"
         />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/signout_as_tv"

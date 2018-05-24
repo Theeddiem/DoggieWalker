@@ -4,16 +4,17 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="4dp"
-    app:cardCornerRadius="15dp"
+    app:cardCornerRadius="5dp"
     app:cardUseCompatPadding="true"
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="40dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="60dp"
             android:layout_height="60dp"
-            android:scaleType="fitXY"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#ffffff"
             android:src="@drawable/defaultcontact"
             android:id="@+id/messenger_prophoto_row"
             android:layout_marginRight="30dp"/>
