@@ -1,5 +1,6 @@
 package com.game.eddieandmichael.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -73,6 +74,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 
         Toolbar toolbar = thisView.findViewById(R.id.chatWindow_Toolbar);
 
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
         activity.setSupportActionBar(toolbar);
