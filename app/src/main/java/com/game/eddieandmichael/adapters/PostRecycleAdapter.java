@@ -12,6 +12,7 @@ import android.support.transition.AutoTransition;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -222,6 +223,14 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
             holder.moreBtn.setVisibility(View.GONE);
         }
 
+//        if(post.isAWalker())
+//        {
+//            holder.layout.setCardBackgroundColor(context.getResources().getColor(R.color.light_blue_50));
+//        }else
+//        {
+//            holder.layout.setCardBackgroundColor(context.getResources().getColor(R.color.overlay_light_80));
+//        }
+
         holder.moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -394,6 +403,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
         TextView prices;
         TextView places;
         ImageButton moreBtn;
+        CardView layout;
 
 
         public PostViewHolder(View itemView) {
@@ -407,11 +417,10 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
             places = itemView.findViewById(R.id.post_places);
             moreBtn = itemView.findViewById(R.id.post_more_btn);
             postImage = itemView.findViewById(R.id.post_ImageView);
+            layout = itemView.findViewById(R.id.post_main_layout);
 
         }
     }
 
 
 }
-
-//TODO different colors for seekers and walkers

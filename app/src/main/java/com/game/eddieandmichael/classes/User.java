@@ -10,12 +10,15 @@ public class User implements Serializable
     private String _ID;
     private String profilePhoto;
     private String aboutUser;
+    private String[] chatWithUser;
+
 
     private static User instance = null;
 
     private User()
     {
         aboutUser = "";
+        this.chatWithUser = new String[1];
     }
 
     public static User getInstance()
@@ -78,4 +81,14 @@ public class User implements Serializable
     public void setAboutUser(String aboutUser) {
         this.aboutUser = aboutUser;
     }
+
+    public String[] getChatWithUser() {
+        return chatWithUser;
+    }
+
+    public void setChatWithUser(String[] chatWithUser) {
+        this.chatWithUser = chatWithUser;
+    }
+
+
 }
