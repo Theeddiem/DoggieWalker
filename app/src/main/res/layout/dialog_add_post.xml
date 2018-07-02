@@ -3,24 +3,22 @@
 <ScrollView
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
+    android:background="@drawable/rectangleshape"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:minWidth="1000dp"
-        android:minHeight="450dp"
+        android:padding="3dp"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/spacing_large"
             android:id="@+id/addPost_ProfileInfo"
             >
 
@@ -29,10 +27,6 @@
                 android:layout_height="@dimen/spacing_xxlarge"
                 android:id="@+id/addPost_profileImage"
                 />
-
-            <View
-                android:layout_width="@dimen/spacing_large"
-                android:layout_height="0dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -54,39 +48,20 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_small"
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:layout_width="@dimen/spacing_mlarge"
-                        android:layout_height="match_parent"
-                        android:tint="@color/colorPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tint="@color/colorAccent"
                         android:src="@drawable/ic_public"
                         android:clickable="true"
                         />
-
-                    <View
-                        android:layout_width="@dimen/spacing_medium"
-                        android:layout_height="0dp" />
-
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/addPost_submitBtn"
-                android:background="@color/colorAccent"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:minWidth="0dp"
-                android:paddingLeft="@dimen/spacing_large"
-                android:paddingRight="@dimen/spacing_large"
-                android:text="Post"
-                android:textAllCaps="false"
-                android:clickable="true"
-                />
 
         </LinearLayout>
 
@@ -162,32 +137,48 @@
             android:layout_gravity="center"
             />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <ImageButton
+                android:id="@+id/addPost_AddPhotoBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/addPost_AddPhotoBtn"
-                android:tint="@color/grey_40"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_image_black_48dp"
+                android:tint="@color/grey_40"
 
                 />
+
             <ImageButton
+                android:id="@+id/addPost_AddLocationBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/addPost_AddLocationBtn"
-                android:tint="@color/grey_40"
+                android:layout_toRightOf="@+id/addPost_AddPhotoBtn"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_add_location_black_48dp"
+                android:tint="@color/grey_40"
 
                 />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/addPost_submitBtn"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentRight="true"
+
+
+                android:background="@drawable/btn_rounded_accent"
+                android:clickable="true"
+                android:minWidth="0dp"
+                android:text="Post"
+                android:textColor="@color/overlay_light_90"
+                android:textAllCaps="false" />
+
+        </RelativeLayout>
 
 
 
