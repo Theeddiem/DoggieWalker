@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/maps/ic_add_location_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_image_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -34,11 +34,11 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="70e9ff" />
-                            <entry key="height" value="48" />
-                            <entry key="outputName" value="ic_add_location_black_48dp" />
+                            <entry key="height" value="36" />
+                            <entry key="outputName" value="ic_image_black_36dp" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\MichaelKata" />
-                            <entry key="width" value="48" />
+                            <entry key="width" value="36" />
                           </map>
                         </option>
                       </PersistentState>

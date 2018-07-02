@@ -28,6 +28,7 @@
                 android:id="@+id/addPost_profileImage"
                 />
 
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -45,6 +46,7 @@
                     android:id="@+id/addPost_profileName"
                     />
 
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,28 +62,18 @@
 
                 </LinearLayout>
 
+
             </LinearLayout>
 
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/addPost_walkerSwitch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            >
-
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Are you a walker?"
-                android:textSize="20sp"
+                android:text="Walker?"
+                android:textSize="15sp"
                 android:textColor="@color/overlay_dark_90"
-                android:id="@+id/addPost_walkerText"
-                />
 
+                />
             <Switch
                 android:id="@+id/addPost_isWalker_switch"
                 android:layout_width="wrap_content"
@@ -90,8 +82,9 @@
                 android:layout_toRightOf="@+id/addPost_walkerText"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
+        </LinearLayout>
 
-        </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -147,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_image_black_48dp"
+                android:src="@drawable/ic_image_black_36dp"
                 android:tint="@color/grey_40"
 
                 />
@@ -158,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/addPost_AddPhotoBtn"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_add_location_black_48dp"
+                android:src="@drawable/ic_add_location_black_36dp"
                 android:tint="@color/grey_40"
 
                 />
