@@ -24,7 +24,7 @@
             android:id="@+id/addPost_ProfileInfo"
             >
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="@dimen/spacing_xxlarge"
                 android:layout_height="@dimen/spacing_xxlarge"
                 android:id="@+id/addPost_profileImage"
@@ -76,13 +76,15 @@
 
             <Button
                 android:id="@+id/addPost_submitBtn"
-                android:layout_width="wrap_content"
+                android:background="@color/colorAccent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:minWidth="0dp"
                 android:paddingLeft="@dimen/spacing_large"
                 android:paddingRight="@dimen/spacing_large"
-                android:text="POST"
+                android:text="Post"
+                android:textAllCaps="false"
                 android:clickable="true"
                 />
 
@@ -101,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:text="Are you a walker?"
                 android:textSize="20sp"
+                android:textColor="@color/overlay_dark_90"
                 android:id="@+id/addPost_walkerText"
                 />
 
@@ -108,6 +111,7 @@
                 android:id="@+id/addPost_isWalker_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/addPost_walkerText"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
@@ -116,7 +120,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="match_parent"
             >
 
             <EditText
@@ -141,7 +145,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Locations..."
+                android:hint="Enter Location"
                 android:id="@+id/dialogPost_places_et"
                 android:layout_marginTop="15dp"
                 android:layout_below="@id/dialogPost_prices_et"
@@ -164,21 +168,22 @@
             android:orientation="horizontal"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Photo"
-                android:textSize="20sp"
-                android:layout_marginEnd="10dp"
-                />
-
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/addPost_AddPhotoBtn"
                 android:tint="@color/grey_40"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_photo_camera"
+                android:src="@drawable/ic_image_black_48dp"
+
+                />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/addPost_AddLocationBtn"
+                android:tint="@color/grey_40"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_add_location_black_48dp"
 
                 />
 

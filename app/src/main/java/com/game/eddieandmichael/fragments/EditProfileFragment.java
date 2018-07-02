@@ -68,7 +68,7 @@ public class EditProfileFragment extends Fragment
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
 
 
         profilePhotoUrl = getArguments().getString("photoUrl");

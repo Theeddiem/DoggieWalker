@@ -6,10 +6,9 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
         android:id="@+id/editProfile_toolBar"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
     </android.support.v7.widget.Toolbar>
@@ -39,7 +38,7 @@
                     android:background="@color/grey_10"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/editProfile_photo"
