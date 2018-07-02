@@ -7,35 +7,35 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="160dp"
         android:background="@color/colorPrimary" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:orientation="vertical"
         android:padding="@dimen/spacing_mlarge">
 
         <ImageView
+            android:id="@+id/login_logoImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/spacing_mlarge"
             android:layout_marginTop="@dimen/spacing_large"
-            android:src="@drawable/ic_public"
-            android:id="@+id/login_logoImage"
-            />
+            android:src="@drawable/ic_public" />
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_middle"
-            android:visibility="visible"
+            android:layout_marginTop="30dp"
             app:cardCornerRadius="6dp"
             app:cardElevation="5dp">
 
             <LinearLayout
+                android:layout_marginTop="@dimen/spacing_middle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -45,10 +45,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="@dimen/spacing_xlarge"
                     android:layout_marginTop="@dimen/spacing_middle"
                     android:text="SIGN IN"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/green_500"
                     android:textStyle="bold" />
 
@@ -61,6 +60,7 @@
                     android:textColor="@color/grey_40" />
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/login_email_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="-4dp"
@@ -69,12 +69,10 @@
                     android:maxLength="50"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blue_600"
                     android:textStyle="bold"
-                    android:theme="@style/EditText.Grey"
-                    android:id="@+id/login_email_et"
-                    />
+                    android:theme="@style/EditText.Grey" />
 
                 <View
                     android:layout_width="0dp"
@@ -89,6 +87,7 @@
                     android:textColor="@color/grey_40" />
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/login_password_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="-4dp"
@@ -97,35 +96,45 @@
                     android:maxLength="50"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blue_600"
                     android:textStyle="bold"
-                    android:theme="@style/EditText.Grey"
-                    android:id="@+id/login_password_et"
-                    />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/spacing_mlarge" />
+                    android:theme="@style/EditText.Grey" />
 
                 <Button
+                    android:id="@+id/login_login_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginLeft="-4dp"
-                    android:layout_marginRight="-4dp"
-                    android:background="@drawable/btn_rounded_primary"
-                    android:text="S I G N  I N"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_rounded_accent"
+                    android:text="Login"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:id="@+id/login_login_btn"
                     />
+
+
+                <Button
+                    android:id="@+id/login_facebook_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_rounded_primary"
+                    android:text="Login With Facebook"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/login_google_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_rounded_red"
+                    android:text="Login With Google"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_medium"
-                    android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
