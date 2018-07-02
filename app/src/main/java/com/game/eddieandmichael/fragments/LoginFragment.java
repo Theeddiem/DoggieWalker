@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,18 +70,22 @@ public class LoginFragment extends Fragment
         login_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-                if(emailTv.getText().toString() == null)
+                if (TextUtils.isEmpty(emailTv.getText().toString())&& TextUtils.isEmpty( passwordTv.getText().toString())) //null doesn't work need TextUtils
                 {
-                    Toast.makeText(getActivity(), "Enter Email Please", Toast.LENGTH_SHORT).show();
-                }else if(passwordTv.getText().toString() == null)
-                {
+                    Toast.makeText(getActivity(), "Enter Email and Password Please", Toast.LENGTH_SHORT).show();
+                }
+                else if (TextUtils.isEmpty(passwordTv.getText().toString())) //null doesn't work need TextUtils
                     Toast.makeText(getActivity(), "Enter Password Please", Toast.LENGTH_SHORT).show();
-                }else
+
+               else if (TextUtils.isEmpty(emailTv.getText().toString())) //null doesn't work need TextUtils
+                        Toast.makeText(getActivity(), "Enter Email Please", Toast.LENGTH_SHORT).show();
+
+                else
                 {
+
                     firebaseAuth.signInWithEmailAndPassword(emailTv.getText().toString(), passwordTv.getText().toString())
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>()
                             {

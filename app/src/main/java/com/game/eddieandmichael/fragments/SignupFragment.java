@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,6 +107,7 @@ public class SignupFragment extends Fragment
                     final String userName = userName_et.getText().toString();
                     String password = password_et.getText().toString();
 
+
                     firebaseAuth.createUserWithEmailAndPassword(email,password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>()
                             {
@@ -199,23 +201,23 @@ public class SignupFragment extends Fragment
 
             private boolean checkFields()
             {
-                if(fullName_et.getText().toString() == null)
+                if(TextUtils.isEmpty(fullName_et.getText().toString())) //fix with TextUtils
                 {
                     Toast.makeText(getActivity(), "Enter Full Name", Toast.LENGTH_SHORT).show();
                     return false;
-                }else if(userName_et.getText().toString() == null)
+                }else if(TextUtils.isEmpty(userName_et.getText().toString() ))//fix with TextUtils
                 {
                     Toast.makeText(getActivity(), "Enter User Name", Toast.LENGTH_SHORT).show();
                     return false;
-                }else if(email_et.getText().toString() == null)
+                }else if(TextUtils.isEmpty(email_et.getText().toString()))//fix with TextUtils
                 {
                     Toast.makeText(getActivity(), "Enter Email", Toast.LENGTH_SHORT).show();
                     return false;
-                }else if (password_et.getText().toString() == null)
+                }else if (TextUtils.isEmpty(password_et.getText().toString()))//fix with TextUtils
                 {
                     Toast.makeText(getActivity(), "Enter Password", Toast.LENGTH_SHORT).show();
                     return false;
-                }else if(rePassword_et.getText().toString() == null)
+                }else if(TextUtils.isEmpty(rePassword_et.getText().toString() ))//fix with TextUtils
                 {
                     Toast.makeText(getActivity(), "Enter your password again", Toast.LENGTH_SHORT).show();
                     return false;
