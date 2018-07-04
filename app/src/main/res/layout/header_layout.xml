@@ -3,31 +3,18 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="180dp"
+
     android:background="@color/colorPrimary"
-    android:gravity="bottom"
+
     >
 
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:textColor="#ffff"
-        android:text="DoggieWalker"
-        android:textAllCaps="false"
-        android:layout_marginStart="5dp"
-        android:textStyle="italic"
-
-
-        />
     <ImageView
-
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-
+        android:layout_marginTop="20dp"
         android:id="@+id/navigation_profileImage"
-        android:src="@drawable/dogwalker"
-        />
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:src="@drawable/dogwalker" />
 
 
     </LinearLayout>

@@ -20,12 +20,12 @@
 
         <ImageView
             android:id="@+id/login_logoImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/spacing_mlarge"
             android:layout_marginTop="@dimen/spacing_large"
-            android:src="@drawable/ic_public" />
+            android:src="@drawable/dogface" />
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
