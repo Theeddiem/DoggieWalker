@@ -25,6 +25,7 @@
 
 
         </activity>
+
         <service android:name="com.game.eddieandmichael.services.SyncWithFirebaseService"/>
 
     </application>

@@ -91,7 +91,7 @@ public class MainScreen extends Fragment
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            toolbar.setBackgroundColor(getActivity().getColor(R.color.colorPrimaryDark));
+            toolbar.setBackgroundColor(getActivity().getColor(R.color.colorPrimary));
         }
         getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
 

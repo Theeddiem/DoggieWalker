@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             {
-                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.colorPrimaryDark)));
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.colorPrimary)));
                 getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
             }
         }

@@ -2,25 +2,26 @@ package com.game.eddieandmichael.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
+
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
+import android.support.v7.widget.Toolbar;
+import android.app.ActionBar;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,13 +35,16 @@ public class SignOutFragment extends Fragment
     TextView signOut_tv;
     GoogleSignInOptions signInOptions;
     GoogleApiClient mGoogleApiClient;
-
+    Toolbar toolbar;
+    android.support.v7.app.ActionBar actionBar;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState)
     {
         View view = null;
         view = inflater.inflate(R.layout.signout_fragment,container,false);
 
+        toolbar=view.findViewById(R.id.signout_frag_toolbar);
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("");
 
 
         final User user = User.getInstance();
@@ -90,6 +94,7 @@ public class SignOutFragment extends Fragment
 
         return view;
     }
+
 
     @Override
     public void onStart()

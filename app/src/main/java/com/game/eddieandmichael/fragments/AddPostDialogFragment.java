@@ -99,12 +99,7 @@ public class AddPostDialogFragment extends DialogFragment {
     List<Address> addresses;
 
 
-    public AddPostDialogFragment() {
-    }
 
-    @SuppressLint("MissingPermission")
-    @Nullable
-    @Override
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
