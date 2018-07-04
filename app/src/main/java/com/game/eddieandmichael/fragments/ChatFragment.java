@@ -93,10 +93,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         sendMessege.setOnClickListener(this);
 
 
-
         return thisView;
     }
-
 
     @Override
     public void onClick(View v) {
@@ -193,5 +191,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         otherUserImage = thisView.findViewById(R.id.chatWindow_profileImage);
         otherUserName = thisView.findViewById(R.id.chatWindow_profileName);
     }
+
 
 }
