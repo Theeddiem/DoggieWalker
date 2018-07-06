@@ -146,7 +146,7 @@ public class ProfileFragment extends Fragment
 
         updateUI();
 
-        new changeColor().execute();
+      //  new changeColor().execute();
 
         return thisView;
     }
@@ -175,7 +175,7 @@ public class ProfileFragment extends Fragment
 
 
 
-    private class changeColor extends AsyncTask<Void,Void,Void>
+  /*  private class changeColor extends AsyncTask<Void,Void,Void>
     {
         int color = 0;
         int defaultColor;
@@ -231,6 +231,6 @@ public class ProfileFragment extends Fragment
             p = Palette.from(bitmap).generate();
             return null;
         }
-    }
+    }*/
 }
 

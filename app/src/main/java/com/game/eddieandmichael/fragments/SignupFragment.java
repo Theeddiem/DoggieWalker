@@ -85,7 +85,7 @@ public class SignupFragment extends Fragment
 
         getReferences(view);
 
-      /*  google_btn.setOnClickListener(new View.OnClickListener()
+        google_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -94,7 +94,7 @@ public class SignupFragment extends Fragment
                 startActivityForResult(signInIntent,GOOGLE_SIGNUP_REQUEST);
             }
         });
-*/
+
 
         email_btn.setOnClickListener(new View.OnClickListener()
         {
@@ -258,8 +258,8 @@ public class SignupFragment extends Fragment
         rePassword_et = view.findViewById(R.id.signup_rePassword_et);
 
         email_btn = view.findViewById(R.id.signup_email_btn);
-       // facebook_btn = view.findViewById(R.id.signup_facebook_btn);
-       // google_btn = view.findViewById(R.id.signup_google_btn);
+       facebook_btn = view.findViewById(R.id.signup_facebook_btn);
+       google_btn = view.findViewById(R.id.signup_google_btn);
         addProfilePhoto_btn = view.findViewById(R.id.signup_addPhoto_btn);
 
         profilePhotoURI_tv = view.findViewById(R.id.signup_profilePhoto_tv);
