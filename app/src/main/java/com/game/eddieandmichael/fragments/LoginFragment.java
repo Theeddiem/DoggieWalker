@@ -250,23 +250,16 @@ public class LoginFragment extends Fragment
                 public void onSuccess(QuerySnapshot documentSnapshots)
                 {
                     List<User> users = documentSnapshots.toObjects(User.class);
-                    if(documentSnapshots.isEmpty())
-                    {
+                    if(documentSnapshots.isEmpty()) {
                         user.set_ID(account.getId());
                         user.setEmail(account.getEmail());
                         user.setFullName(account.getDisplayName());
                         user.setUserName(account.getEmail());
                         user.setProfilePhoto(account.getPhotoUrl().toString());
 
-                        allTheUsers.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
-                        {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference)
-                            {
-
-                            }
-                        });
-                    }else
+                        allTheUsers.document(user.get_ID()).set(user);
+                    }
+                    else
                     {
                         User Firebaseuser = users.get(0);
                         user.set_ID(Firebaseuser.get_ID());

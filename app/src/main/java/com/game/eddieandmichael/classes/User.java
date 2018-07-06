@@ -1,8 +1,13 @@
 package com.game.eddieandmichael.classes;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class User implements Serializable
 {
@@ -20,6 +25,7 @@ public class User implements Serializable
     private User()
     {
         aboutUser = "";
+        if (chatWithUser==null)
         this.chatWithUser = new ArrayList<>();
     }
 
@@ -28,10 +34,12 @@ public class User implements Serializable
         if(instance == null)
         {
             instance = new User();
+
         }
 
         return instance;
     }
+
 
     public String getFullName() {
         return fullName;
@@ -92,11 +100,16 @@ public class User implements Serializable
         this.chatWithUser = chatWithUser;
     }
 
-    public void addUserToChat(String id)
-    {
-        if(!chatWithUser.contains(id))
-        {
-            chatWithUser.add(id);
-        }
-    }
+   public void addUserToChat(String id)
+   {
+       if (!chatWithUser.contains(id))
+       {
+           Log.i(TAG, fullName +"  addUserToChat: "+id);
+           chatWithUser.add(id);
+       }
+       else
+           Log.i(TAG, "fail");
+
+
+   }
 }

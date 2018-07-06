@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 
 public class SignupFragment extends Fragment
@@ -121,6 +124,7 @@ public class SignupFragment extends Fragment
                                         user.setEmail(email);
                                         user.setFullName(fullName);
                                         user.setUserName(userName);
+
                                         user.set_ID(firebaseAuth.getUid());
 
                                         String firebasePath = ("profilePhotos/"+user.get_ID());
@@ -138,49 +142,19 @@ public class SignupFragment extends Fragment
                                                             Uri uri = taskSnapshot.getDownloadUrl();
                                                             user.setProfilePhoto(uri.toString());
 
-                                                            firestoreDatabase.collection("users")
-                                                                    .add(user)
-                                                                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>()
-                                                                    {
-                                                                        @Override
-                                                                        public void onComplete(@NonNull Task<DocumentReference> task)
-                                                                        {
-                                                                            if (task.isSuccessful())
-                                                                            {
-                                                                                Toast.makeText(getActivity(), "Signup success", Toast.LENGTH_SHORT).show();
+                                                            firestoreDatabase.collection("users").document(user.get_ID())
+                                                                    .set(user);
 
-                                                                            }else
-                                                                            {
-                                                                                Toast.makeText(getActivity(), "Signup Failed", Toast.LENGTH_SHORT).show();
 
-                                                                            }
-
-                                                                        }
-                                                                    });
 
                                                         }
                                                     });
                                         }else
                                         {
-                                            firestoreDatabase.collection("users")
-                                                    .add(user)
-                                                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>()
-                                                    {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<DocumentReference> task)
-                                                        {
-                                                            if (task.isSuccessful())
-                                                            {
-                                                                Toast.makeText(getContext(), "Signup success", Toast.LENGTH_SHORT).show();
+                                            firestoreDatabase.collection("users").document(user.get_ID())
+                                                    .set(user);
 
-                                                            }else
-                                                            {
-                                                                Toast.makeText(getActivity(), "Signup Failed", Toast.LENGTH_SHORT).show();
 
-                                                            }
-
-                                                        }
-                                                    });
                                         }
 
 

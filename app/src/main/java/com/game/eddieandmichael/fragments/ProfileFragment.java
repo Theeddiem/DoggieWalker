@@ -23,9 +23,15 @@ import com.game.eddieandmichael.activities.MainActivity;
 import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class ProfileFragment extends Fragment
@@ -46,6 +52,8 @@ public class ProfileFragment extends Fragment
     String aboutUserString;
 
     int toolBarColor = 0;
+
+    private FirebaseFirestore db= FirebaseFirestore.getInstance();
 
 
     @Override
@@ -94,6 +102,15 @@ public class ProfileFragment extends Fragment
                         String UserfullName=userById.getFullName();
 
                         currentUser.addUserToChat(Uid);
+
+                        userById.addUserToChat(currentUser.get_ID());
+
+
+                        List<String>  check= currentUser.getChatWithUser();
+                        Toast.makeText(getActivity(), check.get(0), Toast.LENGTH_SHORT).show();
+
+                        db.collection("users").document(userById.get_ID()).set(userById);   //update other user chat room
+                        db.collection("users").document(currentUser.get_ID()).set(currentUser); // and this chat room
 
                         Fragment fr=new ChatFragment();
                         FragmentManager fm=getFragmentManager();
@@ -232,5 +249,7 @@ public class ProfileFragment extends Fragment
             return null;
         }
     }*/
+
+
 }
 

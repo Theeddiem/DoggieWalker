@@ -84,6 +84,10 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 
         otherUser = allThePosts.findUserById(OtherUserID);
 
+
+
+
+
         otherUserName.setText(otherUser.getFullName());
         Picasso.get().load(otherUser.getProfilePhoto()).into(otherUserImage);
 
@@ -103,6 +107,11 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         ChatMessage message = new ChatMessage(msgInput,currentUser.get_ID(),OtherUserID);
         messegeInput.getText().clear();
         //my SideBackUp
+
+
+
+
+
 
         if(msgInput.length()>0) {
             db.collection("Chats").document(currentUser.get_ID() + " " + OtherUserID).
@@ -152,7 +161,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
                         if(e!=null)
                             return;
                         conversation.clear();
-                        adapter.notifyDataSetChanged();;
+                        adapter.notifyDataSetChanged();
 
                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots)
                         {
