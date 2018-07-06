@@ -187,6 +187,7 @@ public class LoginFragment extends Fragment
                                                     if(documentSnapshots.isEmpty())
                                                     {
                                                         Toast.makeText(getActivity(), "No User Data Found", Toast.LENGTH_SHORT).show();
+                                                        Log.i(TAG, "onSuccess:  3check ");
                                                     }else
                                                     {
                                                         List<User> users = documentSnapshots.toObjects(User.class);
@@ -196,8 +197,9 @@ public class LoginFragment extends Fragment
                                                         user.setFullName(users.get(0).getFullName());
                                                         user.setEmail(users.get(0).getEmail());
                                                         user.setProfilePhoto(users.get(0).getProfilePhoto());
+                                                        user.setChatWithUser(users.get(0).getChatWithUser());
 
-
+                                                        Log.i(TAG, "onSuccess:  4check ");
                                                         getActivity().onBackPressed();
 
                                                     }
@@ -260,6 +262,7 @@ public class LoginFragment extends Fragment
                         List<String> clearList = new ArrayList<>();
                         user.setChatWithUser(clearList);
                         allTheUsers.document(user.get_ID()).set(user);
+                        Log.i(TAG, "onSuccess:  2check ");
                     }
                     else
                     {
@@ -271,7 +274,7 @@ public class LoginFragment extends Fragment
                         user.setProfilePhoto(Firebaseuser.getProfilePhoto());
                         user.setAboutUser(Firebaseuser.getAboutUser());
                         user.setChatWithUser(Firebaseuser.getChatWithUser());
-                        Log.i(TAG, "onSuccess:wwewewe ");
+                        Log.i(TAG, "onSuccess:  1check ");
 
                     }
 
@@ -284,6 +287,7 @@ public class LoginFragment extends Fragment
             user.setFullName(account.getDisplayName());
             user.setUserName(account.getEmail());
             user.setProfilePhoto(account.getPhotoUrl().toString());
+
 
             getActivity().onBackPressed();
 
