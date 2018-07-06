@@ -146,7 +146,7 @@ public class ProfileFragment extends Fragment
 
         updateUI();
 
-      //  new changeColor().execute();
+      //  new changeColor().execute(); //cause bug that crush app and deletes user.
 
         return thisView;
     }

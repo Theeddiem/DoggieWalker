@@ -58,9 +58,10 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
             minute = java.util.Calendar.MINUTE;
 
         }
-
-        holder.messageTime.setText(hour + ":" + minute);
-
+        if(minute<10)
+        holder.messageTime.setText(hour + ":0" + minute);
+       else
+            holder.messageTime.setText(hour + ":" + minute);
        if(currentUser.get_ID().equals(ChatMessageList.get(position).getCurrentUserID())) {
                         holder.messageRelativeLayout.setBackgroundResource(R.drawable.rect_mycolor); //set background of the chat bubble
 
@@ -72,9 +73,6 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
        else {
            holder.messageRelativeLayout.setBackgroundResource(R.drawable.rect_hiscolor); //set background of the chat bubble
 
-           holder.messageInput.setTextColor(context.getResources().getColor(R.color.grey_10));
-           holder.messageTime.setTextColor(context.getResources().getColor(R.color.grey_10));
-
            FrameLayout.LayoutParams Leftparams = new FrameLayout.LayoutParams //set the bubble to the left
                    (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.START);
            holder.messageRelativeLayout.setLayoutParams(Leftparams);
@@ -82,7 +80,7 @@ public class MessageRecycleAdapter  extends RecyclerView.Adapter<MessageRecycleA
 
 
        }
-//
+
 
 
     }
