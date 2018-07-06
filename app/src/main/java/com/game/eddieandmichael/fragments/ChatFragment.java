@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -106,13 +107,9 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         String msgInput = messegeInput.getText().toString();
         ChatMessage message = new ChatMessage(msgInput,currentUser.get_ID(),OtherUserID);
         messegeInput.getText().clear();
+
+
         //my SideBackUp
-
-
-
-
-
-
         if(msgInput.length()>0) {
             db.collection("Chats").document(currentUser.get_ID() + " " + OtherUserID).
                     collection(currentUser.get_ID() + "  with " + otherUser.get_ID()).add(message)
@@ -144,6 +141,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
             });
 
         }
+
+
 
 
     }
