@@ -38,14 +38,13 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/signup_fullName_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Full Name"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:id="@+id/signup_fullName_et"
-                        />
+                        android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -55,14 +54,13 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/signUp_username_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Username"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:id="@+id/signUp_username_et"
-                        />
+                        android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -71,14 +69,13 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/signup_email_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Email"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:id="@+id/signup_email_et"
-                        />
+                        android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -87,14 +84,13 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/signup_password_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Password"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:id="@+id/signup_password_et"
-                        />
+                        android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -103,33 +99,34 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/signup_rePassword_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Re-type Password"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:id="@+id/signup_rePassword_et"
-                        />
+                        android:singleLine="true" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
+
                         <TextView
+                            android:id="@+id/signup_profilePhoto_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="No file selected"
-                            android:textSize="20sp"
-                            android:id="@+id/signup_profilePhoto_tv"
-                            />
+                            android:textSize="20sp" />
 
-                        <Button
+                        <ImageButton
+                            android:id="@+id/signup_addPhoto_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Add Profile Photo"
-                            android:id="@+id/signup_addPhoto_btn"
+                            android:textAllCaps="false"
+                            android:layout_marginStart="20dp"
+                            android:src="@drawable/add_profile_image"
 
                             />
 
@@ -145,24 +142,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:background="@drawable/btn_rounded_accent"
-                    android:text="REGISTER"
-                    android:textColor="@android:color/white" />
-
-
-                <Button
-                    android:id="@+id/signup_facebook_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/btn_rounded_primary"
-                    android:text="REGISTER WITH FACEBOOK"
-                    android:textColor="@android:color/white" />
-
-                <Button
-                    android:id="@+id/signup_google_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/btn_rounded_red"
-                    android:text="REGISTER WITH GOOGLE"
+                    android:text="Register"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white" />
 
 
