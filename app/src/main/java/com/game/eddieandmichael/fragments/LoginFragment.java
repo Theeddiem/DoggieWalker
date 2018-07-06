@@ -42,6 +42,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -256,7 +257,8 @@ public class LoginFragment extends Fragment
                         user.setFullName(account.getDisplayName());
                         user.setUserName(account.getEmail());
                         user.setProfilePhoto(account.getPhotoUrl().toString());
-
+                        List<String> clearList = new ArrayList<>();
+                        user.setChatWithUser(clearList);
                         allTheUsers.document(user.get_ID()).set(user);
                     }
                     else

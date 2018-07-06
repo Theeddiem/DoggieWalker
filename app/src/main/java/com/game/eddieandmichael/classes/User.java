@@ -25,7 +25,6 @@ public class User implements Serializable
     private User()
     {
         aboutUser = "";
-        if (chatWithUser==null)
         this.chatWithUser = new ArrayList<>();
     }
 

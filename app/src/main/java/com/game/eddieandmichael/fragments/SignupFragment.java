@@ -37,6 +37,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.constraint.Constraints.TAG;
@@ -124,6 +125,8 @@ public class SignupFragment extends Fragment
                                         user.setEmail(email);
                                         user.setFullName(fullName);
                                         user.setUserName(userName);
+                                        List<String> clearList = new ArrayList<>();
+                                        user.setChatWithUser(clearList);
 
                                         user.set_ID(firebaseAuth.getUid());
 

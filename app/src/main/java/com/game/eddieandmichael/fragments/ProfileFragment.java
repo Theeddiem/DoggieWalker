@@ -95,22 +95,17 @@ public class ProfileFragment extends Fragment
                     if(currentUser.get_ID() == null)
                     {
                         Toast.makeText(getActivity(), "Login to send message", Toast.LENGTH_SHORT).show();
-                    }else
+                    }else if(currentUser.get_ID()!=userById.get_ID())
                     {
 
                         String Uid= userById.get_ID();
                         String UserfullName=userById.getFullName();
 
                         currentUser.addUserToChat(Uid);
-
-                        userById.addUserToChat(currentUser.get_ID());
-
-
-                        List<String>  check= currentUser.getChatWithUser();
-                        Toast.makeText(getActivity(), check.get(0), Toast.LENGTH_SHORT).show();
-
-                        db.collection("users").document(userById.get_ID()).set(userById);   //update other user chat room
                         db.collection("users").document(currentUser.get_ID()).set(currentUser); // and this chat room
+                      /*  userById.addUserToChat(currentUser.get_ID());
+                        db.collection("users").document(userById.get_ID()).set(userById)*/;   //update other user chat room
+
 
                         Fragment fr=new ChatFragment();
                         FragmentManager fm=getFragmentManager();
