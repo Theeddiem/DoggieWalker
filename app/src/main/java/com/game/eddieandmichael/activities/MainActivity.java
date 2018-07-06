@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    @Override
+/*    @Override
     protected void onDestroy()
     {
         stopService(syncServiceIntent);
@@ -345,7 +345,7 @@ public class MainActivity extends AppCompatActivity
 
         super.onDestroy();
 
-    }
+    }*/
 
 }
 
