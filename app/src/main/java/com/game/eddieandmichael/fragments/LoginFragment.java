@@ -270,7 +270,8 @@ public class LoginFragment extends Fragment
                         user.setUserName(Firebaseuser.getUserName());
                         user.setProfilePhoto(Firebaseuser.getProfilePhoto());
                         user.setAboutUser(Firebaseuser.getAboutUser());
-
+                        user.setChatWithUser(Firebaseuser.getChatWithUser());
+                        Log.i(TAG, "onSuccess:wwewewe ");
 
                     }
 

@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.graphics.Palette;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static android.support.constraint.Constraints.TAG;
 
 
 public class ProfileFragment extends Fragment
@@ -102,9 +105,16 @@ public class ProfileFragment extends Fragment
                         String UserfullName=userById.getFullName();
 
                         currentUser.addUserToChat(Uid);
+                        Log.i(TAG, currentUser.get_ID()+"  other =   " + Uid);
+
                         db.collection("users").document(currentUser.get_ID()).set(currentUser); // and this chat room
-                      /*  userById.addUserToChat(currentUser.get_ID());
-                        db.collection("users").document(userById.get_ID()).set(userById)*/;   //update other user chat room
+
+
+                        userById.addUserToChat(currentUser.get_ID());
+                        db.collection("users").document(userById.get_ID()).set(userById);   //update other user chat room
+
+                        Log.i(TAG, userById.get_ID()+"  me =   " + currentUser.get_ID());
+                        Toast.makeText(getActivity(), userById.get_ID(), Toast.LENGTH_SHORT).show();
 
 
                         Fragment fr=new ChatFragment();

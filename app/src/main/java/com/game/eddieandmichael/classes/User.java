@@ -103,8 +103,7 @@ public class User implements Serializable
    {
        if (!chatWithUser.contains(id))
        {
-           Log.i(TAG, fullName +"  addUserToChat: "+id);
-           chatWithUser.add(id);
+             chatWithUser.add(id);
        }
        else
            Log.i(TAG, "fail");

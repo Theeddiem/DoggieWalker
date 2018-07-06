@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class MessengerFragment extends Fragment {
     View thisView;
@@ -46,16 +49,16 @@ public class MessengerFragment extends Fragment {
         myRecyclerView=thisView.findViewById(R.id.RecyclerContactsView);
         List<String> chatWithUser = currentUser.getChatWithUser();
 
-        adapter = new ContactsRecycleAdapter(getActivity(),contacts);
-        myRecyclerView.setAdapter(adapter);
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-      //  Toast.makeText(getContext(), ""+chatWithUser.size(), Toast.LENGTH_SHORT).show();
         for(String id: chatWithUser)
         {
             contacts.add(allThePosts.findUserById(id));
+            Log.i(TAG, " this =  " +allThePosts.findUserById(id).get_ID());
         }
+
+        adapter = new ContactsRecycleAdapter(getActivity(),contacts);
+        myRecyclerView.setAdapter(adapter);
+        myRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.notifyDataSetChanged();
         return thisView;
 
