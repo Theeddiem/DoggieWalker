@@ -154,6 +154,25 @@ public class SignupFragment extends Fragment
                                                     });
                                         }else
                                         {
+                                            Log.i(TAG, "onComplete: holaa");
+                                            Uri defphoto = Uri.parse("android.resource://"+getContext().getPackageName()+"/drawable/defaultcontact");
+                                            Log.i(TAG, defphoto.toString());
+                                            storageReference.putFile(defphoto)
+                                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
+                                                    {
+                                                        @Override
+                                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+                                                        {
+                                                            Uri uri = taskSnapshot.getDownloadUrl();
+                                                            user.setProfilePhoto(uri.toString());
+
+                                                            firestoreDatabase.collection("users").document(user.get_ID())
+                                                                    .set(user);
+
+
+
+                                                        }
+                                                    });
                                             firestoreDatabase.collection("users").document(user.get_ID())
                                                     .set(user);
 

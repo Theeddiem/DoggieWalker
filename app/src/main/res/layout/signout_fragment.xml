@@ -25,8 +25,10 @@
         />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="150dp"
+        android:maxHeight="150dp"
         android:layout_below="@id/signout_as_tv"
         android:layout_marginTop="25dp"
         android:id="@+id/signout_profileImage"
@@ -34,15 +36,13 @@
         />
 
     <TextView
+        android:id="@+id/signout_userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/signout_profileImage"
-        android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="228dp"
         android:text="Profile name"
-        android:textSize="35sp"
-        android:id="@+id/signout_userName"
-        />
+        android:textSize="35sp" />
 
 
     <TextView

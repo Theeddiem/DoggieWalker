@@ -2,16 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="@color/grey_10"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <android.support.v7.widget.Toolbar
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/topPanel">
+    android:layout_height="?attr/actionBarSize"
+    android:id="@+id/toolbar_messenger"
+    android:background="@color/colorPrimary"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chats"
+        android:textSize="20sp"
+        android:textColor="@color/overlay_light_90"/>
 
 </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@+id/topPanel"
+        android:layout_below="@+id/toolbar_messenger"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/RecyclerContactsView">

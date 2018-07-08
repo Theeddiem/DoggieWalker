@@ -76,7 +76,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 
         Toolbar toolbar = thisView.findViewById(R.id.chatWindow_Toolbar);
 
-        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
         activity.setSupportActionBar(toolbar);

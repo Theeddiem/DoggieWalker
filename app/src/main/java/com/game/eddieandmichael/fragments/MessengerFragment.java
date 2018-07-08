@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,47 +61,19 @@ public class MessengerFragment extends Fragment {
         myRecyclerView.setAdapter(adapter);
         myRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.notifyDataSetChanged();
+
+        Toolbar toolbar = thisView.findViewById(R.id.toolbar_messenger);
+      /*  toolbar.setTitle("Chats");*/
+
+
+
+
+
         return thisView;
 
 
     }
 
-  /*  @Override
-    public void onStart() {
-        super.onStart();
-
-
-        db.collection("Chats").document(currentUser.get_ID()).
-                collection(currentUser.get_ID() + "  with " + otherUser.get_ID()).orderBy("messageTime", Query.Direction.ASCENDING)
-                .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if(e!=null)
-                            return;
-                        conversation.clear();
-                        adapter.notifyDataSetChanged();;
-
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots)
-                        {
-                            ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
-
-                            conversation.add(message);
-                            adapter.notifyDataSetChanged();
-
-                        }
-                        int lastpos = myRecyclerView.getAdapter().getItemCount() - 1; /// scroll to last item
-                        if (lastpos < 0)
-                            return;
-                        else /// scroll to last item
-                            myRecyclerView.smoothScrollToPosition(lastpos);
-
-
-                    }
-
-                });
-
-
-    }*/
 
 
 

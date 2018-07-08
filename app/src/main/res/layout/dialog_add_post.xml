@@ -27,6 +27,7 @@
                 android:layout_width="@dimen/spacing_xxlarge"
                 android:layout_height="@dimen/spacing_xxlarge"
                 android:id="@+id/addPost_profileImage"
+
                 />
 
 

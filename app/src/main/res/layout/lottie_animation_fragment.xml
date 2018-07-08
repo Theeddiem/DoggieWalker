@@ -14,7 +14,7 @@
         android:textSize="20sp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/short_lorem_ipsum"
+        android:text=""
         />
 
     <com.airbnb.lottie.LottieAnimationView
