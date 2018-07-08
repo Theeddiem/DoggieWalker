@@ -54,28 +54,8 @@ public class MessengerFragment extends Fragment {
         allThePosts = AllThePosts.getInstance();
 
         myRecyclerView=thisView.findViewById(R.id.RecyclerContactsView);
-    /*    List<String> chatWithUser = currentUser.getChatWithUser();
-
-
-        for(String id: chatWithUser)
-        {
-            contacts.add(allThePosts.findUserById(id));
-            Log.i(TAG, " this =  " +allThePosts.findUserById(id).get_ID());
-        }
-
-        Log.i(TAG, "onCreateView: created");
-        adapter = new ContactsRecycleAdapter(getActivity(),contacts);
-        myRecyclerView.setAdapter(adapter);
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter.notifyDataSetChanged();*/
-
 
         Toolbar toolbar = thisView.findViewById(R.id.toolbar_messenger);
-      /*  toolbar.setTitle("Chats");*/
-
-
-
-
 
         return thisView;
 

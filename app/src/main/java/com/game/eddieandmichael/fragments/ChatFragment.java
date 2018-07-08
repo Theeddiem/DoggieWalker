@@ -27,6 +27,7 @@ import com.game.eddieandmichael.doggiewalker.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -36,6 +37,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ChatFragment extends Fragment implements View.OnClickListener {
@@ -61,6 +64,10 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
     ImageView otherUserImage;
 
     AllThePosts allThePosts = AllThePosts.getInstance();
+
+    private  static final String OTHER_USER_MSG_AMOUNT ="otherUserAmount";
+
+    int currentUserAmount;
 
     ////////////////////////////////////////////////////
     @Override
@@ -108,9 +115,15 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         ChatMessage message = new ChatMessage(msgInput,currentUser.get_ID(),OtherUserID);
         messegeInput.getText().clear();
 
+        Map<Object, String> CurUseramount = new HashMap<>(); //for counting mesgs/
+
 
         //my SideBackUp
         if(msgInput.length()>0) {
+            currentUserAmount++;
+            CurUseramount.put(OTHER_USER_MSG_AMOUNT,String.valueOf(currentUserAmount));
+            Log.i(TAG, "onClick: +"+String.valueOf(currentUserAmount));
+
             db.collection("Chats").document(currentUser.get_ID() + " " + OtherUserID).
                     collection(currentUser.get_ID() + "  with " + otherUser.get_ID()).add(message)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -125,7 +138,12 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
                 }
             });
 
+
             //His SideBackUp
+
+            db.collection("Chats").document(OtherUserID + " " + currentUser.get_ID()).set(CurUseramount);
+            Log.i(TAG, "onClick: +"+String.valueOf(currentUserAmount));
+
             db.collection("Chats").document(OtherUserID + " " + currentUser.get_ID()).
                     collection(otherUser.get_ID() + "  with " + currentUser.get_ID()).add(message)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -140,6 +158,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
                 }
             });
 
+
         }
 
 
@@ -151,6 +170,26 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
 
+           db.collection("Chats").document(OtherUserID + " " + currentUser.get_ID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists())
+                {
+
+                    String otherUserAmountSTR=documentSnapshot.getString(OTHER_USER_MSG_AMOUNT);
+                    Log.i(TAG, "gghis=  " +otherUserAmountSTR);
+                    if(otherUserAmountSTR!=null)
+                    currentUserAmount=Integer.parseInt(otherUserAmountSTR);
+                    Log.i(TAG, "gghis2=  " + otherUserAmountSTR);
+
+                }
+                else
+                    Log.i(TAG, "Doucmnet2 does not exist");
+
+            }
+        });
+
+
         db.collection("Chats").document(currentUser.get_ID() + " " + OtherUserID).
                 collection(currentUser.get_ID() + "  with " + otherUser.get_ID()).orderBy("messageTime", Query.Direction.ASCENDING)
                 .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
@@ -158,13 +197,15 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if(e!=null)
                             return;
+                        int tempsize=0;
+                        tempsize=conversation.size();
                         conversation.clear();
                         adapter.notifyDataSetChanged();
 
                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots)
                         {
-                            ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
 
+                            ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
                             conversation.add(message);
                             adapter.notifyDataSetChanged();
 

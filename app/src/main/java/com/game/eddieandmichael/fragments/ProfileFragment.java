@@ -114,7 +114,7 @@ public class ProfileFragment extends Fragment
                         db.collection("users").document(userById.get_ID()).set(userById);   //update other user chat room
 
                         Log.i(TAG, userById.get_ID()+"  me =   " + currentUser.get_ID());
-                        Toast.makeText(getActivity(), userById.get_ID(), Toast.LENGTH_SHORT).show();
+
 
 
                         Fragment fr=new ChatFragment();
