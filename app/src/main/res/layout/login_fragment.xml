@@ -111,16 +111,6 @@
                     android:textColor="@android:color/white"
                     />
 
-
-                <Button
-                    android:id="@+id/login_facebook_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/btn_rounded_primary"
-                    android:text="Login With Facebook"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white" />
-
                 <Button
                     android:id="@+id/login_google_btn"
                     android:layout_width="match_parent"

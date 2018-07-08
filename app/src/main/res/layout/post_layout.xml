@@ -71,8 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Emma Richmond"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:text=""
                         android:textColor="@color/grey_90" />
 
                     <LinearLayout
@@ -110,7 +109,7 @@
                         android:id="@+id/post_aboutJob"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/medium_lorem_ipsum" />
+                        android:text="" />
                 </LinearLayout>
 
                 <View
@@ -135,7 +134,7 @@
                         android:id="@+id/post_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/short_lorem_ipsum" />
+                        android:text="" />
                 </LinearLayout>
 
                 <View
@@ -159,7 +158,7 @@
                         android:id="@+id/post_places"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/short_lorem_ipsum" />
+                        android:text="" />
                 </LinearLayout>
 
 

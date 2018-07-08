@@ -164,8 +164,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        syncServiceIntent = new Intent(this, SyncWithFirebaseService.class);
-        startService(syncServiceIntent);
+        syncServiceIntent = new Intent(this, SyncWithFirebaseService.class); //here
+        startService(syncServiceIntent);  //here
 
     }
 
