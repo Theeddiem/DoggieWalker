@@ -155,6 +155,11 @@ public class MainActivity extends AppCompatActivity
                             return true;
                         }
 
+                        else
+
+                            Toast.makeText(MainActivity.this, "Login to access messenger ", Toast.LENGTH_SHORT).show();
+
+
 
                     }
 
