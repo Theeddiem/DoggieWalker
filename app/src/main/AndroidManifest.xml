@@ -27,7 +27,7 @@
         </activity>
 
         <service android:name="com.game.eddieandmichael.services.SyncWithFirebaseService"/>
-
+        <service android:name="com.game.eddieandmichael.services.MyService"/>
     </application>
 
 </manifest>

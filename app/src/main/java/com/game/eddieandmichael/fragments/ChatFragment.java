@@ -151,7 +151,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
 
-
         db.collection("Chats").document(currentUser.get_ID() + " " + OtherUserID).
                 collection(currentUser.get_ID() + "  with " + otherUser.get_ID()).orderBy("messageTime", Query.Direction.ASCENDING)
                 .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {

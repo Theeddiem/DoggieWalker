@@ -116,6 +116,7 @@
                             android:id="@+id/signup_profilePhoto_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
                             android:text="No file selected"
                             android:textSize="20sp" />
 
@@ -125,6 +126,7 @@
                             android:layout_height="wrap_content"
                             android:text="Add Profile Photo"
                             android:textAllCaps="false"
+                            android:background="@null"
                             android:layout_marginStart="20dp"
                             android:src="@drawable/add_profile_image"
 

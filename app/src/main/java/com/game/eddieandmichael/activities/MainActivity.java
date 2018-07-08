@@ -27,6 +27,7 @@ import com.game.eddieandmichael.fragments.MainScreen;
 import com.game.eddieandmichael.fragments.MessengerFragment;
 import com.game.eddieandmichael.fragments.ProfileFragment;
 import com.game.eddieandmichael.fragments.SignOutFragment;
+import com.game.eddieandmichael.services.MyService;
 import com.game.eddieandmichael.services.SyncWithFirebaseService;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -40,6 +41,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.time.Instant;
 import java.util.List;
 
 
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity
 
     Intent syncServiceIntent;
 
+
+    Intent servicetest;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -64,6 +68,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         FirebaseApp.initializeApp(this);
+
+
+        servicetest=new Intent(this, MyService.class);
+        startService(servicetest);
 
 
         Toolbar toolbar=findViewById(R.id.main_ToolBar);
@@ -171,6 +179,7 @@ public class MainActivity extends AppCompatActivity
 
         syncServiceIntent = new Intent(this, SyncWithFirebaseService.class); //here
         startService(syncServiceIntent);  //here
+
 
     }
 
