@@ -70,8 +70,7 @@ public class MainActivity extends AppCompatActivity
         FirebaseApp.initializeApp(this);
 
 
-        servicetest=new Intent(this, MyService.class);
-        startService(servicetest);
+
 
 
         Toolbar toolbar=findViewById(R.id.main_ToolBar);
@@ -179,6 +178,9 @@ public class MainActivity extends AppCompatActivity
 
         syncServiceIntent = new Intent(this, SyncWithFirebaseService.class); //here
         startService(syncServiceIntent);  //here
+
+        servicetest=new Intent(this, MyService.class);
+        startService(servicetest);
 
 
     }

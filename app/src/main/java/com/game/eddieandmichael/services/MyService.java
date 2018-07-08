@@ -79,23 +79,45 @@ public class MyService  extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-       /* db.collection("Chats").document(currentUser.get_ID()+ " " +"QFlArXBKZyNJRMjVJzp6FHTYcJZ2").addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                String otherUserAmountSTR=documentSnapshot.getString("otherUserAmount");
-                Log.i(TAG, "MyServiceonEvent: "+ otherUserAmountSTR);
-            }
-        });*/
+
+
+
+
 
         Runnable r = new Runnable() {
             @Override
-            public void run() {
-                    for(int i=0;i<2000;i++){
+            public void run()
+            {
+                try {
+                    Thread.sleep(1500);
+                    db.collection("Chats").document(currentUser.get_ID() + " QFlArXBKZyNJRMjVJzp6FHTYcJZ2").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if(documentSnapshot.exists())
+                            {
+                                String otherUserAmountSTR=documentSnapshot.getString("otherUserAmount");
+                                OthermsgCounter =Integer.parseInt(otherUserAmountSTR);
+                                Log.i(TAG, "Othermsg55Counter = " + OthermsgCounter);
+
+                            }
+                            else
+                                OthermsgCounter=0;
+                            Log.i(TAG, "Othermsg55Counter = " + OthermsgCounter);
+
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+             for(int i=0;i<2000;i++){
+
                         long futureTime=System.currentTimeMillis() +2000;
                         while (System.currentTimeMillis()<futureTime)
                         {
                             synchronized (this)
                             {
+
                                 try {
                                     wait(futureTime-System.currentTimeMillis());
                                     db.collection("Chats").document(currentUser.get_ID() + " QFlArXBKZyNJRMjVJzp6FHTYcJZ2").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -104,14 +126,19 @@ public class MyService  extends Service {
                                             if(documentSnapshot.exists())
                                             {
                                                 String otherUserAmountSTR=documentSnapshot.getString("otherUserAmount");
-                                                Log.i(TAG, "run=  " +otherUserAmountSTR);
+                                                if(OthermsgCounter<Integer.parseInt(otherUserAmountSTR))
+                                                {
+                                                    Toast.makeText(MyService.this, "new Msg", Toast.LENGTH_SHORT).show();
+                                                    Log.i(TAG, "new msg " +otherUserAmountSTR);
+                                                    OthermsgCounter=Integer.parseInt(otherUserAmountSTR);
+                                                }
 
                                             }
                                             else
                                                 Log.i(TAG, "onfail: ");
                                         }
                                     });
-                                    Log.i(TAG, "run: run "+ i);
+                                    Log.i(TAG, "run "+ i + "currentOtheramout + ");
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -124,7 +151,7 @@ public class MyService  extends Service {
 
         Thread eddieThread=new Thread(r);
         eddieThread.start();
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
 /*    @Override
