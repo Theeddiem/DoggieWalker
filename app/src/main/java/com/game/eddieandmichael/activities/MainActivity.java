@@ -169,6 +169,9 @@ public class MainActivity extends AppCompatActivity
 
 
                     }
+                    case R.id.navi_about:
+                        Toast.makeText(MainActivity.this, "Michael Katan & Eddie Knaz \n                    2018", Toast.LENGTH_LONG).show();
+                        drawerLayout.closeDrawers();
 
                 }
 

@@ -169,7 +169,6 @@ public class MyService  extends Service {
                                                 Log.i(TAG, "hola= " + otherUserAmountSTR +"byo = "+ String.valueOf(OthermsgCounter));
                                                 if(OthermsgCounter<Integer.parseInt(otherUserAmountSTR))
                                                 {
-                                                    Toast.makeText(MyService.this, "new Msg", Toast.LENGTH_SHORT).show();
                                                     Log.i(TAG, "new msg " +otherUserAmountSTR);
                                                     OthermsgCounter=Integer.parseInt(otherUserAmountSTR);
                                                     notificaionPrint();
