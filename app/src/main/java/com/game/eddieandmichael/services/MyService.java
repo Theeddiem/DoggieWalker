@@ -157,9 +157,10 @@ public class MyService  extends Service {
                         {
                             synchronized (this)
                             {
-                                if(currentUser.get_ID()!=null)
+
                                 try {
                                     wait(futureTime-System.currentTimeMillis());
+                                    if(currentUser.get_ID()!=null)
                                     db.collection("Chats").document(currentUser.get_ID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
