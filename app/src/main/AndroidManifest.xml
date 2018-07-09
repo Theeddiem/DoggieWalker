@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 
-        <activity android:name="com.game.eddieandmichael.activities.MainActivity">
+        <activity android:name="com.game.eddieandmichael.activities.MainActivity"
+            android:launchMode="singleTop">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

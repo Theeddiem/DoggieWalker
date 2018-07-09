@@ -31,7 +31,7 @@
             android:background="@color/colorPrimary"
             app:tabMode="fixed"
             app:tabGravity="fill"
-            app:tabIndicatorColor="@color/colorAccent"
+            app:tabIndicatorColor="@color/colorPrimaryDark"
             android:id="@+id/tablayout_id"
             >
 

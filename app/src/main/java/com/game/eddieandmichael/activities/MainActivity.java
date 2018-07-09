@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
         Toolbar toolbar=findViewById(R.id.main_ToolBar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.overlay_light_90));
         toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -87,10 +86,11 @@ public class MainActivity extends AppCompatActivity
 
         drawerLayout=findViewById(R.id.drawer_layout);
 
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_fragment,new MainScreen(),"MainScreen");
-        fragmentTransaction.commit();
 
+                            Log.i("gwgw", "222: ");
+                            fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.main_fragment, new MainScreen(), "MainScreen");
+                            fragmentTransaction.commit();
 
 
 
@@ -172,6 +172,9 @@ public class MainActivity extends AppCompatActivity
 
                 }
 
+
+
+
                 return false;
             }
         });
@@ -181,6 +184,9 @@ public class MainActivity extends AppCompatActivity
 
         servicetest=new Intent(this, MyService.class);
         startService(servicetest);
+
+
+
 
 
     }

@@ -324,7 +324,7 @@ public class MainScreen extends Fragment
             int price = 0;
             price =  Integer.parseInt(searchPostET.getText().toString());
 
-            firestore.collection("Posts").whereLessThan("price",price)
+            firestore.collection("Posts").whereLessThanOrEqualTo("price",price)
                     .addSnapshotListener(new EventListener<QuerySnapshot>()
                     {
                         @Override

@@ -124,8 +124,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
             CurUseramount.put(OTHER_USER_MSG_AMOUNT,String.valueOf(currentUserAmount));
             Log.i(TAG, "onClick: +"+String.valueOf(currentUserAmount));
 
-            db.collection("Chats").document(currentUser.get_ID() + " " + OtherUserID).
-                    collection(currentUser.get_ID() + "  with " + otherUser.get_ID()).add(message)
+            db.collection("Chats").document(currentUser.get_ID()).
+                    collection(otherUser.get_ID()).add(message)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
@@ -141,11 +141,11 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 
             //His SideBackUp
 
-            db.collection("Chats").document(OtherUserID + " " + currentUser.get_ID()).set(CurUseramount);
+            db.collection("Chats").document(OtherUserID).set(CurUseramount);
             Log.i(TAG, "onClick: +"+String.valueOf(currentUserAmount));
 
-            db.collection("Chats").document(OtherUserID + " " + currentUser.get_ID()).
-                    collection(otherUser.get_ID() + "  with " + currentUser.get_ID()).add(message)
+            db.collection("Chats").document(OtherUserID).
+                    collection(currentUser.get_ID()).add(message)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
@@ -170,7 +170,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
 
-           db.collection("Chats").document(OtherUserID + " " + currentUser.get_ID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+           db.collection("Chats").document(OtherUserID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists())
@@ -190,8 +190,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
         });
 
 
-        db.collection("Chats").document(currentUser.get_ID() + " " + OtherUserID).
-                collection(currentUser.get_ID() + "  with " + otherUser.get_ID()).orderBy("messageTime", Query.Direction.ASCENDING)
+        db.collection("Chats").document(currentUser.get_ID()).
+                collection(otherUser.get_ID()).orderBy("messageTime", Query.Direction.ASCENDING)
                 .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {

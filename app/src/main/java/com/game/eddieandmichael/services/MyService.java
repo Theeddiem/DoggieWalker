@@ -1,17 +1,29 @@
 package com.game.eddieandmichael.services;
 
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
+import android.os.Build;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.game.eddieandmichael.activities.MainActivity;
 import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.ChatMessage;
 import com.game.eddieandmichael.classes.User;
+import com.game.eddieandmichael.fragments.MessengerFragment;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -33,8 +45,11 @@ public class MyService  extends Service {
     FirebaseFirestore db;
     AllThePosts allThePosts;
     int OthermsgCounter;
+     NotificationManager manager;
 
-
+    String TAG="MyService";
+    private static final String CHANNEL_1_ID= "msg";
+    final int NOTIF_ID = 1;
     public MyService() {
 
     }
@@ -42,26 +57,52 @@ public class MyService  extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        allThePosts = AllThePosts.getInstance();
-
-
-        db = FirebaseFirestore.getInstance();
         currentUser = User.getInstance();
- /*       db.collection("Chats").document(currentUser.get_ID()+ " " +"QFlArXBKZyNJRMjVJzp6FHTYcJZ2").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                String temp=documentSnapshot.getString("otherUserAmount");
-                if(temp!=null)
-                OthermsgCounter = Integer.parseInt(temp);
-                Log.i(TAG, "FirstEvent: "+ temp);
-            }
-        });*/
+        allThePosts = AllThePosts.getInstance();
+        db = FirebaseFirestore.getInstance();
+         manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setSmallIcon(android.R.drawable.star_on);
+        builder.setContentTitle("New msg");
 
+        builder.setPriority(Notification.PRIORITY_MAX);
+            if(currentUser.get_ID()!=null)
+            createNotificationChannels();
 
-        Log.i("CounterService", "EventCreated");
 
     }
 
+    private void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel1 = new NotificationChannel(CHANNEL_1_ID, "chat", NotificationManager.IMPORTANCE_HIGH);
+            channel1.setDescription("this is that chat notification");
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel1);
+
+        }
+
+    }
+
+    private void notificaionPrint()
+    {
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setSmallIcon(android.R.drawable.star_off);
+        builder.setContentTitle("New message");
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.putExtra("menuFragment", "favoritesMenuItem");
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+        builder.setAutoCancel(true);
+        builder.setPriority(Notification.PRIORITY_MAX);
+        Notification notification = builder.build();
+
+        notification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_SHOW_LIGHTS;
+        notification.defaults = Notification.DEFAULT_ALL;
+
+        manager.notify(NOTIF_ID,notification);
+
+    }
 
     @Override
     public void onDestroy() {
@@ -80,29 +121,27 @@ public class MyService  extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
 
-
-
-
-
         Runnable r = new Runnable() {
             @Override
             public void run()
             {
+
                 try {
-                    Thread.sleep(1500);
-                    db.collection("Chats").document(currentUser.get_ID() + " QFlArXBKZyNJRMjVJzp6FHTYcJZ2").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    Thread.sleep(3000);
+                    if(currentUser.get_ID()!=null)
+                    db.collection("Chats").document(currentUser.get_ID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if(documentSnapshot.exists())
                             {
                                 String otherUserAmountSTR=documentSnapshot.getString("otherUserAmount");
                                 OthermsgCounter =Integer.parseInt(otherUserAmountSTR);
-                                Log.i(TAG, "Othermsg55Counter = " + OthermsgCounter);
+                                Log.i(TAG, "Counter = " + OthermsgCounter);
 
                             }
                             else
                                 OthermsgCounter=0;
-                            Log.i(TAG, "Othermsg55Counter = " + OthermsgCounter);
+                            Log.i(TAG, "Counter  = " + OthermsgCounter);
 
                         }
                     });
@@ -110,6 +149,7 @@ public class MyService  extends Service {
                     e.printStackTrace();
                 }
 
+            
              for(int i=0;i<2000;i++){
 
                         long futureTime=System.currentTimeMillis() +2000;
@@ -117,28 +157,30 @@ public class MyService  extends Service {
                         {
                             synchronized (this)
                             {
-
+                                if(currentUser.get_ID()!=null)
                                 try {
                                     wait(futureTime-System.currentTimeMillis());
-                                    db.collection("Chats").document(currentUser.get_ID() + " QFlArXBKZyNJRMjVJzp6FHTYcJZ2").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    db.collection("Chats").document(currentUser.get_ID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                                             if(documentSnapshot.exists())
                                             {
                                                 String otherUserAmountSTR=documentSnapshot.getString("otherUserAmount");
+                                                Log.i(TAG, "hola= " + otherUserAmountSTR +"byo = "+ String.valueOf(OthermsgCounter));
                                                 if(OthermsgCounter<Integer.parseInt(otherUserAmountSTR))
                                                 {
                                                     Toast.makeText(MyService.this, "new Msg", Toast.LENGTH_SHORT).show();
                                                     Log.i(TAG, "new msg " +otherUserAmountSTR);
                                                     OthermsgCounter=Integer.parseInt(otherUserAmountSTR);
-                                                }
+                                                    notificaionPrint();
+                                                 }
 
                                             }
                                             else
                                                 Log.i(TAG, "onfail: ");
                                         }
                                     });
-                                    Log.i(TAG, "run "+ i + "currentOtheramout + ");
+
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
