@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.IBinder;
@@ -22,6 +23,7 @@ import com.game.eddieandmichael.activities.MainActivity;
 import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.ChatMessage;
 import com.game.eddieandmichael.classes.User;
+import com.game.eddieandmichael.doggiewalker.R;
 import com.game.eddieandmichael.fragments.MessengerFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -84,12 +86,14 @@ public class MyService  extends Service {
 
     }
 
-    private void notificaionPrint(String OtherUserFullnameSTR,String OtherUserIdSTR)
+    private void notificaionPrint(String OtherUserFullnameSTR,String OtherUserIdSTR,String OtherUserMsgTextSTR)
     {
         Notification.Builder builder = new Notification.Builder(this);
-        builder.setSmallIcon(android.R.drawable.star_off);
-        builder.setContentTitle("New message");
-        builder.setContentText("From: "+OtherUserFullnameSTR);
+        builder.setSmallIcon(android.R.drawable.presence_online);
+        builder.setContentTitle(OtherUserFullnameSTR);
+
+        Log.i(TAG, OtherUserMsgTextSTR);
+        builder.setContentText(OtherUserMsgTextSTR);
         Intent intent = new Intent(getBaseContext(),MainActivity.class);
         intent.putExtra("From", "notifyFrag");
         intent.putExtra("id",OtherUserIdSTR);
@@ -130,7 +134,7 @@ public class MyService  extends Service {
             {
 
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(3500);
                     if(currentUser.get_ID()!=null)
                     db.collection("Chats").document(currentUser.get_ID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
@@ -172,12 +176,13 @@ public class MyService  extends Service {
                                                 String otherUserAmountSTR=documentSnapshot.getString("otherUserAmount");
                                                 String OtherUserFullnameSTR=documentSnapshot.getString("otherUserFullName");
                                                 String OtherUserIdSTR=documentSnapshot.getString("otherUserID");
+                                                String OtherUserMsgTextSTR=documentSnapshot.getString("otherUserMessage");
                                                 Log.i(TAG, "hola= " + otherUserAmountSTR +"byo = "+ String.valueOf(OthermsgCounter));
                                                 if(OthermsgCounter<Integer.parseInt(otherUserAmountSTR))
                                                 {
                                                     Log.i(TAG, "new msg " +otherUserAmountSTR);
                                                     OthermsgCounter=Integer.parseInt(otherUserAmountSTR);
-                                                    notificaionPrint(OtherUserFullnameSTR,OtherUserIdSTR);
+                                                    notificaionPrint(OtherUserFullnameSTR,OtherUserIdSTR,OtherUserMsgTextSTR);
                                                  }
 
                                             }

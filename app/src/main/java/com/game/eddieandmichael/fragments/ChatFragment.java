@@ -71,6 +71,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
     private  static final String OTHER_USER_MSG_AMOUNT ="otherUserAmount";
     private  static final String OTHER_USER_FULL_NAME ="otherUserFullName";
     private  static final String OTHER_USER_ID ="otherUserID";
+    private  static final String OTHER_USER_MSG ="otherUserMessage";
+
 
     int currentUserAmount;
 
@@ -132,6 +134,9 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
             OtherId.put(OTHER_USER_MSG_AMOUNT,String.valueOf(currentUserAmount));
             OtherId.put(OTHER_USER_FULL_NAME,currentUser.getFullName());
             OtherId.put(OTHER_USER_ID,currentUser.get_ID());
+            OtherId.put(OTHER_USER_MSG,message.getMessageText());
+
+
             Log.i(TAG, "onClick: +"+String.valueOf(currentUserAmount));
 
             db.collection("Chats").document(currentUser.get_ID()).
@@ -231,6 +236,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
                             ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
                             conversation.add(message);
                             adapter.notifyDataSetChanged();
+
                         }
 
 
