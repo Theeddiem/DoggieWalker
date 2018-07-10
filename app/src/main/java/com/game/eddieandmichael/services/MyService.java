@@ -84,11 +84,12 @@ public class MyService  extends Service {
 
     }
 
-    private void notificaionPrint()
+    private void notificaionPrint(String OtherUserFullnameSTR)
     {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setSmallIcon(android.R.drawable.star_off);
         builder.setContentTitle("New message");
+        builder.setContentText("From: "+OtherUserFullnameSTR);
         Intent intent = new Intent(this,MainActivity.class);
         intent.putExtra("menuFragment", "favoritesMenuItem");
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
@@ -127,7 +128,7 @@ public class MyService  extends Service {
             {
 
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(5000);
                     if(currentUser.get_ID()!=null)
                     db.collection("Chats").document(currentUser.get_ID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
@@ -167,12 +168,13 @@ public class MyService  extends Service {
                                             if(documentSnapshot.exists())
                                             {
                                                 String otherUserAmountSTR=documentSnapshot.getString("otherUserAmount");
+                                                String OtherUserFullnameSTR=documentSnapshot.getString("otherUserFullName");
                                                 Log.i(TAG, "hola= " + otherUserAmountSTR +"byo = "+ String.valueOf(OthermsgCounter));
                                                 if(OthermsgCounter<Integer.parseInt(otherUserAmountSTR))
                                                 {
                                                     Log.i(TAG, "new msg " +otherUserAmountSTR);
                                                     OthermsgCounter=Integer.parseInt(otherUserAmountSTR);
-                                                    notificaionPrint();
+                                                    notificaionPrint(OtherUserFullnameSTR);
                                                  }
 
                                             }

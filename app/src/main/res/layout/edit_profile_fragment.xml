@@ -8,28 +8,34 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/editProfile_toolBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="?attr/actionBarSize">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EditProfile"
+            android:textSize="20sp"
+            android:textColor="@color/overlay_light_90"/>
 
     </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
-            android:clipToPadding="false"
+            android:clipToPadding="true"
             android:scrollbars="none"
             android:scrollingCache="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <LinearLayout

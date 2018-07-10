@@ -3,10 +3,12 @@ package com.game.eddieandmichael.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -27,6 +30,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -50,6 +54,8 @@ public class EditProfileFragment extends Fragment
     Uri newPhotoUri;
     int toolBarColor;
 
+    String TAG="EditProfile";
+
     User currentUser;
 
     final int PICK_IMAGE_REQUEST = 1;
@@ -67,9 +73,9 @@ public class EditProfileFragment extends Fragment
         Toolbar toolbar = view.findViewById(R.id.editProfile_toolBar);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+ /*       toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));*/
+        toolbar.setTitle("");
 
         profilePhotoUrl = getArguments().getString("photoUrl");
         fullName = getArguments().getString("fullName");
@@ -151,13 +157,14 @@ public class EditProfileFragment extends Fragment
 
                         if (documents.isEmpty())
                         {
-                            collection.add(currentUser);
+                            collection.document(currentUser.get_ID()).set(currentUser);
+                            Log.i(TAG, "-1");
                             return;
                         }
 
                         DocumentSnapshot userInFirebase = documentSnapshots.getDocuments().get(0);
 
-
+                        Log.i(TAG, "0");
                         final String firebaseID = userInFirebase.getId();
 
                         currentUser.setFullName(fullName_ET.getText().toString());
@@ -179,16 +186,22 @@ public class EditProfileFragment extends Fragment
                                                             @Override
                                                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
                                                             {
-
+                                                                Log.i(TAG, "1");
                                                                 String downloadUrl = taskSnapshot.getDownloadUrl().toString();
+
                                                                 currentUser.setProfilePhoto(downloadUrl);
-                                                                collection.document(firebaseID).delete()
+                                                                collection.document(currentUser.get_ID()).set(currentUser)
+                                                           /*     collection.document(firebaseID).delete()*/
                                                                         .addOnSuccessListener(new OnSuccessListener<Void>()
                                                                         {
                                                                             @Override
                                                                             public void onSuccess(Void aVoid)
                                                                             {
-                                                                                collection.add(currentUser)
+
+                                                                                Log.i(TAG, " 27");
+                                                                                Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
+                                                                                getActivity().onBackPressed();
+                                                                             /*   collection.add(currentUser)
                                                                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
                                                                                         {
                                                                                             @Override
@@ -197,7 +210,7 @@ public class EditProfileFragment extends Fragment
                                                                                                 Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
                                                                                                 getActivity().onBackPressed();
                                                                                             }
-                                                                                        });
+                                                                                        });*/
 
                                                                             }
                                                                         });
@@ -211,8 +224,22 @@ public class EditProfileFragment extends Fragment
 
                         }else
                         {
-                            collection.document(firebaseID).delete()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>()
+                            Log.i(TAG, "6");
+                            collection.document(currentUser.get_ID()).set(currentUser, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.i(TAG, "onSuccess:5  "+currentUser.get_ID());
+                                    Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
+                                    getActivity().onBackPressed();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.i(TAG, "7");
+                                }
+                            });
+
+                             /*       .addOnSuccessListener(new OnSuccessListener<Void>()
                                     {
                                         @Override
                                         public void onSuccess(Void aVoid)
@@ -229,7 +256,7 @@ public class EditProfileFragment extends Fragment
                                                     });
 
                                         }
-                                    });
+                                    });*/
                         }
 
 

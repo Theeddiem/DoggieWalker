@@ -26,6 +26,7 @@ import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -66,8 +67,10 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
     AllThePosts allThePosts = AllThePosts.getInstance();
 
     private  static final String OTHER_USER_MSG_AMOUNT ="otherUserAmount";
+    private  static final String OTHER_USER ="otherUserFullName";
 
     int currentUserAmount;
+
 
     ////////////////////////////////////////////////////
     @Override
@@ -117,11 +120,14 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 
         Map<Object, String> CurUseramount = new HashMap<>(); //for counting mesgs/
 
+        Map<Object,String> OtherId = new HashMap<>();
+
 
         //my SideBackUp
         if(msgInput.length()>0) {
             currentUserAmount++;
-            CurUseramount.put(OTHER_USER_MSG_AMOUNT,String.valueOf(currentUserAmount));
+            OtherId.put(OTHER_USER_MSG_AMOUNT,String.valueOf(currentUserAmount));
+            OtherId.put(OTHER_USER,currentUser.getFullName());
             Log.i(TAG, "onClick: +"+String.valueOf(currentUserAmount));
 
             db.collection("Chats").document(currentUser.get_ID()).
@@ -141,7 +147,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
 
             //His SideBackUp
 
-            db.collection("Chats").document(OtherUserID).set(CurUseramount);
+            db.collection("Chats").document(OtherUserID).set(OtherId);
             Log.i(TAG, "onClick: +"+String.valueOf(currentUserAmount));
 
             db.collection("Chats").document(OtherUserID).
@@ -175,8 +181,9 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists())
                 {
-
                     String otherUserAmountSTR=documentSnapshot.getString(OTHER_USER_MSG_AMOUNT);
+                    String otherUserId=documentSnapshot.getString(OTHER_USER);
+
                     Log.i(TAG, "gghis=  " +otherUserAmountSTR);
                     if(otherUserAmountSTR!=null)
                     currentUserAmount=Integer.parseInt(otherUserAmountSTR);
@@ -197,24 +204,32 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if(e!=null)
                             return;
-                        int tempsize=0;
-                        tempsize=conversation.size();
-                        conversation.clear();
-                        adapter.notifyDataSetChanged();
+                      /*  conversation.clear();
+                        adapter.notifyDataSetChanged();*/
 
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots)
+                    /*    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots)
                         {
 
                             ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
                             conversation.add(message);
                             adapter.notifyDataSetChanged();
 
+                        }*/
+
+                        for(DocumentChange dc:queryDocumentSnapshots.getDocumentChanges())
+                        {
+                            DocumentSnapshot documentSnapshot =dc.getDocument();
+                            ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
+                            conversation.add(message);
+                            adapter.notifyDataSetChanged();
                         }
+
+
                         int lastpos = myRecyclerView.getAdapter().getItemCount() - 1; /// scroll to last item
                         if (lastpos < 0)
                             return;
                         else /// scroll to last item
-                            myRecyclerView.smoothScrollToPosition(lastpos);
+                            myRecyclerView.scrollToPosition(lastpos);
 
 
                     }
