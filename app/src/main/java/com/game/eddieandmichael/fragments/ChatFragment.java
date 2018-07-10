@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.support.constraint.Constraints.TAG;
+
 
 public class ChatFragment extends Fragment implements View.OnClickListener {
 
@@ -136,6 +138,10 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             Log.d(TAG, "onSuccess: WORKS ");
+                            currentUser.addUserToChat(OtherUserID);
+                            Log.i(TAG, currentUser.get_ID()+"  other =   " + OtherUserID);
+
+                            db.collection("users").document(currentUser.get_ID()).set(currentUser);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -156,6 +162,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             Log.d(TAG, "onSuccess: WORKS ");
+                            allThePosts.findUserById(OtherUserID).addUserToChat(currentUser.get_ID());
+                            db.collection("users").document(OtherUserID).set( allThePosts.findUserById(OtherUserID));
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override

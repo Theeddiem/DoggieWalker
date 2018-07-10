@@ -104,17 +104,16 @@ public class ProfileFragment extends Fragment
                         String Uid= userById.get_ID();
                         String UserfullName=userById.getFullName();
 
-                        currentUser.addUserToChat(Uid);
+                   /*     currentUser.addUserToChat(Uid);
                         Log.i(TAG, currentUser.get_ID()+"  other =   " + Uid);
 
                         db.collection("users").document(currentUser.get_ID()).set(currentUser); // and this chat room
 
 
                         userById.addUserToChat(currentUser.get_ID());
-                        db.collection("users").document(userById.get_ID()).set(userById);   //update other user chat room
+                        db.collection("users").document(userById.get_ID()).set(userById);*/   //update other user chat room
 
                         Log.i(TAG, userById.get_ID()+"  me =   " + currentUser.get_ID());
-
 
 
                         Fragment fr=new ChatFragment();

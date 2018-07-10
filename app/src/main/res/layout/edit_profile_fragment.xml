@@ -20,8 +20,7 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested_scroll_view"
@@ -45,11 +44,10 @@
                     android:orientation="vertical">
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/editProfile_photo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/editProfile_photo"
-                        android:transitionName="transition_profilePhoto"
-                        />
+                        android:transitionName="transition_profilePhoto" />
 
                 </LinearLayout>
 
@@ -70,8 +68,7 @@
                             android:layout_height="@dimen/spacing_mxlarge"
                             android:layout_marginTop="@dimen/spacing_mlarge"
                             android:background="@android:color/transparent"
-                            android:tint="@color/grey_60"
-                            />
+                            android:tint="@color/grey_60" />
 
                         <View
                             android:layout_width="@dimen/spacing_large"
@@ -83,11 +80,10 @@
                             android:textColorHint="@color/grey_40">
 
                             <android.support.v7.widget.AppCompatEditText
+                                android:id="@+id/editProfile_Name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Name"
-                                android:id="@+id/editProfile_Name"
-                                />
+                                android:hint="Name" />
 
                         </android.support.design.widget.TextInputLayout>
 
@@ -120,11 +116,10 @@
                             android:textColorHint="@color/grey_40">
 
                             <android.support.v7.widget.AppCompatEditText
+                                android:id="@+id/editProfile_userName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="UserName"
-                                android:id="@+id/editProfile_userName"
-                                />
+                                android:hint="UserName" />
 
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
@@ -159,11 +154,10 @@
                             android:textColorHint="@color/grey_40">
 
                             <android.support.v7.widget.AppCompatEditText
+                                android:id="@+id/editProfile_about"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="About Me"
-                                android:id="@+id/editProfile_about"
-                                />
+                                android:hint="About Me" />
 
                         </android.support.design.widget.TextInputLayout>
 
@@ -176,19 +170,18 @@
         </android.support.v4.widget.NestedScrollView>
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/editProfile_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_smlarge"
             android:clickable="true"
+            android:src="@drawable/ic_photo_camera"
             android:tint="@android:color/white"
             app:backgroundTint="@color/blue_grey_800"
             app:fabSize="normal"
             app:layout_anchor="@id/lyt_form"
             app:layout_anchorGravity="top|end|right"
-            app:rippleColor="@android:color/white"
-            android:src="@drawable/ic_photo_camera"
-            android:id="@+id/editProfile_fab"
-            />
+            app:rippleColor="@android:color/white" />
 
     </android.support.design.widget.CoordinatorLayout>
 
