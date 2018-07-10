@@ -130,7 +130,7 @@ public class MyService  extends Service {
             {
 
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(3000);
                     if(currentUser.get_ID()!=null)
                     db.collection("Chats").document(currentUser.get_ID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
