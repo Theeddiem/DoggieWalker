@@ -84,14 +84,16 @@ public class MyService  extends Service {
 
     }
 
-    private void notificaionPrint(String OtherUserFullnameSTR)
+    private void notificaionPrint(String OtherUserFullnameSTR,String OtherUserIdSTR)
     {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setSmallIcon(android.R.drawable.star_off);
         builder.setContentTitle("New message");
         builder.setContentText("From: "+OtherUserFullnameSTR);
-        Intent intent = new Intent(this,MainActivity.class);
-        intent.putExtra("menuFragment", "favoritesMenuItem");
+        Intent intent = new Intent(getBaseContext(),MainActivity.class);
+        intent.putExtra("From", "notifyFrag");
+        intent.putExtra("id",OtherUserIdSTR);
+        intent.putExtra("fullname",OtherUserFullnameSTR);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
         builder.setAutoCancel(true);
@@ -169,12 +171,13 @@ public class MyService  extends Service {
                                             {
                                                 String otherUserAmountSTR=documentSnapshot.getString("otherUserAmount");
                                                 String OtherUserFullnameSTR=documentSnapshot.getString("otherUserFullName");
+                                                String OtherUserIdSTR=documentSnapshot.getString("otherUserID");
                                                 Log.i(TAG, "hola= " + otherUserAmountSTR +"byo = "+ String.valueOf(OthermsgCounter));
                                                 if(OthermsgCounter<Integer.parseInt(otherUserAmountSTR))
                                                 {
                                                     Log.i(TAG, "new msg " +otherUserAmountSTR);
                                                     OthermsgCounter=Integer.parseInt(otherUserAmountSTR);
-                                                    notificaionPrint(OtherUserFullnameSTR);
+                                                    notificaionPrint(OtherUserFullnameSTR,OtherUserIdSTR);
                                                  }
 
                                             }

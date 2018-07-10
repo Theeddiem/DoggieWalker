@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
+import com.game.eddieandmichael.fragments.ChatFragment;
 import com.game.eddieandmichael.fragments.LoginFragment;
 import com.game.eddieandmichael.fragments.LottieAnimation;
 import com.game.eddieandmichael.fragments.MainScreen;
@@ -87,110 +88,125 @@ public class MainActivity extends AppCompatActivity
         drawerLayout=findViewById(R.id.drawer_layout);
 
 
-                            Log.i("gwgw", "222: ");
+
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.main_fragment, new MainScreen(), "MainScreen");
+            fragmentTransaction.commit();
+
+
+            navigationView = findViewById(R.id.main_NavigationView);
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem item) {
+                    item.setChecked(false); // change color if selceted.
+
+                    switch (item.getItemId()) {
+                        case R.id.navi_profile: {
+                            if (user.get_ID() == null) {
+                                Toast.makeText(MainActivity.this, "Login to watch profile", Toast.LENGTH_SHORT).show();
+                            } else {
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.main_fragment, new ProfileFragment(), "ProfileScreen").addToBackStack(null);
+                                fragmentTransaction.commit();
+                                drawerLayout.closeDrawers();
+                            }
+                            return true;
+                        }
+
+                        case R.id.navi_mainScreen: {
                             fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.main_fragment, new MainScreen(), "MainScreen");
-                            fragmentTransaction.commit();
-
-
-
-        navigationView = findViewById(R.id.main_NavigationView);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item)
-            {
-                item.setChecked(false); // change color if selceted.
-
-                switch (item.getItemId())
-                {
-                    case R.id.navi_profile:
-                    {
-                        if(user.get_ID() == null)
-                        {
-                            Toast.makeText(MainActivity.this, "Login to watch profile", Toast.LENGTH_SHORT).show();
-                        }else {
-                            fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.main_fragment, new ProfileFragment(), "ProfileScreen");
+                            fragmentTransaction.replace(R.id.main_fragment, new MainScreen(), "MainScreen").addToBackStack(null);
                             fragmentTransaction.commit();
                             drawerLayout.closeDrawers();
+
+
+                            return true;
                         }
-                        return true;
+
+                        case R.id.navi_login: {
+
+                            if (user.get_ID() != null) {
+
+
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.main_fragment, new SignOutFragment(), "SignOut").addToBackStack(null);
+                                fragmentTransaction.commit();
+                                drawerLayout.closeDrawers();
+                                return true;
+
+                            } else {
+
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.main_fragment, new LoginFragment(), "LoginScreen").addToBackStack(null);
+                                fragmentTransaction.commit();
+                                drawerLayout.closeDrawers();
+                                return true;
+                            }
+
+                        }
+                        case R.id.navi_messenger: {
+                            if (user.get_ID() != null) {
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.main_fragment, new MessengerFragment(), "MessengerScreen").addToBackStack(null);
+                                fragmentTransaction.commit();
+                                drawerLayout.closeDrawers();
+                                return true;
+                            } else
+
+                                Toast.makeText(MainActivity.this, "Login to access messenger ", Toast.LENGTH_SHORT).show();
+
+
+                        }
+                        case R.id.navi_about:
+                            Toast.makeText(MainActivity.this, "Michael Katan & Eddie Knaz \n                    2018", Toast.LENGTH_LONG).show();
+                            drawerLayout.closeDrawers();
+
                     }
 
-                    case R.id.navi_mainScreen:
-                    {
+
+                    return false;
+                }
+            });
+
+            syncServiceIntent = new Intent(this, SyncWithFirebaseService.class); //here
+            startService(syncServiceIntent);  //here
+
+            servicetest = new Intent(this, MyService.class);
+            startService(servicetest);
+
+
+
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) { //too lunch chat framgnet when getting notification using onnewIntnet cause it's singleTop
+
+        super.onNewIntent(intent);
+
+            String type = intent.getStringExtra("From");
+            String Uid=intent.getStringExtra("id");
+            String UserfullName=intent.getStringExtra("fullname");
+            Log.i("hello", "22" + type);
+            Log.i("hello", "1" + type);
+            if (type != null) {
+                switch (type) {
+                    case "notifyFrag":
+                        Log.i("hello+", "this wow  " + type + "    " +Uid +" "+UserfullName);
+
                         fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment,new MainScreen(),"MainScreen");
-                        fragmentTransaction.commit();
+                        Fragment fr=new ChatFragment();
+                        Bundle args = new Bundle();
+                        args.putString("UserID", Uid);
+                        args.putString("UserFullName",UserfullName);
+                        fr.setArguments(args);
+                        fragmentTransaction.replace(R.id.main_fragment, fr,"ChatScreen").addToBackStack(null).
+                                commit();
                         drawerLayout.closeDrawers();
 
-
-
-                        return true;
-                    }
-
-                    case R.id.navi_login:
-                    {
-
-                        if(user.get_ID() != null)
-                        {
-
-
-                            fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.main_fragment, new SignOutFragment(), "SignOut");
-                            fragmentTransaction.commit();
-                            drawerLayout.closeDrawers();
-                            return true;
-
-                        }else {
-
-                            fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.main_fragment, new LoginFragment(), "LoginScreen");
-                            fragmentTransaction.commit();
-                            drawerLayout.closeDrawers();
-                            return true;
-                        }
-
-                    }
-                     case R.id.navi_messenger:
-                    {
-                        if(user.get_ID() != null) {
-                            fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.main_fragment, new MessengerFragment(), "MessengerScreen");
-                            fragmentTransaction.commit();
-                            drawerLayout.closeDrawers();
-                            return true;
-                        }
-
-                        else
-
-                            Toast.makeText(MainActivity.this, "Login to access messenger ", Toast.LENGTH_SHORT).show();
-
-
-
-                    }
-                    case R.id.navi_about:
-                        Toast.makeText(MainActivity.this, "Michael Katan & Eddie Knaz \n                    2018", Toast.LENGTH_LONG).show();
-                        drawerLayout.closeDrawers();
 
                 }
-
-
-
-
-                return false;
             }
-        });
-
-        syncServiceIntent = new Intent(this, SyncWithFirebaseService.class); //here
-        startService(syncServiceIntent);  //here
-
-        servicetest=new Intent(this, MyService.class);
-        startService(servicetest);
-
-
-
-
 
     }
 
@@ -208,6 +224,10 @@ public class MainActivity extends AppCompatActivity
     protected void onStart()
     {
         super.onStart();
+
+
+
+
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
