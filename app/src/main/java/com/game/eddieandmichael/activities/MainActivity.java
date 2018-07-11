@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
         Toolbar toolbar=findViewById(R.id.main_ToolBar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.overlay_light_90));
         toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -170,6 +171,8 @@ public class MainActivity extends AppCompatActivity
 
             syncServiceIntent = new Intent(this, SyncWithFirebaseService.class); //here
             startService(syncServiceIntent);  //here
+
+
 
             servicetest = new Intent(this, MyService.class);
             startService(servicetest);

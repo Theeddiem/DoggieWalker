@@ -16,6 +16,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,7 @@ import com.game.eddieandmichael.classes.AllThePosts;
 import com.game.eddieandmichael.classes.Post;
 import com.game.eddieandmichael.classes.User;
 import com.game.eddieandmichael.doggiewalker.R;
+import com.game.eddieandmichael.services.SyncWithFirebaseService;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -45,6 +48,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -56,6 +60,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.support.constraint.Constraints.TAG;
 
 public class AddPostDialogFragment extends DialogFragment {
 
@@ -88,7 +93,7 @@ public class AddPostDialogFragment extends DialogFragment {
 
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     FirebaseAuth auth;
-
+    String TAG = "AddPost";
     LottieAnimation lottieAnimation;
 
     ////////////////////////////////////////////
@@ -218,36 +223,37 @@ public class AddPostDialogFragment extends DialogFragment {
                                         DocumentSnapshot documentSnapshot = documentSnapshots.getDocuments().get(0);
 
                                         final String postfireBaseId = documentSnapshot.getId();
-
+                                        Log.i(TAG, "11  " +postfireBaseId);
                                         Post oldPost = documentSnapshot.toObject(Post.class);
-
+                                        Log.i(TAG, "22  "  + oldPost.getAboutThePost());
                                         final Post newPost = new Post();
 
                                         newPost.set_ID(oldPost.get_ID());
                                         newPost.setPostOwner_ID(oldPost.getPostOwner_ID());
                                         newPost.setAboutThePost(postText.getText().toString());
                                         newPost.setPlacesOfPost(placesText.getText().toString());
+                                        Log.i(TAG, "onSuccess: "+ priceText.getText().toString());
+                                        if(TextUtils.isEmpty(priceText.getText().toString()))
+                                            newPost.setPrice(0);
+                                        else
                                         newPost.setPrice(Integer.parseInt(priceText.getText().toString()));
                                         newPost.setPostsPhotos(oldPost.getPostsPhotos());
                                         newPost.setTimeOfPost(oldPost.getTimeOfPost());
                                         newPost.setHasPhoto(oldPost.isHasPhoto());
 
-                                        collection.document(postfireBaseId).delete()
+
+                                        Log.i(TAG, "33  "  + newPost.getAboutThePost());
+                                        collection.document(postfireBaseId).set(newPost, SetOptions.merge())
                                                 .addOnSuccessListener(new OnSuccessListener<Void>()
                                                 {
                                                     @Override
                                                     public void onSuccess(Void aVoid)
                                                     {
-                                                        collection.add(newPost)
-                                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                                    @Override
-                                                                    public void onSuccess(DocumentReference documentReference)
-                                                                    {
+
                                                                         Toast.makeText(getContext(), "Post Updated", Toast.LENGTH_SHORT).show();
                                                                         lottieAnimation.dismiss();
                                                                         dismiss();
-                                                                    }
-                                                                });
+
                                                     }
                                                 });
 
@@ -293,6 +299,7 @@ public class AddPostDialogFragment extends DialogFragment {
                                                 public void onSuccess(DocumentReference documentReference)
                                                 {
                                                     Toast.makeText(getActivity(), "Post Added", Toast.LENGTH_SHORT).show();
+
                                                     lottieAnimation.dismiss();
                                                     dismiss();
                                                 }

@@ -49,7 +49,7 @@ public class MyService  extends Service {
     FirebaseFirestore db;
     AllThePosts allThePosts;
     int OthermsgCounter;
-     NotificationManager manager;
+    NotificationManager manager;
 
     String TAG="MyService";
     private static final String CHANNEL_1_ID= "msg";
@@ -61,9 +61,10 @@ public class MyService  extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        db = FirebaseFirestore.getInstance();
         currentUser = User.getInstance();
         allThePosts = AllThePosts.getInstance();
-        db = FirebaseFirestore.getInstance();
+        Log.i(TAG, "onCreate: "+ currentUser.getFullName());
         manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 
 
@@ -127,46 +128,49 @@ public class MyService  extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
 
+
+                Log.i(TAG, "I tried");
+                currentUser = User.getInstance();
+                Log.i(TAG, "I tried2");
+                if (currentUser.get_ID() != null) {
+                    db.collection("Chats").document(currentUser.get_ID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                String otherUserAmountSTR = documentSnapshot.getString("otherUserAmount");
+                                OthermsgCounter = Integer.parseInt(otherUserAmountSTR);
+                                Log.i(TAG, "Counter = " + OthermsgCounter);
+
+                            } else
+                                OthermsgCounter = 0;
+                            Log.i(TAG, "Counter  = " + OthermsgCounter);
+
+                        }
+                    });
+                } else
+                    Log.i(TAG, "I failed");
+
+
+
+
+
+
         Runnable r = new Runnable() {
             @Override
             public void run()
             {
 
-                try {
-                    Thread.sleep(3500);
-                    if(currentUser.get_ID()!=null)
-                    db.collection("Chats").document(currentUser.get_ID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if(documentSnapshot.exists())
-                            {
-                                String otherUserAmountSTR=documentSnapshot.getString("otherUserAmount");
-                                OthermsgCounter =Integer.parseInt(otherUserAmountSTR);
-                                Log.i(TAG, "Counter = " + OthermsgCounter);
+                for(int i=0;i<2000;i++){
 
-                            }
-                            else
-                                OthermsgCounter=0;
-                            Log.i(TAG, "Counter  = " + OthermsgCounter);
-
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            
-             for(int i=0;i<2000;i++){
-
-                        long futureTime=System.currentTimeMillis() +2000;
-                        while (System.currentTimeMillis()<futureTime)
+                    long futureTime=System.currentTimeMillis() +2000;
+                    while (System.currentTimeMillis()<futureTime)
+                    {
+                        synchronized (this)
                         {
-                            synchronized (this)
-                            {
 
-                                try {
-                                    wait(futureTime-System.currentTimeMillis());
-                                    if(currentUser.get_ID()!=null)
+                            try {
+                                wait(futureTime-System.currentTimeMillis());
+                                if(currentUser.get_ID()!=null)
                                     db.collection("Chats").document(currentUser.get_ID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -182,7 +186,7 @@ public class MyService  extends Service {
                                                     Log.i(TAG, "new msg " +otherUserAmountSTR);
                                                     OthermsgCounter=Integer.parseInt(otherUserAmountSTR);
                                                     notificaionPrint(OtherUserFullnameSTR,OtherUserIdSTR,OtherUserMsgTextSTR);
-                                                 }
+                                                }
 
                                             }
                                             else
@@ -190,17 +194,18 @@ public class MyService  extends Service {
                                         }
                                     });
 
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
                             }
                         }
                     }
+                }
 
             }
         };
 
         Thread eddieThread=new Thread(r);
+        Log.i(TAG, "Trhed");
         eddieThread.start();
         return START_STICKY;
     }
