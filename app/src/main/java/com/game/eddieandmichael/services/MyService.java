@@ -9,6 +9,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.IBinder;
@@ -36,6 +37,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+
 import java.util.ArrayList;
 
 import static android.support.constraint.Constraints.TAG;
@@ -62,38 +64,36 @@ public class MyService  extends Service {
         currentUser = User.getInstance();
         allThePosts = AllThePosts.getInstance();
         db = FirebaseFirestore.getInstance();
-         manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification.Builder builder = new Notification.Builder(this);
-        builder.setSmallIcon(android.R.drawable.star_on);
-        builder.setContentTitle("New msg");
+        manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 
-        builder.setPriority(Notification.PRIORITY_MAX);
-            if(currentUser.get_ID()!=null)
-            createNotificationChannels();
 
 
     }
 
-    private void createNotificationChannels() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel1 = new NotificationChannel(CHANNEL_1_ID, "chat", NotificationManager.IMPORTANCE_HIGH);
-            channel1.setDescription("this is that chat notification");
 
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(channel1);
-
-        }
-
-    }
 
     private void notificaionPrint(String OtherUserFullnameSTR,String OtherUserIdSTR,String OtherUserMsgTextSTR)
     {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setSmallIcon(android.R.drawable.presence_online);
         builder.setContentTitle(OtherUserFullnameSTR);
-
-        Log.i(TAG, OtherUserMsgTextSTR);
         builder.setContentText(OtherUserMsgTextSTR);
+
+
+        if(Build.VERSION.SDK_INT>=26) {
+            String channelId = "some_channel_id";
+            CharSequence channelName = "Some Channel";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, importance);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            manager.createNotificationChannel(notificationChannel);
+
+            builder.setChannelId(channelId);
+        }
+
         Intent intent = new Intent(getBaseContext(),MainActivity.class);
         intent.putExtra("From", "notifyFrag");
         intent.putExtra("id",OtherUserIdSTR);
@@ -102,11 +102,10 @@ public class MyService  extends Service {
         builder.setContentIntent(pendingIntent);
         builder.setAutoCancel(true);
         builder.setPriority(Notification.PRIORITY_MAX);
-        Notification notification = builder.build();
 
+        Notification notification = builder.build();
         notification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_SHOW_LIGHTS;
         notification.defaults = Notification.DEFAULT_ALL;
-
         manager.notify(NOTIF_ID,notification);
 
     }
@@ -203,7 +202,7 @@ public class MyService  extends Service {
 
         Thread eddieThread=new Thread(r);
         eddieThread.start();
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
 /*    @Override
