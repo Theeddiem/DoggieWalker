@@ -218,26 +218,26 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if(e!=null)
                             return;
-                      /*  conversation.clear();
-                        adapter.notifyDataSetChanged();*/
+                        conversation.clear();
+                        adapter.notifyDataSetChanged();
 
-                    /*    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots)
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots)
                         {
 
                             ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
                             conversation.add(message);
                             adapter.notifyDataSetChanged();
 
-                        }*/
+                        }
 
-                        for(DocumentChange dc:queryDocumentSnapshots.getDocumentChanges())
+                     /*   for(DocumentChange dc:queryDocumentSnapshots.getDocumentChanges())
                         {
                             DocumentSnapshot documentSnapshot =dc.getDocument();
                             ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
                             conversation.add(message);
                             adapter.notifyDataSetChanged();
 
-                        }
+                        }*/
 
 
                         int lastpos = myRecyclerView.getAdapter().getItemCount() - 1; /// scroll to last item
