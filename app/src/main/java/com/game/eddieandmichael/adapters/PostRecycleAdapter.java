@@ -176,7 +176,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
                     fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.addSharedElement(holder.profileImage,"transition_profilePhoto");
-                    fragmentTransaction.replace(R.id.main_fragment, profileFragment, "ProfileScreen");
+                    fragmentTransaction.replace(R.id.main_fragment, profileFragment, "ProfileScreen").addToBackStack(null);;
                     fragmentTransaction.commit();
                 }
 
@@ -200,7 +200,7 @@ public class PostRecycleAdapter extends RecyclerView.Adapter<PostRecycleAdapter.
 
                     screen.setExitTransition(new AutoTransition());
                     fragmentTransaction.addSharedElement(holder.profileImage,"transition_profilePhoto");
-                    fragmentTransaction.replace(R.id.main_fragment,profileFragment,"profileFragment");
+                    fragmentTransaction.replace(R.id.main_fragment,profileFragment,"profileFragment").addToBackStack(null);;
                     fragmentTransaction.commit();
                 }
 

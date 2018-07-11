@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
 
 
             fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.main_fragment, new MainScreen(), "MainScreen");
+            fragmentTransaction.replace(R.id.main_fragment, new MainScreen(), "MainScreen").addToBackStack(null);
             fragmentTransaction.commit();
 
 
@@ -327,18 +327,24 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed()
     {
 
+        int count = getFragmentManager().getBackStackEntryCount();
         MainScreen mainScreen = (MainScreen) fragmentManager.findFragmentByTag("MainScreen");
+        // ChatFragment chatFragment =(ChatFragment) fragmentManager.findFragmentByTag("ChatScreen")   ;
+
+
+
 
         if(mainScreen != null && mainScreen.isVisible())
         {
             finish();
         }else
         {
-            MainScreen mainScreenFrag = new MainScreen();
-            mainScreenFrag.setEnterTransition(new AutoTransition());
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.main_fragment,mainScreenFrag,"MainScreen");
-            fragmentTransaction.commit();
+            if (count == 0) {
+                super.onBackPressed();
+                //additional code
+            } else {
+                getFragmentManager().popBackStack();
+            }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             {

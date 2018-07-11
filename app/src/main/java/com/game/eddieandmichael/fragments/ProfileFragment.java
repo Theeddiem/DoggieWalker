@@ -159,7 +159,7 @@ public class ProfileFragment extends Fragment
 
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addSharedElement(profile_image,"transition_profilePhoto");
-                    transaction.add(R.id.main_fragment,editProfileFragment);
+                    transaction.replace(R.id.main_fragment,editProfileFragment).addToBackStack(null);
                     transaction.commit();
                 }
             });
